@@ -2,11 +2,13 @@ module.exports = (app) => {
     app.get('/listing', (req, res) => {
         var placeid = req.query.placeid;
         var title = "Recko"
+        if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
         getGooglePlace(placeid)
         .then((place) => res.render('listing', {
             title: title,
             placeid: place,
-            place: place
+            place: place, 
+            loggedIn: loggedIn
         }))
         .catch(err => res.status(500).send('An error occured'));
     });

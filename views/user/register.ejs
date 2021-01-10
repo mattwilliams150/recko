@@ -1,0 +1,45 @@
+<% layout('layout') %>
+   
+      <div class="row px-5">
+        <div class="col-md-2 col-lg-3"></div>
+        <div class="col-md-8 col-lg-6 min-vh-90">
+          <div class="py-5 px-md-5 px-xl-7">
+            <div class="mb-4">
+              <h2>Register</h2>
+            </div>
+            <% if(hasErrors) {%>
+                <% for(var i=0; i < messages.length; i++) { %>
+                    <div class="alert alert-danger">
+                        <%= messages[i] %>
+                    </div>
+                <% } %>        
+            <% } %>  
+            <form class="form-validate" method="POST" class="" id="signupForm" action="/register">
+              <div class="form-group">
+                <label class="form-label" for="loginUsername"> Email Address</label>
+                <input class="form-control" name="email" id="loginUsername" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
+              </div>
+              <div class="form-group">
+                <label class="form-label" for="loginPassword"> Password</label>
+                <input class="form-control" name="password" id="loginPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
+              </div>
+              <div class="form-group mb-4">
+                <label class="form-label" for="loginPassword2"> Confirm your password</label>
+                <input class="form-control" name="password2" id="loginPassword2" placeholder="Password" type="password" required data-msg="Please enter your password">
+              </div>
+              <button class="btn btn-lg btn-block btn-primary mb-3" type="submit">Register</button>
+              <p class="text-sm">Already have an account? <a href="/login">Login</a></p>
+                
+              <% if(false) { %>    
+              <hr class="my-3 hr-text letter-spacing-2" data-content="OR">
+              <button class="btn btn btn-outline-primary btn-block btn-social mb-3"><i class="fa-2x fa-facebook-f fab btn-social-icon"> </i>Connect <span class="d-none d-sm-inline">with Facebook</span></button>
+              <button class="btn btn btn-outline-muted btn-block btn-social mb-3"><i class="fa-2x fa-google fab btn-social-icon"> </i>Connect <span class="d-none d-sm-inline">with Google</span></button>
+              <% } %>    
+                
+              <hr class="my-4">
+              <p class="text-sm text-muted">By signing up you agree to Recko's <a href="#">Terms and Conditions</a> and <a href="#">Privacy Policy</a>.</p>
+            </form>
+          </div>
+        </div>
+        <div class="col-md-2 col-lg-3"></div>
+      </div>

@@ -1,0 +1,49 @@
+<% layout('layout') %>
+<script>var listing = <%- JSON.stringify(place) %></script>
+<div id="wrapper">
+    <div id="page-content-wrapper">
+        <% include partials/nav %>
+        <div class="container-lg mt-4">
+            <div class="mb-4">
+                <h1><%= place.result.name %></h1>
+            </div>
+            <div class="row container-fluid">
+                <div class="col-md-auto">
+                    <img src="img/recko_logo.png" class="mx-1 my-1" style="height:100px; width: 100px;">
+                </div>
+                <div class="col ml-3">
+                    <ul class="list-group">
+                        <li>You said: 4.5</li>
+                        <li>Recko said: 4.5</li>
+                        <li>Google said: <%= place.result.rating %></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="row container-fluid">
+                <%= place.result.formatted_address %>
+            </div>
+            <div class="row container-fluid">
+                <ul>
+                    <% for (i = 0; i < place.result.opening_hours.weekday_text.length; i++) { %>
+                    <li>
+                        <%= place.result.opening_hours.weekday_text[i] %>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+            <div class="row container-fluid">
+                <ul>
+                    <% for (i = 0; i < place.result.reviews.length; i++) { %>
+                    <li>
+                        <% var item = place.result.reviews[i] %>
+                        <div><%= item.text %></div>
+                        <div><%= item.rating %></div>
+                        <div><%= item.author_name %></div>
+                        <div><%= item.relative_time_description %></div>
+                    </li>
+                    <% } %>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

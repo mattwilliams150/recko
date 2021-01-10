@@ -1,0 +1,42 @@
+<% layout('layout') %>
+   
+      <div class="row px-5">
+        <div class="col-md-2 col-lg-3"></div>
+        <div class="col-md-8 col-lg-6 min-vh-90">
+          <div class="py-5 px-md-5 px-xl-7">
+            <div class="mb-4">
+              <h2>Forgotten Password</h2>
+            </div>
+            <p>Please enter your email and a password reset link will be sent to you.</p>  
+              
+            <% if(hasErrors) {%>
+                <% for(var i=0; i < messages.length; i++) { %>
+                    <div class="alert alert-danger">
+                        <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                            &times;
+                        </a>
+                        <%= messages[i] %>
+                    </div>
+                <% } %>        
+            <% } %>
+
+            <% if(noErrors) {%>
+                <div class="alert alert-info">
+                    <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                        &times;
+                    </a>
+                    <%= info %>
+                </div>
+            <% } %>
+
+            <form class="form-validate" method="POST" class="" id="signupForm" action="/forgot">
+              <div class="form-group">
+                <label class="form-label" for="loginUsername"> Email Address</label>
+                <input class="form-control" name="email" id="forgotEmail" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
+              </div>
+              <button class="btn btn-lg btn-block btn-primary mb-3" type="submit">Submit</button>              
+            </form>
+          </div>
+        </div>
+        <div class="col-md-2 col-lg-3"></div>
+      </div>

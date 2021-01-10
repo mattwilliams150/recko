@@ -3,12 +3,15 @@ module.exports = (app) => {
         var type = req.query.type;
         var place = req.query.place;
         var title = "Recko | " + type + " in " + place
+        if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
         getGooglePlaces(type, place)
         .then((places) => res.render('results', {
             title: title,
             type: type,
             place: place,
-            places: places
+            places: places, 
+            loggedIn: loggedIn
+            
         }))
         .catch(err => res.status(500).send('An error occured'));
     });

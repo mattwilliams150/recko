@@ -1,7 +1,8 @@
 module.exports = (app) => {
     
     app.get('/', (req, res, next) => {
-        res.render('index', {title: 'Recko'});
+        if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
+        res.render('index', {title: 'Recko', loggedIn: loggedIn});
     });
     
 };

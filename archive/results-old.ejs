@@ -1,0 +1,71 @@
+<% layout('layout') %>
+<script>var places = <%- JSON.stringify(places) %></script>
+<div id="wrapper">
+    <div id="page-content-wrapper">
+        <% include partials/nav %>
+        <div class="container-lg mt-4">
+            <div class="row">
+                <div class="col-md-3 d-none d-sm-none d-md-block">
+                    <div class="card">
+                        <article class="card-group-item">
+                            <header class="card-header">
+                                <h6 class="title">Brands </h6>
+                            </header>
+                            <div class="filter-content">
+                                <div class="card-body">
+                                <form>
+                                    <label class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="">
+                                      <span class="form-check-label">
+                                        Mersedes Benz
+                                      </span>
+                                    </label> <!-- form-check.// -->
+                                    <label class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="">
+                                      <span class="form-check-label">
+                                        Nissan Altima
+                                      </span>
+                                    </label>  <!-- form-check.// -->
+                                    <label class="form-check">
+                                      <input class="form-check-input" type="checkbox" value="">
+                                      <span class="form-check-label">
+                                        Another Brand
+                                      </span>
+                                    </label>  <!-- form-check.// -->
+                                </form>
+
+                                </div> <!-- card-body.// -->
+                            </div>
+                        </article> <!-- card-group-item.// -->
+                    </div> <!-- card.// -->
+                </div>
+                
+                <div class="col-md-9">
+                    <div class="mb-4">
+                        <h1><%= type %> in <%= place %></h1>
+                    </div>
+                    
+                    <% for (i = 0; i < places.results.length; i++) { %>
+                    <article class="search-result row border-top px-4 py-3">
+                        <div class="row container-fluid pb-2">
+                            <h3><a href='/listing?placeid=<%= places.results[i].place_id %>'><%= places.results[i].name %></a></h3>
+                        </div>
+                        <div class="row container-fluid">
+                            <div class="col-md-auto">
+                                <img src="img/recko_logo.png" class="mx-1 my-1" style="height:100px; width: 100px;">
+                            </div>
+                            <div class="col ml-3">
+                                <ul class="list-group">
+                                    <li>You said: 4.5</li>
+                                    <li>Recko said: 4.5</li>
+                                    <li>Google said: <%= places.results[i].rating %></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </article>
+                    <% } %>
+                </div>
+	        </div>          
+        </div>
+    </div>
+</div>
