@@ -15,7 +15,7 @@ module.exports = (app) => {
         }))
         .catch(err => res.status(500).send('An error occured'));
     });
-}
+};
     
     
 function getGooglePlaces(type, place){
