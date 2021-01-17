@@ -21,7 +21,17 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/recko', {
  });
 
 require('./config/passport');
-// var ipblocker = require('./routes/ipblocker');
+
+// only allow localhost or testing IPs.
+app.use(function (req, res, next) {
+    let host = req.get('host');
+    let ip = req.headers['x-forwarded-for'];
+    if (host == 'localhost:8080' || ip == process.env.TESTINGIP || process.env.ENVIRONMENT == 'production') {
+        next();
+    } else {
+        res.end();
+    };
+});
 // require('./secret/secret');
 
 app.use(express.static('public'));
