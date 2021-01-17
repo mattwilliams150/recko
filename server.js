@@ -21,7 +21,7 @@ mongoose.connect('mongodb://localhost/recko', {
  });
 
 require('./config/passport');
-require('./secret/secret');
+// require('./secret/secret');
 
 app.use(express.static('public'));
 app.engine('ejs', engine);
