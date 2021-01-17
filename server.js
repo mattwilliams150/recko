@@ -11,7 +11,6 @@ var mongoose = require('mongoose');
 var mongostore = require('connect-mongo')(session);
 var passport = require('passport');
 var flash = require('connect-flash');
-var AccessControl = require('express-ip-access-control');
 
 var app = express();
 
@@ -23,19 +22,6 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/recko', {
 
 require('./config/passport');
 // require('./secret/secret');
-
-app.use(AccessControl({
-    mode: 'allow',
-    denys: [],
-    allows: ['92.18.75.229'],
-    forceConnectionAddress: false,
-    log: function(clientIp, access) {
-        console.log(clientIp + (access ? ' accessed.' : ' denied.'));
-    },
-    statusCode: 401,
-    redirectTo: '',
-    message: 'Unauthorized'
-}));
 
 app.use(express.static('public'));
 app.engine('ejs', engine);
