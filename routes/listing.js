@@ -5,14 +5,21 @@ module.exports = (app) => {
         var placeid = req.query.placeid;
         var title = "Recko"
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-        getGooglePlace(placeid)
-        .then((place) => res.render('listing', {
-            title: title,
-            placeid: placeid,
-            place: place, 
-            loggedIn: loggedIn
-        }))
-        .catch(err => res.status(500).send('An error occured'));
+        //var reviews = Review.findOne({'placeid':placeid});
+        //console.log(reviews);
+
+        Review.find({'placeid':placeid}, (err, review) => {
+            //console.log(review);
+            getGooglePlace(placeid)
+            .then((place) => res.render('listing', {
+                title: title,
+                placeid: placeid,
+                place: place,
+                loggedIn: loggedIn,
+                reviews: review
+            }))
+            .catch(err => res.status(500).send('An error occured'));
+        });
     });
 
     app.post('/listingreview', (req, res) => {

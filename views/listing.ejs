@@ -82,10 +82,44 @@
             <div class="text-block">
               <p class="subtitle text-sm text-primary">Reviews    </p>
               <h5 class="mb-4">Listing Reviews </h5>
-                
+            <!-- Recko Reviews--->
+            <% for (i = 0; i < reviews.length; i++) { %>
+             <div class="media d-block d-sm-flex review">
+                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="https://lh3.googleusercontent.com/a-/AOh14Gjk4rycRPdSzLkYqdrpqdFygi--6lD-Pr38INIB=s128-c0x00000000-cc-rp-mo" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm">
+
+                    <% let datediff = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24))
+                        let monthsago = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24*30)) %>
+
+                        <% if(datediff == 0) { %>
+                             Today
+                        <% } else if (datediff < 7) { %>
+                             This Week
+                        <% } else if (datediff < 30) { %>
+                             This Month
+                        <% } else { %>
+                             <%=monthsago%> Months Ago
+                         <% } %>
+
+                    </span></div>
+                <div class="media-body">
+                  <h6 class="mt-2 mb-1"><%= reviews[i].name %></h6>
+                  <div class="mb-2">
+                    <% for (j = 0; j < 5; j++) { %>
+                             <%  if (reviews[i].rating > j) {  %>
+                                <i class="fa fa-xs fa-star text-primary"></i>
+                            <% } else { %>
+                                <i class="fa fa-xs fa-star text-gray-300"></i>
+                            <% } %>
+                        <% } %>
+                  </div>
+                  <p class="text-muted text-sm"><%= reviews[i].review %></p>
+                </div>
+              </div>
+            <% } %>
+            <!-- Google Reviews--->
             <% for (i = 0; i < place.result.reviews.length; i++) { %>      
               <div class="media d-block d-sm-flex review">
-                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="<%= place.result.reviews[i].profile_photo_url %>" alt="Padmé Amidala"><span class="text-uppercase text-muted text-sm"><%= place.result.reviews[i].relative_time_description %></span></div>
+                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="<%= place.result.reviews[i].profile_photo_url %>" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm"><%= place.result.reviews[i].relative_time_description %></span></div>
                 <div class="media-body">
                   <h6 class="mt-2 mb-1"><%= place.result.reviews[i].author_name %></h6>
                   <div class="mb-2">
