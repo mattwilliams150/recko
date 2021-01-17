@@ -25,10 +25,9 @@ require('./config/passport');
 // require('./secret/secret');
 
 app.use(AccessControl({
-    mode: 'deny',
+    mode: 'allow',
     denys: [],
-    //allows: ['92.18.75.229'],
-    allows: [],
+    allows: ['92.18.75.229'],
     forceConnectionAddress: false,
     log: function(clientIp, access) {
         console.log(clientIp + (access ? ' accessed.' : ' denied.'));
