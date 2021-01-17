@@ -1,3 +1,5 @@
+var Review = require('../models/review');
+
 module.exports = (app) => {
     app.get('/listing', (req, res) => {
         var placeid = req.query.placeid;
@@ -6,11 +8,27 @@ module.exports = (app) => {
         getGooglePlace(placeid)
         .then((place) => res.render('listing', {
             title: title,
-            placeid: place,
+            placeid: placeid,
             place: place, 
             loggedIn: loggedIn
         }))
         .catch(err => res.status(500).send('An error occured'));
+    });
+
+    app.post('/listingreview', (req, res) => {
+        var newReview = new Review();
+        newReview.placeid = req.query.placeid
+        newReview.name = req.body.review_name;
+        newReview.email = req.body.review_email
+        newReview.rating = req.body.review_rating
+        newReview.review = req.body.review_review
+        newReview.date = Date.now()
+
+        newReview.save((err) => {
+            console.log(err);
+        });
+
+        res.redirect('/listing?placeid='+req.query.placeid);
     });
 }
 

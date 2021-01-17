@@ -107,18 +107,18 @@
                 <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
                 <div class="collapse mt-4" id="leaveReview">
                   <h5 class="mb-4">Leave a review</h5>
-                  <form class="form" id="contact-form" method="get" action="#">
+                  <form class="form" id="contact-form" method="post" action="/listingreview?placeid=<%= placeid %>">
                     <div class="row">
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label class="form-label" for="name">Your name *</label>
-                          <input class="form-control" type="text" name="name" id="name" placeholder="Enter your name" required="required">
+                          <input class="form-control" type="text" name="review_name" id="name" placeholder="Enter your name" required="required">
                         </div>
                       </div>
                       <div class="col-sm-6">
                         <div class="form-group">
                           <label class="form-label" for="rating">Your rating *</label>
-                          <select class="custom-select focus-shadow-0" name="rating" id="rating">
+                          <select class="custom-select focus-shadow-0" name="review_rating" id="rating">
                             <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
                             <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
                             <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
@@ -130,11 +130,11 @@
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="email">Your email *</label>
-                      <input class="form-control" type="email" name="email" id="email" placeholder="Enter your  email" required="required">
+                      <input class="form-control" type="email" name="review_email" id="email" placeholder="Enter your  email" required="required">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="review">Review text *</label>
-                      <textarea class="form-control" rows="4" name="review" id="review" placeholder="Enter your review" required="required"></textarea>
+                      <textarea class="form-control" rows="4" name="review_review" id="review" placeholder="Enter your review" required="required"></textarea>
                     </div>
                     <button class="btn btn-primary" type="submit">Post review</button>
                   </form>

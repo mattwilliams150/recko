@@ -47,11 +47,7 @@ module.exports = (app, passport) => {
             res.redirect('/')
         });
     });
-    
-    
-    
-    
-    
+
     app.get('/forgot', (req, res) => {
         var errors = req.flash('error');
         var info = req.flash('info');
