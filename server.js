@@ -21,6 +21,7 @@ mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/recko', {
  });
 
 require('./config/passport');
+// var ipblocker = require('./routes/ipblocker');
 // require('./secret/secret');
 
 app.use(express.static('public'));
