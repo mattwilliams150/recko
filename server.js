@@ -15,7 +15,7 @@ var flash = require('connect-flash');
 var app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect('mongodb://localhost/recko', {
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/recko', {
    useNewUrlParser: true,
    useUnifiedTopology: true
  });
