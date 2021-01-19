@@ -26,7 +26,7 @@ require('./config/passport');
 app.use(function (req, res, next) {
     let host = req.get('host');
     let ip = req.headers['x-forwarded-for'];
-    if (host == 'localhost:8080' || ip == process.env.TESTINGIP || process.env.ENVIRONMENT == 'production') {
+    if (host == 'localhost:8080' || process.env.TESTINGIP.test(ip) || process.env.ENVIRONMENT == 'production') {
         next();
     } else {
         res.end();
