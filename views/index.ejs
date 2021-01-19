@@ -1,4 +1,28 @@
 <% layout('layout') %>
+<script>
+    function nearme() {
+        var options = {
+          enableHighAccuracy: true,
+          timeout: 5000,
+          maximumAge: 0
+        };
+
+        function success(pos) {
+          var crd = pos.coords;
+
+          console.log('Your current position is:');
+          console.log(`Latitude : ${crd.latitude}`);
+          console.log(`Longitude: ${crd.longitude}`);
+          console.log(`More or less ${crd.accuracy} meters.`);
+        }
+
+        function error(err) {
+          console.warn(`ERROR(${err.code}): ${err.message}`);
+        }
+
+        navigator.geolocation.getCurrentPosition(success, error, options);
+      }
+  </script>
 
     <section class="d-flex align-items-center dark-overlay bg-cover" style="background-image: url(img/photo/photo-1525610553991-2bede1a236e2.jpg);">
       <div class="container py-6 py-lg-7 text-white overlay-content text-center"> 
@@ -26,7 +50,7 @@
             <div class="col-lg-4 d-flex align-items-center form-group">
               <div class="input-label-absolute input-label-absolute-right w-100">
                 <label class="label-absolute mr-lg-2" for="location">
-                    <i class="fa fa-crosshairs"></i>
+                    <i class="fa fa-crosshairs" onclick="nearme()"></i>
                     <div class="sr-only">Where?</div>
                 </label>
                 <input class="form-control border-0 shadow-0" type="text" name="place" placeholder="Where?" id="location">
