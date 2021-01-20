@@ -50,7 +50,7 @@ function getGooglePlace(placeid){
 
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
         console.log('apikey: ' + apikey);
-        var googlePlaces = new gp(apikey, config.outputFormat);
+        var googlePlaces = new gp(apikey, "json");
         console.log(googlePlaces);
         var parameters = {
             reference: placeid
