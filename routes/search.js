@@ -13,7 +13,7 @@ module.exports = (app) => {
             loggedIn: loggedIn
             
         }))
-        .catch(err => res.status(500).send('An error occured'));
+        .catch(err => res.status(500).send('An error occured'+err));
     });
 };
     
@@ -28,6 +28,7 @@ function getGooglePlaces(type, place){
         }
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
         var googlePlaces = new gp(apiKey, "json");
+        console.log(googlePlaces);
         var parameters = {
             query: type + " in " + place
         };
