@@ -3,6 +3,12 @@ module.exports = (app) => {
         var type = req.query.type;
         var place = req.query.place;
         var title = "Recko | " + type + " in " + place
+        try {
+            var config = require("../config.js");
+        } catch {
+            console.log('no config.js file')
+        }
+        var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY || config.clientPlacesApiKey;
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
         getGooglePlaces(type, place)
         .then((places) => res.render('results', {
@@ -10,7 +16,8 @@ module.exports = (app) => {
             type: type,
             place: place,
             places: places, 
-            loggedIn: loggedIn
+            loggedIn: loggedIn,
+            clientPlacesApiKey: clientPlacesApiKey
             
         }))
         .catch(err => res.status(500).send('An error occured'));
