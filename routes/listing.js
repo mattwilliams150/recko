@@ -18,7 +18,7 @@ module.exports = (app) => {
                 loggedIn: loggedIn,
                 reviews: review
             }))
-            .catch(err => res.status(500).send('An error occured'));
+            .catch(err => res.status(500).send('An error occured'+err));
         });
     });
 
