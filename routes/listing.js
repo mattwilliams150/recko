@@ -42,7 +42,12 @@ module.exports = (app) => {
 function getGooglePlace(placeid){
     return new Promise((resolve, reject) => {    
         var gp = require('googleplaces');
-        var config = require("../config.js");
+        try {
+            var config = require("../config.js");
+        } catch {
+            console.log('no config.js file')
+        }
+
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
         console.log('apikey: ' + apikey);
         var googlePlaces = new gp(apikey, config.outputFormat);

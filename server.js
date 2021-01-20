@@ -27,8 +27,8 @@ app.use(function (req, res, next) {
     let host = req.get('host');
     let testip = req.headers['x-forwarded-for'];
     let ipregex = new RegExp(process.env.TESTINGIP);
-    console.log(testip);
-    console.log(ipregex);
+    //console.log(testip);
+    //console.log(ipregex);
     if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production') {
         next();
     } else {

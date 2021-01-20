@@ -23,6 +23,7 @@ function getGooglePlaces(type, place){
         var gp = require('googleplaces');
         var config = require("../config.js");
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
+        console.log(apikey);
         var googlePlaces = new gp(apiKey, config.outputFormat);
         var parameters = {
             query: type + " in " + place
