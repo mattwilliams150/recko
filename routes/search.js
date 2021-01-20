@@ -21,9 +21,12 @@ module.exports = (app) => {
 function getGooglePlaces(type, place){
     return new Promise((resolve, reject) => {    
         var gp = require('googleplaces');
-        var config = require("../config.js");
+        try {
+            var config = require("../config.js");
+        } catch {
+            console.log('no config.js file')
+        }
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
-        console.log(apikey);
         var googlePlaces = new gp(apiKey, "json");
         var parameters = {
             query: type + " in " + place
