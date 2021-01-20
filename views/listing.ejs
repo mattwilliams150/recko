@@ -9,7 +9,7 @@
             <div class="badge badge-pill badge-transparent px-3 py-2 mb-4">Eat &amp; Drink</div>
             <h1 class="text-shadow verified"><%= place.result.name %></h1>
             <p><i class="fa-map-marker-alt fas mr-2"></i> <%= place.result.formatted_address %></p>
-            <p class="mb-0 d-flex align-items-center"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200 mr-4">                   </i>8 Reviews</p>
+            <p class="mb-0 d-flex align-items-center"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200 mr-4">                   </i><%= place.result.user_ratings_total + reviews.length %> Reviews</p>
           </div>
           <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
         </div>
