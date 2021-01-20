@@ -44,7 +44,7 @@ function getGooglePlace(placeid){
         var gp = require('googleplaces');
         var config = require("../config.js");
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
-        console.log(apikey);
+        console.log('apikey: ' + apikey);
         var googlePlaces = new gp(apikey, config.outputFormat);
         var parameters = {
             reference: placeid
@@ -52,6 +52,7 @@ function getGooglePlace(placeid){
         var place = googlePlaces.placeDetailsRequest(parameters, function (error, response) {
             if (error) {   
                 reject(error);
+                console.log('Google Places Error: ' + error)
             }
             resolve(response);
         });
