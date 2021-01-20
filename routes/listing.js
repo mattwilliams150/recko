@@ -4,9 +4,13 @@ module.exports = (app) => {
     app.get('/listing', (req, res) => {
         var placeid = req.query.placeid;
         var title = "Recko"
+        try {
+            var config = require("../config.js");
+        } catch {
+            console.log('no config.js file')
+        }
+        var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY || config.clientPlacesApiKey;
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-        //var reviews = Review.findOne({'placeid':placeid});
-        //console.log(reviews);
 
         Review.find({'placeid':placeid}, (err, review) => {
             //console.log(review);
@@ -16,7 +20,8 @@ module.exports = (app) => {
                 placeid: placeid,
                 place: place,
                 loggedIn: loggedIn,
-                reviews: review
+                reviews: review,
+                clientPlacesApiKey: clientPlacesApiKey
             }))
             .catch(err => res.status(500).send('An error occured'));
         });

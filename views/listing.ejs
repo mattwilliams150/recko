@@ -1,7 +1,8 @@
 <% layout('layout') %>
-      
+
+     <script>var place = <%- JSON.stringify(place) %></script>
     <!-- Hero Section-->
-    <section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('img/photo/restaurant-1515164783716-8e6920f3e77c.jpg');">
+    <section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=<%=place.result.photos[0].photo_reference%>&key=<%=clientPlacesApiKey%>');">
       <div class="container overlay-content">
         <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
           <div class="text-white mb-4 mb-lg-0">
@@ -35,12 +36,12 @@
               <!-- Gallery-->
               <h3 class="mb-4">Gallery</h3>
               <div class="row gallery ml-n1 mr-n1">
-                <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1515164783716-8e6920f3e77c.jpg"><img class="img-fluid" src="img/photo/restaurant-1515164783716-8e6920f3e77c.jpg" alt="..."></a></div>
-                <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1466978913421-dad2ebd01d17.jpg"><img class="img-fluid" src="img/photo/restaurant-1466978913421-dad2ebd01d17.jpg" alt="..."></a></div>
-                <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1477763858572-cda7deaa9bc5.jpg"><img class="img-fluid" src="img/photo/restaurant-1477763858572-cda7deaa9bc5.jpg" alt="..."></a></div>
-                <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1505275350441-83dcda8eeef5.jpg"><img class="img-fluid" src="img/photo/restaurant-1505275350441-83dcda8eeef5.jpg" alt="..."></a></div>
-                <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1508766917616-d22f3f1eea14.jpg"><img class="img-fluid" src="img/photo/restaurant-1508766917616-d22f3f1eea14.jpg" alt="..."></a></div>
-                <div class="col-lg-4 col-6 px-1 mb-2"><a href="img/photo/restaurant-1430931071372-38127bd472b8.jpg"><img class="img-fluid" src="img/photo/restaurant-1430931071372-38127bd472b8.jpg" alt="..."></a></div>
+
+                 <% for (i = 0; i < Math.min(place.result.photos.length, 6); i++) { %>
+                <div class="col-lg-4 col-6 px-1 mb-2"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=place.result.photos[i].photo_reference%>&key=<%=clientPlacesApiKey%>" alt="...">
+                </div>
+                <% } %>
+
               </div>
             </div>
             <!-- Amenities-->
