@@ -43,7 +43,8 @@ function getGooglePlace(placeid){
     return new Promise((resolve, reject) => {    
         var gp = require('googleplaces');
         var config = require("../config.js");
-        var googlePlaces = new gp(config.apiKey, config.outputFormat);
+        var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
+        var googlePlaces = new gp(apikey, config.outputFormat);
         var parameters = {
             reference: placeid
         };
