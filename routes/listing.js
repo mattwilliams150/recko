@@ -51,6 +51,7 @@ function getGooglePlace(placeid){
         var apikey = process.env.GOOGLE_PLACES_API_KEY || config.apiKey;
         console.log('apikey: ' + apikey);
         var googlePlaces = new gp(apikey, config.outputFormat);
+        console.log(googlePlaces);
         var parameters = {
             reference: placeid
         };
@@ -60,6 +61,7 @@ function getGooglePlace(placeid){
                 console.log('Google Places Error: ' + error)
             }
             resolve(response);
+            console.log(response);
         });
     });
 };
