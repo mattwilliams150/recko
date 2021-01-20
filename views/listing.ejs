@@ -19,68 +19,7 @@
       <div class="container">
         <div class="row">
           <div class="col-lg-8">
-            <!-- About Listing-->
-            <div class="text-block">
-              <h3 class="mb-3">About</h3>
-              <p class="text-muted"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.</p>
-              <p class="text-muted"> Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-            </div>
-            <div class="text-block">
-              <!-- Listing Location-->
-              <h3 class="mb-4">Location</h3>
-              <div class="map-wrapper-300 mb-3">
-                <div class="h-100" id="detailMap"></div>
-              </div>
-            </div>
-            <div class="text-block">
-              <!-- Gallery-->
-              <h3 class="mb-4">Gallery</h3>
-              <div class="row gallery ml-n1 mr-n1">
-
-                 <% for (i = 0; i < Math.min(place.result.photos.length, 6); i++) { %>
-                <div class="col-lg-4 col-6 px-1 mb-2"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=place.result.photos[i].photo_reference%>&key=<%=clientPlacesApiKey%>" alt="...">
-                </div>
-                <% } %>
-
-              </div>
-            </div>
-            <!-- Amenities-->
-            <div class="text-block">
-              <h3 class="mb-4">Amenities</h3>
-              <ul class="amenities-list list-inline">
-                <li class="list-inline-item mb-3">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Elevator</span>
-                  </div>
-                </li>
-                <li class="list-inline-item mb-3">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Vegan friendly</span>
-                  </div>
-                </li>
-                <li class="list-inline-item mb-3">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Alcohol served</span>
-                  </div>
-                </li>
-                <li class="list-inline-item mb-3">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>No smoking</span>
-                  </div>
-                </li>
-                <li class="list-inline-item mb-3">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Parking spaces (paid)</span>
-                  </div>
-                </li>
-                <li class="list-inline-item mb-3">
-                  <div class="d-flex align-items-center">
-                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>WiFi</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <div class="text-block">
+                        <div class="text-block">
               <p class="subtitle text-sm text-primary">Reviews    </p>
               <h5 class="mb-4">Listing Reviews </h5>
             <!-- Recko Reviews--->
@@ -176,9 +115,66 @@
                 </div>
               </div>
             </div>
+            <div class="text-block">
+              <!-- Listing Location-->
+              <h3 class="mb-4">Location</h3>
+              <div class="map-wrapper-300 mb-3">
+                <div class="h-100" id="detailMap"></div>
+              </div>
+            </div>
+            <div class="text-block">
+              <!-- Gallery-->
+              <h3 class="mb-4">Gallery</h3>
+              <div class="row gallery ml-n1 mr-n1">
+
+                 <% for (i = 0; i < Math.min(place.result.photos.length, 6); i++) { %>
+                <div class="col-lg-4 col-6 px-1 mb-2"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=place.result.photos[i].photo_reference%>&key=<%=clientPlacesApiKey%>" alt="...">
+                </div>
+                <% } %>
+
+              </div>
+            </div>
+            <!-- Amenities-->
+            <div class="text-block">
+              <h3 class="mb-4">Amenities</h3>
+              <ul class="amenities-list list-inline">
+                <li class="list-inline-item mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Elevator</span>
+                  </div>
+                </li>
+                <li class="list-inline-item mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Vegan friendly</span>
+                  </div>
+                </li>
+                <li class="list-inline-item mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Alcohol served</span>
+                  </div>
+                </li>
+                <li class="list-inline-item mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>No smoking</span>
+                  </div>
+                </li>
+                <li class="list-inline-item mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>Parking spaces (paid)</span>
+                  </div>
+                </li>
+                <li class="list-inline-item mb-3">
+                  <div class="d-flex align-items-center">
+                    <div class="icon-circle bg-secondary mr-2"><i class="fa fa-check"></i></div><span>WiFi</span>
+                  </div>
+                </li>
+              </ul>
+            </div>
           </div>
           <div class="col-lg-4">
             <div class="pl-xl-4">
+
+            <% if (place.result.opening_hours) { %>
               <!-- Opening Hours      -->
               <div class="card border-0 shadow mb-5">
                 <div class="card-header bg-gray-100 py-4 border-0">
@@ -202,6 +198,8 @@
                   </table>
                 </div>
               </div>
+             <% } %>
+
               <!-- Contact-->
               <div class="card border-0 shadow mb-5">
                 <div class="card-header bg-gray-100 py-4 border-0">
