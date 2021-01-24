@@ -218,7 +218,7 @@
             <% for (i = 0; i < places.results.length; i++) { %>  
             <!-- venue item-->
               <a href='/listing?placeid=<%= places.results[i].place_id %>'>
-            <div class="col-sm-6 mb-5 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
+            <div class="col-sm-6 mb-4 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
                 
               <div class="card h-100 border-0 shadow">
                 <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=places.results[i].photos[0].photo_reference%>&key=<%=clientPlacesApiKey%>); min-height: 200px;">
