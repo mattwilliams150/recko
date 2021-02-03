@@ -33,6 +33,7 @@ app.use(function (req, res, next) {
         next();
     } else {
         res.end();
+        console.log('IP Denied: ' + ipregex);
     };
 });
 // require('./secret/secret');
