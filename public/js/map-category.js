@@ -27,7 +27,7 @@ function createListingsMap(options) {
         tap = true;
     }
 
-    /* 
+    /*
     ====================================================
       Create and center the base map
     ====================================================
@@ -51,14 +51,14 @@ function createListingsMap(options) {
         maxZoom: 19
     }).addTo(map);
 
-    /* 
+    /*
     ====================================================
-      Load GeoJSON file with the data 
+      Load GeoJSON file with the data
       about the listings
     ====================================================
     */
 
-    /*$.getJSON(settings.jsonFile).done(function (json) {
+    $.getJSON(settings.jsonFile).done(function (json) {
             L.geoJSON(json, {
                 pointToLayer: pointToLayer,
                 onEachFeature: onEachFeature
@@ -72,20 +72,11 @@ function createListingsMap(options) {
         })
         .fail(function (jqxhr, textStatus, error) {
             console.log(error);
-        });*/
-    
-    L.geoJSON(settings.jsonFile, {
-        pointToLayer: pointToLayer,
-        onEachFeature: onEachFeature
-    }).addTo(map);
+        });
 
-    if (markersGroup) {
-        var featureGroup = new L.featureGroup(markersGroup);
-        map.fitBounds(featureGroup.getBounds());
-    }
-    /* 
+    /*
     ====================================================
-      Bind popup and highlighting features 
+      Bind popup and highlighting features
       to each marker
     ====================================================
     */
@@ -177,7 +168,7 @@ function createListingsMap(options) {
         return $('#' + id).parents('.leaflet-tooltip')
     }
 
-    /* 
+    /*
     ====================================================
       Construct popup content based on the JSON data
       for each marker
@@ -275,7 +266,7 @@ function createListingsMap(options) {
 
         return popupContent;
     }
-    /* 
+    /*
     ====================================================
       Highlight marker when users hovers above
       corresponding .card in the listing

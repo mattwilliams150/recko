@@ -218,9 +218,9 @@
             <% for (i = 0; i < places.results.length; i++) { %>  
             <!-- venue item-->
               <a href='/listing?placeid=<%= places.results[i].place_id %>'>
-            <div class="col-sm-6 mb-4 hover-animate" data-marker-id="59c0c8e33b1527bfe2abaf92">
+            <div class="col-sm-6 mb-4 hover-animate" data-marker-id="<%= places.results[i].place_id %>">
                 
-              <div class="card h-100 border-0 shadow">
+              <div class="card h-100 border-0 shadow" id="<%= places.results[i].place_id %>">
                 <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=places.results[i].photos[0].photo_reference%>&key=<%=clientPlacesApiKey%>); min-height: 200px;">
                   <div class="card-img-overlay-bottom z-index-20">
                     <h4 class="text-white text-shadow"><%= places.results[i].name %></h4>
@@ -272,46 +272,16 @@
         </div>
       </div>
     </div>
-    
-    <script>    
-    var geojson = 
-    {
-      "type": "FeatureCollection",
-      "features": 
-        [
-            <% for (i = 0; i < places.results.length; i++) { %>
-                {
-                  "type": "Feature",
-                  "geometry": {
-                    "type": "Point",
-                    "coordinates": [
-                      <%= places.results[i].geometry.location.lat %>,
-                      <%= places.results[i].geometry.location.lng %>
-                    ]
-                  },
-                  "properties": {
-                    "id": "<%= places.results[i].place_id %>",
-                    "link": "/listing?placeid=<%= places.results[i].place_id %>",
-                    "name": "<%= places.results[i].name %>",
-                  }
-                }
-                <% if(i !== places.results.length -1) {%> , <% } %>
-            <% } %>
-        ]
-    }
 
-    </script>
+    <script src="js/map.js"></script>
+    <script>
 
-    <script src="js/map-search.js"></script>
-<!--    <script>
-      createListingsMap({
+      createMap({
           mapId: 'categorySideMap',
-          jsonFile: geojson
-          //tileLayer: tileLayers[6]
-      });
+      },places);
       
     </script>
--->
+
     <!-- Price Slider-->
     <script src="vendor/nouislider/nouislider.min.js"></script>
     <script>
