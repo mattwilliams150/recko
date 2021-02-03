@@ -60,6 +60,7 @@ app.use(passport.session());
 require('./routes/routes')(app);
 require('./routes/listing')(app);
 require('./routes/search')(app);
+require('./routes/blog')(app);
 require('./routes/user')(app, passport);
 
 app.listen(process.env.PORT || 8080, function () {

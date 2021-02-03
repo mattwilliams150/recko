@@ -1,0 +1,45 @@
+<% layout('layout') %>
+    <script>var article = <%- JSON.stringify(article) %></script>
+    <section class="hero-home dark-overlay mb-5"><img class="bg-image" src="/img/articles/<%=article.heroImagePath%>" alt="">
+        <div class="container py-7">
+            <div class="overlay-content text-center text-white">
+                <h1 class="display-3 text-serif font-weight-bold text-shadow mb-0"><%=article.title%></h1>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-8 col-lg-10 mx-auto">
+                    <p class="py-3 mb-5 text-muted text-center font-weight-light">
+                        <a href="">
+                            <img class="avatar mr-2" src="/img/articles/<%=article.authorImagePath%>" alt="">
+                        </a> Written by
+                        <span class="font-weight-bold" href="#">
+                            <%=article.author%>
+                        </span>
+                        <span class="mx-1">|
+                        </span>
+                        <%=article.publishDate%>
+                    </p>
+                </div>
+            </div>
+
+            <% for (i = 0; i < article.article.length; i++) { %>
+
+            <div class="row">
+                <div class="col-xl-10 mx-auto">
+                    <div class="text-content my-4">
+                        <h2><%=article.article[i].name%></h2>
+                        <img class="img-fluid mb-5" src="/img/articles/<%=article.article[i].imagePath%>" alt="">
+                        <span class="lead"><%=article.article[i].text%></span>
+                    </div>
+                </div>
+            </div>
+
+            <% if (i != article.article.length-1) { %><hr><% } %>
+
+            <% } %>
+
+        </div>
+    </section>

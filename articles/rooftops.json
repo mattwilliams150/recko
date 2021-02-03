@@ -1,0 +1,70 @@
+{
+    "title": "London's Best Rooftops",
+    "heroImagePath": "roof-east.jpg",
+    "author": "Ryan Matthews",
+    "authorImagePath": "ryan-matthews.jpeg",
+    "publishDate": "2021-02-03",
+    "article":
+    [
+        {
+            "name": "Bar Elba",
+            "text": "Year-round rooftop bar, Bar Elba, is a cheeky nod to the Battle of Waterloo (no prizes for guessing where in London this bar is based!) and the island that Napoleon was exiled to along with 600 of his closest pals (and his favourite horse, Marengo). Not a bad way to keep the party going in exile! Funnily enough the rooftop bar has a capacity of 600. It also offers an extensive cocktail menu as well as a rooftop ice skating rink in the Winter (not particularly linked to the man with the bicorne hat although, who knows, maybe Napoleon enjoyed a rooftop skate from time to time!? Pre-exile obvs).",
+            "imagePath": "bar-elba.jpg",
+            "website": "bar-elba.co.uk"
+        },
+        {
+            "name": "Savage Garden",
+            "text": "Although it’s named after an adjacent road rather than the 90s Australian pop duo, you’ll still fall truly, madly, deeply for the incredible views offered by this glitzy cocktail bar in the clouds. The slider menu is particularly impressive featuring pork tomahawk, tempura oysters and ‘injectable’ donuts. If you’re looking for a tipple whilst you take in the stunning views of Tower Bridge, then check out the unique cocktail list and rooftop gin terrace.",
+            "imagePath": "savage-garden.jpg",
+            "website": "www.savagegarden.co.uk"
+        },
+        {
+            "name": "Queen of Hoxton",
+            "text": "YA long-standing favourite of Londoners, Queen of Hoxton delivers on all fronts. Great for cocktails, food and if the rhythm takes you, cutting shapes on the dancefloor. The rooftop is open all year round with a tepee donning the roof in the colder months. Late night DJ sessions run on the weekend and happy hour £5 cocktails Wednesdays to Fridays 4-7pm keep Londoners always coming back for more!",
+            "imagePath": "queen-of-hoxton.png",
+            "website": "queenofhoxton.com"
+        },
+        {
+            "name": "Bussey Rooftop Bar",
+            "text": "Earning the accolade of Peckham’s highest rooftop bar, the 360-degree views of the classic London skyline from Bussey Rooftop Bar are fantastic. Partnering up with Share a Slice, fresh pizzas cooked in traditional Italian woodfired ovens are served alongside cocktails and wine. What’s better is you can feel good about feeling good as, for every pizza purchased, one is donated to feed someone in need! ",
+            "imagePath": "bussey-rooftop-bar.jpg",
+            "website": "https://busseyrooftopbar.com/"
+        },
+        {
+            "name": "Radio Rooftop Bar",
+            "text": "Fancy a spot of luxury whilst elevated to the heights of London’s iconic landmarks? Then look no further than Radio Rooftop Bar. Perched atop the 10 stories of the ME building on the Strand, this classy rooftop venue offers views of the Thames from the Shard down to St Paul’s. HOT TIP: views are best enjoyed with champagne in hand (whether that’s for sunset or sunrise – we won’t judge!).",
+            "imagePath": "radio-rooftop.jpg",
+            "website": "https://radiorooftop.com/london/"
+        },
+        {
+            "name": "Roof East",
+            "text": "How do I appeal to my inner child AND enjoy cocktails AND sample delicious pop up delights on a London rooftop this Summer, I hear you ask? Well, we’ve got you covered. Roof East brings you batting cages, crazy golf and curling (yes, you heard us right!) all on top of a multi-storey carpark a stone’s through from Stratford tube station. It doesn’t get more “East London” than this delightful adult’s playground!",
+            "imagePath": "roof-east.jpg",
+            "website": "https://www.roofeast.com/"
+        },
+        {
+            "name": "Boundary Rooftop",
+            "text": "Bringing you fresh Mediterranean cuisine and fresh  in the heart of Shoreditch, Boundary’s Rooftop is an oasis in the sky away from the madness on the streets below. This is a design afficionado’s paradise, with every corner thoughtfully designed and intriguing art donning the walls. Stylish, classy and offering fantastic views of London from the East, this bar and restaurant rarely disappoints. ",
+            "imagePath": "boundary.jpg",
+            "website": "https://boundary.london/rooftop/"
+        },
+        {
+            "name": "Aqua Kyoto",
+            "text": "This decadent Japanese restaurant and rooftop terrace is a touch of class for when you’re looking to seriously impress. The sublime Japanese cuisine and glamorous design from award-winning designer Robert Angell will leave you in awe. And if that’s not enough, you can enjoy breath-taking views of London whilst sipping high-quality cocktails on the terrace.",
+            "imagePath": "aqua-kyoto.jpg",
+            "website": "https://aquakyoto.co.uk/"
+        },
+        {
+            "name": "Forza Wine",
+            "text": "Great all year round, the spin off from Peckham’s popular Italian restaurant, Forza Wine, is a high-perched oasis with incredible views, a buzzing atmosphere and a fantastic selection of wine. The aperitivo on offer is also tasty and substantial for those of you enjoying the wine so much that you don’t want to leave your seat to head to dinner!",
+            "imagePath": "",
+            "website": "https://www.forzawine.com/"
+        },
+        {
+            "name": "Frank’s",
+            "text": "The original alternative rooftop venue, Frank’s in Peckham has been the go-to spot for London’s arty crowds for over a decade. Not satisfied with epic views of London’s skyline or enjoying a great cocktail at the spiritual home of sunset negronis? Frank’s is also part of the Bold Tendencies art gallery, with a cluster of installations to appreciate such as Richard Wentworth’s snaking “Agora” and a variety of other sculptures including new works added for 2020 from Jenny Holzer, Jeremy Deller, Es Devlin, and Fraser T Smith.",
+            "imagePath": "franks.jpg",
+            "website": "http://boldtendencies.com/franks-cafe/"
+        }
+    ]
+}
