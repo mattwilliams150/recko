@@ -23,14 +23,12 @@
                 <option>Things to do</option>
               </select>
             </div>
-            <div class="col-lg-4 d-flex align-items-center form-group">
-              <div class="input-label-absolute input-label-absolute-right w-100">
-                <label class="label-absolute mr-lg-2" for="location">
-                    <i class="fa fa-crosshairs"></i>
-                    <div class="sr-only">Where?</div>
-                </label>
-                <input class="form-control border-0 shadow-0" type="text" name="place" placeholder="Where?" id="location">
-              </div>
+            <div class="col-lg-4 d-flex align-items-center align-items-center form-group">
+              <select class="selectpicker" title="Where?" data-style="btn-form-control" name="place">
+                  <% for (i=0; i<locations.locations.length; i++) { %>
+                  <option><%=locations.locations[i]%></option>
+                  <% } %>
+              </select>
             </div>
             <div class="col-lg-4 form-group mb-0">
               <button class="btn btn-primary btn-block h-100" type="submit">Search</button>

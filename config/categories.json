@@ -1,5 +1,5 @@
 {
-    cuisines: [
+    "cuisines": [
         "Barbecue",
         "Burgers",
         "Chinese",
@@ -22,7 +22,7 @@
         "Thai",
         "Vietnamese"
     ],
-    bars: [
+    "bars": [
         "Rooftop",
         "Live music",
         "Late night",
@@ -34,7 +34,7 @@
         "Pub",
         "Brewery"
     ],
-    thingsToDo: [
+    "thingsToDo": [
         "Free",
         "Landmark",
         "Outdoors",
@@ -44,7 +44,7 @@
         "Active",
         "Entertainment"
     ],
-    tags: [
+    "tags": [
         "Relaxed atmosphere",
         "Quirky",
         "Captivating design/architecture",
