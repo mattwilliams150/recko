@@ -4,12 +4,7 @@ module.exports = (app) => {
     app.get('/listing', (req, res) => {
         var placeid = req.query.placeid;
         var title = "Recko"
-        try {
-            var config = require("../config.js");
-        } catch {
-            console.log('no config.js file')
-        }
-        var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY || config.clientPlacesApiKey;
+        var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY;
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
 
         Review.find({'placeid':placeid}, (err, review) => {
@@ -47,13 +42,7 @@ module.exports = (app) => {
 function getGooglePlace(placeid){
     return new Promise((resolve, reject) => {    
         var gp = require('googleplaces');
-        try {
-            var config = require("../config.js");
-        } catch {
-            console.log('no config.js file')
-        }
-
-        var apikey = process.env.SERVER_GOOGLE_PLACES_API_KEY || config.serverPlacesApiKey;
+        var apikey = process.env.SERVER_GOOGLE_PLACES_API_KEY;
         var googlePlaces = new gp(apikey, "json");
         var parameters = {
             reference: placeid

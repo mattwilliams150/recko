@@ -16,7 +16,7 @@ var flash = require('connect-flash');
 var app = express();
 
 mongoose.Promise = global.Promise;
-mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost/recko', {
+mongoose.connect(process.env.MONGODB_URI, {
    useNewUrlParser: true,
    useUnifiedTopology: true
  });
@@ -65,6 +65,6 @@ require('./routes/search')(app);
 require('./routes/blog')(app);
 require('./routes/user')(app, passport);
 
-app.listen(process.env.PORT || 8080, function () {
+app.listen(process.env.PORT, function () {
     console.log('App running on port 8080');
 });
