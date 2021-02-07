@@ -11,7 +11,7 @@
             "name": "1. Savage Garden",
             "text": "Although it is named after an adjacent road rather than the 90s Australian pop duo, you’ll still fall truly, madly, deeply (apologies…) for the incredible views offered by this classy cocktail bar in the clouds. The slider menu is particularly impressive featuring pork tomahawk, tempura oysters and ‘injectable’ donuts. If you’re looking for a tipple whilst you take in the stunning views of Tower Bridge, then check out the hand-crafted cocktail list and rooftop gin terrace.",
             "imagePath": "savage-garden.jpg",
-            "website": "www.savagegarden.co.uk"
+            "website": "https://www.savagegarden.co.uk"
         },
         {
             "name": "2. Frank’s",
@@ -23,13 +23,13 @@
             "name": "3. Bar Elba",
             "text": "Year-round rooftop bar, Bar Elba, is a cheeky nod to the Battle of Waterloo (no prizes for guessing where in London this bar is based!) and the island that Napoleon was exiled to along with 600 of his closest pals (and his favourite horse, Marengo). Not a bad way to keep the party going in exile! The rooftop bar offers an excellent cocktail menu as well as a rooftop ice skating rink in the Winter (not particularly linked to the man with the bicorne hat although, who knows, maybe Napoleon enjoyed a rooftop skate from time to time!?).",
             "imagePath": "bar-elba.jpg",
-            "website": "bar-elba.co.uk"
+            "website": "https://bar-elba.co.uk"
         },
         {
             "name": "4. Queen of Hoxton",
             "text": "A long-standing favourite of Londoners, Queen of Hoxton delivers on all fronts. Great for cocktails, food and if the rhythm takes you, cutting shapes on the dancefloor. The rooftop is open all year round with a tepee donning the roof in colder months. Late night DJ sessions run on the weekend and happy hour £5 cocktails Wednesdays to Fridays 4-7pm keep Londoners always coming back for more!",
             "imagePath": "queen-of-hoxton.png",
-            "website": "queenofhoxton.com"
+            "website": "https://queenofhoxton.com"
         },
         {
             "name": "5. Bussey Rooftop Bar",

@@ -39,6 +39,7 @@
                         <h2><%=article.article[i].name%></h2>
                         <img <% if (i%2 == 0) {%>class="img-fluid mb-5 sm-post-img md-post-img mr-4" align="left"<% } else { %>class="img-fluid mb-5 sm-post-img md-post-img ml-4" align="right"<% } %>src="/img/articles/<%=article.article[i].imagePath%>" alt="">
                         <span class="lead"><%=article.article[i].text%></span>
+                        <p class="mt-2"><a href="<%=article.article[i].website%>"><%=article.article[i].website.replace("https://","")%></a></p>
                     </div>
                 </div>
             </div>
