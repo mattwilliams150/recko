@@ -28,26 +28,47 @@ module.exports = (app) => {
             var count = 0;
 
             filenames.forEach(function(filename) {
-                console.log(filename);
-                console.log(filenames.length);
                 fs.readFile("./articles/" + filename, "utf-8", function(err, content) {
                     if (err) {
                         console.log('Error : Articles : ' + err);
                         res.redirect('/');
                     }
+                    try {
+                        let article = JSON.parse(content);
 
-                    let article = JSON.parse(content);
+                        articles.push({
+                            "filename": filename.replace(".json",""),
+                            "title": article.title,
+                            "heroImagePath": article.heroImagePath,
+                            "introText": article.introText.substring(0,100)+"...",
+                            "publishDate": article.publishDate
+                        });
 
-                    articles[count] = {
-                        "filename": filename.replace(".json",""),
-                        "title": article.title,
-                        "heroImagePath": article.heroImagePath,
-                        "introText": article.introText.substring(0,100)+"..."
-                    };
+                    }
+                    catch(err) {
+                        console.log('Error : Article : (Processing Json)' + err);
+                    }
 
                     count++
                     if (count === filenames.length) {
                         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
+                        console.log(articles);
+                        // sort by date
+                        function compare(a, b) {
+                          // Use toUpperCase() to ignore character casing
+                          const articleA = a.publishDate;
+                          const articleB = b.publishDate;
+
+                          let comparison = 0;
+                          if (articleA > articleB) {
+                            comparison = -1;
+                          } else if (articleA < articleB) {
+                            comparison = 1;
+                          }
+                          return comparison;
+                        }
+                        articles.sort(compare);
+                        console.log(articles);
                         res.render('articles', {title: 'Recko', loggedIn: loggedIn, articles: articles});
                     }
                 });

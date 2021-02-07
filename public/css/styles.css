@@ -1,4 +1,11 @@
-.logo {
-    height: 75px;
-    width: 75px;
+@media (max-width: 768px) {
+    .sm-post-img {
+        width: 100%;
+    }
 }
+@media (min-width: 768px) {
+    .md-post-img {
+        max-height: 400px;
+    }
+}
+
