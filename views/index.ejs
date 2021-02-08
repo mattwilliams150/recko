@@ -44,6 +44,16 @@
     <!-- Coming Soon / Email capture-->
     <section class="py-5  bg-gray-100">
       <div class="container">
+
+        <% if(emailMessage.length != 0) {%>
+         <div class="alert alert-success">
+            <a href="#" class="close" data-dismiss="alert" aria-label="close">
+                               &times;
+             </a>
+             <%= emailMessage %>
+        </div>
+        <% } %>
+
           <div class = "row col-lg-6 mb-5 mb-lg-0 text-center text-lg-left">
               <h2 class="text-secondary">Coming soon!</h2>
           </div>
@@ -69,15 +79,6 @@
     <!-- articles -->
     <section class="pt-4">
       <div class="container">
-
-        <% if(emailMessage.length != 0) {%>
-         <div class="alert alert-success">
-            <a href="#" class="close" data-dismiss="alert" aria-label="close">
-                               &times;
-             </a>
-             <%= emailMessage %>
-        </div>
-        <% } %>
 
         <div class="py-4">
             <h1>Recko Recommends...</h1>
