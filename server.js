@@ -26,10 +26,16 @@ require('./config/passport');
 // only allow localhost or testing IPs.
 app.use(function (req, res, next) {
     let host = req.get('host');
+    console.log(host);
     let testip = req.headers['x-forwarded-for'];
     let ipregex = new RegExp(process.env.TESTINGIP);
-    //console.log(testip);
-    //console.log(ipregex);
+
+    if (host != 'localhost:8080' && !/^www\./i.test(host)) {
+        href = "https://www" + host + req.url;
+        console.log("redirect: " + href);
+        //res.redirect(href);
+    }
+
     if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production') {
         next();
     } else {
