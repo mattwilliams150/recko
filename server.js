@@ -26,14 +26,12 @@ require('./config/passport');
 // only allow localhost or testing IPs.
 app.use(function (req, res, next) {
     let host = req.get('host');
-    console.log(host);
     let testip = req.headers['x-forwarded-for'];
     let ipregex = new RegExp(process.env.TESTINGIP);
 
     if (host != 'localhost:8080' && !/^www\./i.test(host) && !/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url)) {
         href = "https://www.recko.co.uk" + req.url;
-        console.log("redirect: " + href);
-        //res.redirect(href);
+        res.redirect(href);
     }
 
     if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production') {
