@@ -4,8 +4,8 @@
       <div class="container py-6 py-lg-7 text-white overlay-content text-center"> 
         <div class="row">
           <div class="col-xl-10 mx-auto">
-            <h1 class="display-3 font-weight-bold text-shadow">Discover London</h1>
-            <p class="text-lg text-shadow">Uncover the best places to eat and drink and best things to do near you.</p>
+            <h1 class="display-3 font-weight-bold text-shadow">Discover Your London</h1>
+            <p class="text-lg text-shadow">Uncover restaurants, bars and things to do that are more relevant to you.</p>
           </div>
         </div>
       </div>
@@ -41,9 +41,33 @@
     </div>
 <% } %>
 
+    <!-- Coming Soon / Email capture-->
+    <section class="py-6  bg-gray-100">
+      <div class="container">
+          <div class = "row col-lg-6 mb-5 mb-lg-0 text-center text-lg-left">
+              <h2 class="text-secondary">Coming soon!</h2>
+          </div>
+        <div class="row">
+          <div class="col-lg-6 mb-5 mb-lg-0 text-center text-lg-left">
+            <h5>We are tantalisingly close to launching Recko – a site helping Londoners discover more relevant restaurants, bars and things to do in London!</h5>
+          </div>
+          <div class="col-lg-6">
+            <p class="pb-2">To be kept in the know and to receive exclusive news ahead of launch, register your interest here:</p>
+            <form method="POST" action="/newsletter" id="newsletter-form">
+                <div class="input-group mb-3 px-4">
+                  <input class="form-control border-dark border-right-0" name="email" type="email" placeholder="Your Email Address" aria-label="Your Email Address">
+                  <div class="input-group-append">
+                    <button class="btn btn-outline-dark border-left-0" type="submit"> <i class="fa fa-paper-plane text-lg"></i></button>
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- articles -->
-    <section class="pt-4 bg-gray-100">
+    <section class="pt-4">
       <div class="container">
 
         <% if(emailMessage.length != 0) {%>
@@ -87,37 +111,11 @@
       </div>
     </section>
 
-    <!-- Coming Soon / Email capture-->
-    <section class="py-6">
-      <div class="container">
-          <div class = "row col-lg-6 mb-5 mb-lg-0 text-center text-lg-left">
-              <h2 class="text-secondary">Coming soon!</h2>
-          </div>
-        <div class="row">
-          <div class="col-lg-6 mb-5 mb-lg-0 text-center text-lg-left">
-            <h5>We are tantalisingly close to launching Recko – a site helping Londoners discover more relevant restaurants, bars and things to do in London!</h5>
-          </div>
-          <div class="col-lg-6">
-            <p class="pb-2">To be kept in the know and to receive exclusive news ahead of launch, register your interest here:</p>
-            <form method="POST" action="/newsletter" id="newsletter-form">
-                <div class="input-group mb-3 px-4">
-                  <input class="form-control bg-transparent border-dark border-right-0" name="email" type="email" placeholder="Your Email Address" aria-label="Your Email Address">
-                  <div class="input-group-append">
-                    <button class="btn btn-outline-dark border-left-0" type="submit"> <i class="fa fa-paper-plane text-lg"></i></button>
-                  </div>
-                </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Steps -->
     <section class="py-6 bg-gray-100">
       <div class="container">
         <div class="pb-lg-4">
-          <p class="subtitle text-secondary">One-of-a-kind directory app</p>
-          <h2 class="mb-5">Discover great local businesses around you</h2>
+          <h3 class="mb-5">Uncover restaurants, bars and things to do that are more relevant to you</h3>
         </div>
         <div class="row">
           <div class="col-sm-6 col-lg-3 mb-3 mb-lg-0">
