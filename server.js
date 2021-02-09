@@ -29,7 +29,7 @@ app.use(function (req, res, next) {
     let testip = req.headers['x-forwarded-for'];
     let ipregex = new RegExp(process.env.TESTINGIP);
 
-    if (host != 'localhost:8080' && !/^www\./i.test(host) && !/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url)) {
+    if (process.env.ENVIRONMENT == 'PRODUCTION' && !/^www\./i.test(host) && !/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url)) {
         href = "https://www.recko.co.uk" + req.url;
         res.redirect(href);
     }
