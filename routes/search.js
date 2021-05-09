@@ -1,21 +1,61 @@
+var Places = require('../models/places');
+var locations = require("../config/locations.json");
+var categories = require("../config/categories.json");
+
 module.exports = (app) => {
-    app.get('/results', (req, res) => {
+    app.get('/results', async (req, res) => {
+
+        // possible parameters
         var type = req.query.type;
         var place = req.query.place;
+        var page = parseInt(req.query.page) || 1; // current page defaults to 1
+
         var title = "Recko | " + type + " in " + place
-        var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY;
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-        getGooglePlaces(type, place)
-        .then((places) => res.render('results', {
+
+        // search places in database
+        var query = {type: type, location: place};
+        var mongoplaces = await Places.find(query);
+
+        var recordsPerPage = 10;
+
+        // cut out the number of records per page for the current page
+        var places = mongoplaces.slice((page-1)*recordsPerPage,page*recordsPerPage);
+
+        // pagination
+        var totalRecords = mongoplaces.length;
+        if (page != 1) {var previousPage = page-1} else {var previousPage};
+        if (page*recordsPerPage < totalRecords) {var nextPage = page+1} else {var nextPage};
+        var maxPage = Math.ceil(totalRecords / recordsPerPage)
+
+        var data = {
+            parameters: {
+                type: type,
+                place: place,
+                page: page
+            },
+            pagination: {
+                totalRecords: totalRecords,
+                recordsPerPage: recordsPerPage,
+                previousPage: previousPage,
+                currentPage: page,
+                nextPage: nextPage,
+                maxPage: maxPage
+            },
+            places: places,
+            locations: locations,
+            categories: categories
+        }
+
+        res.render('results', {
             title: title,
             type: type,
             place: place,
-            places: places, 
-            loggedIn: loggedIn,
-            clientPlacesApiKey: clientPlacesApiKey
-            
-        }))
-        .catch(err => res.status(500).send('An error occured'));
+            data: data,
+            loggedIn: loggedIn
+        })
+
+
     });
 };
     

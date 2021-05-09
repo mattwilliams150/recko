@@ -9,3 +9,11 @@
     }
 }
 
+a:hover {
+ cursor:pointer;
+}
+
+.tag-pill {
+    background-color: #17a2b8;
+    color: white;
+}
