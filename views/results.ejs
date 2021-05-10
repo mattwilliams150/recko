@@ -5,34 +5,65 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-6 py-5 p-xl-5">
-          <h1 class="mb-4"><%= type %> in <%= place %></h1>
-          <hr class="my-4">
-          <form action="#">
-            <div class="row">
+          <h1><%= type %> in <%= place %></h1>
 
-            <div class="col-xl-4 col-md-6 mb-4">
-                <label class="form-label" for="place">Place</label>
-                <select class="selectpicker form-control" name="type" id="form_type" data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="" onchange="updateCategories()">
+            <form method="GET" action="/results">
+                <div class="row collapse" id="editSearch">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <label class="form-label" for="place">Type of place</label>
+                            <select class="selectpicker form-control" name="type" id="form_type" data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="" onchange="updateCategories()">
 
-                <option>Restaurants</option>
-                <option>Pubs</option>
-                <option>Cafes</option>
-                <option>Bars</option>
-                <option>Activities</option>
 
-                </select>
+                            <% var types = ["Restaurants", "Pubs", "Cafes", "Bars", "Activities"]  %>
+
+                            <% for (i=0; i<types.length; i++) { %>
+                                <% if(types[i] == data.parameters.type) { %>
+                                    <option selected="selected"><%=types[i]%></option>
+                                <% } else { %>
+                                    <option><%=types[i]%></option>
+                                <% } %>
+                            <% } %>
+
+                            </select>
+                          </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                            <label class="form-label" for="place">Location</label>
+                            <select class="selectpicker form-control" name="place" id="form_place" data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="">
+
+                                <% for (i=0; i<data.locations.locations.length; i++) { %>
+                                    <% if(data.locations.locations[i] == data.parameters.place) { %>
+                                        <option selected="selected"><%=data.locations.locations[i]%></option>
+                                    <% } else { %>
+                                        <option><%=data.locations.locations[i]%></option>
+                                    <% } %>
+                                <% } %>
+
+                            </select>
+                    </div>
+
+                    <div class="col-12 text-right mb-4">
+                        <button class="btn btn-primary" type="submit"> <i class="fas fa-search mr-1"></i>Search</button>
+                    </div>
+                </div>
+
+                <div class="col-12 text-right">
+                <button class="btn btn-link btn-collapse pl-0 text-secondary" type="button" data-toggle="collapse" data-target="#editSearch" aria-expanded="false" aria-controls="editSearch" data-expanded-text="Edit Search" data-collapsed-text="Edit Search">Edit Search</button>
               </div>
+            </form>
 
-              <div class="col-xl-4 col-md-6 mb-4">
-                <label class="form-label" for="place">Place</label>
-                <select class="selectpicker form-control" name="place" id="form_place" data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="">
 
-                    <% for (i=0; i<data.locations.locations.length; i++) { %>
-                        <option><%=data.locations.locations[i]%></option>
-                    <% } %>
 
-                </select>
-              </div>
+
+        <hr>
+
+
+
+          <form method="GET" action="/results">
+              <input type="hidden" id="type" name="type" value="<%=data.parameters.type%>">
+              <input type="hidden" id="place" name="place" value="<%=data.parameters.place%>">
+
+            <div class="row collapse" id="moreFilters">
               <div class="col-xl-4 col-md-6 mb-4">
 
                 <% if (type == "Restaurants") { var categories = data.categories.cuisines %>
@@ -41,40 +72,56 @@
                 <label class="form-label" for="form_category">Category</label>
                 <% } else { var categories = data.categories.thingsToDo %>
                 <label class="form-label" for="form_category">Category</label>
-                  <% } console.log(categories)%>
-                <select class="selectpicker form-control" name="category" id="form_category" multiple data-style="btn-selectpicker" data-selected-text-format="count &gt; 1" title="">
+                  <% } %>
+                <select class="selectpicker form-control" name="category" id="form_category" data-style="btn-selectpicker" data-selected-text-format="count &gt; 1" title="">
+                    <option style="display:none"></option>
                     <% for (i=0; i<categories.length; i++) { %>
-                        <option><%=categories[i]%></option>
+                        <% if(categories[i] == data.parameters.category) { %>
+                            <option selected="selected"><%=categories[i]%></option>
+                        <% } else { %>
+                            <option><%=categories[i]%></option>
+                        <% } %>
                     <% } %>
                 </select>
               </div>
 
               <div class="col-12 pb-4">
-                <div class="collapse" id="moreFilters">
                    <div class="col-12 mb-4">
                     <label class="form-label">Tag</label>
                     <ul class="list-inline mb-0">
 
                      <% for (i=0; i<data.categories.tags.length; i++) { %>
-                      <li class="list-inline-item">
+                    <% var tagReadable = data.categories.tags[i] %>
+                    <% var tagId = data.categories.tagIds[data.categories.tags[i]] %>
+                      <li>
                         <div class="custom-control custom-checkbox">
-                          <input class="custom-control-input" type="checkbox" id="type_0" name="type[]">
-                          <label class="custom-control-label" for="type_0"><%=data.categories.tags[i]%></label>
+                            <% if(data.parameters[tagId] == "on") { %>
+                                <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>" checked="true">
+                            <% } else { %>
+                                <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>">
+                            <% } %>
+                          <label class="custom-control-label" for="<%=tagId%>"><%=tagReadable%></label>
                         </div>
                       </li>
                        <% } %>
                     </ul>
                   </div>
-                </div>
               </div>
-              <div class="col-6 mb-4">
+              <div class="col-12 text-right mb-4">
                 <button class="btn btn-primary" type="submit"> <i class="fas fa-filter mr-1"></i>Filter                </button>
               </div>
-              <div class="col-6 mb-4 text-right">
-                <button class="btn btn-link btn-collapse pl-0 text-secondary" type="button" data-toggle="collapse" data-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters" data-expanded-text="Filter by Tag" data-collapsed-text="Filter by Tag">Filter by Tag</button>
+
               </div>
-            </div>
+              <div class="col-12 text-right">
+                <button class="btn btn-link btn-collapse pl-0 text-secondary" type="button" data-toggle="collapse" data-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters" data-expanded-text="Filter Results" data-collapsed-text="Filter Results">Filter Results</button>
+              </div>
+
+
           </form>
+
+
+
+
           <hr class="my-4">
           <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
             <div class="mr-3">
