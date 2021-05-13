@@ -8,21 +8,41 @@ module.exports = (app) => {
         var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY;
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
 
-        Review.find({'placeid':placeid}, (err, review) => {
+        Review.find({'placeid':placeid}, async (err, review) => {
             //console.log(review);
+            //--- use google data---//
+            /*
             getGooglePlace(placeid)
             .then(async(place) => {
                 await saveplace(placeid, place);
+                var mongoplace = await gdata.find({placeid: placeid});
+                console.log(mongoplace)
                 res.render('listing', {
                     title: title,
                     placeid: placeid,
                     place: place,
+                    mongoplace: mongoplace[0].data.result,
                     loggedIn: loggedIn,
                     reviews: review,
                     clientPlacesApiKey: clientPlacesApiKey
                 })
             })
             .catch(err => res.status(500).send('An error occured'));
+
+            */
+
+            var mongoplace = await gdata.find({placeid: placeid});
+
+            res.render('listing', {
+                    title: title,
+                    placeid: placeid,
+                    mongoplace: mongoplace[0].data.result,
+                    loggedIn: loggedIn,
+                    reviews: review,
+                    clientPlacesApiKey: clientPlacesApiKey
+            })
+
+
         });
     });
 

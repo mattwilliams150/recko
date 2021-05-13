@@ -1,15 +1,15 @@
 <% layout('layout') %>
 
-     <script>var place = <%- JSON.stringify(place) %></script>
+ <script>var mongoplace = <%- JSON.stringify(mongoplace) %></script>
     <!-- Hero Section-->
-    <section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photoreference=<%=place.result.photos[0].photo_reference%>&key=<%=clientPlacesApiKey%>');">
+    <section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('../img/place_photos/<%= mongoplace.place_id %>.png');">
       <div class="container overlay-content">
         <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
           <div class="text-white mb-4 mb-lg-0">
             <div class="badge badge-pill badge-transparent px-3 py-2 mb-4">Eat &amp; Drink</div>
-            <h1 class="text-shadow verified"><%= place.result.name %></h1>
-            <p><i class="fa-map-marker-alt fas mr-2"></i> <%= place.result.formatted_address %></p>
-            <p class="mb-0 d-flex align-items-center"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200 mr-4">                   </i><%= place.result.user_ratings_total + reviews.length %> Reviews</p>
+            <h1 class="text-shadow verified"><%= mongoplace.name %></h1>
+            <p><i class="fa-map-marker-alt fas mr-2"></i> <%= mongoplace.formatted_address %></p>
+            <p class="mb-0 d-flex align-items-center"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200 mr-4">                   </i><%=parseInt(mongoplace.reviews.length) + parseInt(reviews.length)%> Reviews</p>
           </div>
           <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
         </div>
@@ -57,22 +57,22 @@
               </div>
             <% } %>
             <!-- Google Reviews--->
-            <% for (i = 0; i < place.result.reviews.length; i++) { %>      
+            <% for (i = 0; i < mongoplace.reviews.length; i++) { %>
               <div class="media d-block d-sm-flex review">
-                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="<%= place.result.reviews[i].profile_photo_url %>" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm"><%= place.result.reviews[i].relative_time_description %></span></div>
+                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="<%= mongoplace.reviews[i].profile_photo_url %>" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm"><%= mongoplace.reviews[i].relative_time_description %></span></div>
                 <div class="media-body">
-                  <h6 class="mt-2 mb-1"><%= place.result.reviews[i].author_name %></h6>
+                  <h6 class="mt-2 mb-1"><%= mongoplace.reviews[i].author_name %></h6>
                   <div class="mb-2">
                     <%      
                         for (j = 0; j < 5; j++) {
-                            if (Math.round(place.result.reviews[i].rating) > j) {  %>
+                            if (Math.round(mongoplace.reviews[i].rating) > j) {  %>
                                 <i class="fa fa-xs fa-star text-primary"></i>
                             <% } else { %>
                                 <i class="fa fa-xs fa-star text-gray-300"></i>
                             <% } %>     
                         <% } %>
                   </div>
-                  <p class="text-muted text-sm"><%= place.result.reviews[i].text %></p>
+                  <p class="text-muted text-sm"><%= mongoplace.reviews[i].text %></p>
                 </div>
               </div>
             <% } %>    
@@ -122,18 +122,21 @@
                 <div class="h-100" id="detailMap"></div>
               </div>
             </div>
+
+            <% if(false) { %>
             <div class="text-block">
               <!-- Gallery-->
               <h3 class="mb-4">Gallery</h3>
               <div class="row gallery ml-n1 mr-n1">
 
-                 <% for (i = 0; i < Math.min(place.result.photos.length, 6); i++) { %>
-                <div class="col-lg-4 col-6 px-1 mb-2"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=place.result.photos[i].photo_reference%>&key=<%=clientPlacesApiKey%>" alt="...">
+                 <% for (i = 0; i < Math.min(mongoplace.photos.length, 6); i++) { %>
+                <div class="col-lg-4 col-6 px-1 mb-2"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=mongoplace.photos[i].photo_reference%>&key=<%=clientPlacesApiKey%>" alt="...">
                 </div>
                 <% } %>
-
               </div>
             </div>
+              <% } %>
+
             <!-- Amenities-->
             <div class="text-block">
               <h3 class="mb-4">Amenities</h3>
@@ -174,7 +177,7 @@
           <div class="col-lg-4">
             <div class="pl-xl-4">
 
-            <% if (place.result.opening_hours) { %>
+            <% if (mongoplace.opening_hours) { %>
               <!-- Opening Hours      -->
               <div class="card border-0 shadow mb-5">
                 <div class="card-header bg-gray-100 py-4 border-0">
@@ -191,8 +194,8 @@
                   <table class="table text-sm mb-0">
                     <% for (k = 0; k < 7; k++) { %>                
                     <tr>
-                      <th class="px-0 py-2 border-0"><%= place.result.opening_hours.weekday_text[k].split(": ")[0] %></th>
-                      <td class="px-0 py-2 text-right border-0"><%= place.result.opening_hours.weekday_text[k].split(": ")[1] %></td>
+                      <th class="px-0 py-2 border-0"><%= mongoplace.opening_hours.weekday_text[k].split(": ")[0] %></th>
+                      <td class="px-0 py-2 text-right border-0"><%= mongoplace.opening_hours.weekday_text[k].split(": ")[1] %></td>
                     </tr>
                       <% } %>
                   </table>
@@ -214,9 +217,9 @@
                 </div>
                 <div class="card-body">
                   <ul class="list-unstyled mb-4">
-                    <li class="mb-2"> <a class="text-gray-00 text-sm text-decoration-none" href="#"><i class="fa fa-phone mr-3"></i><span class="text-muted"><%= place.result.formatted_phone_number %></span></a></li>
+                    <li class="mb-2"> <a class="text-gray-00 text-sm text-decoration-none" href="#"><i class="fa fa-phone mr-3"></i><span class="text-muted"><%= mongoplace.formatted_phone_number %></span></a></li>
                     <!-- <li class="mb-2"> <a class=" text-sm text-decoration-none" href="#"><i class="fa fa-envelope mr-3"></i><span class="text-muted">info@example.com</span></a></li> -->
-                    <li class="mb-2"> <a class=" text-sm text-decoration-none" href="#"><i class="fa fa-globe mr-3"></i><span class="text-muted"><%= place.result.website %></span></a></li>
+                    <li class="mb-2"> <a class=" text-sm text-decoration-none" href="#"><i class="fa fa-globe mr-3"></i><span class="text-muted"><%= mongoplace.website %></span></a></li>
                     <!-- <li class="mb-2"> <a class="text-blue text-sm text-decoration-none" href="#"><i class="fab fa-facebook mr-3"></i><span class="text-muted">Facebook</span></a></li> -->
                     <!-- <li class="mb-2"> <a class=" text-sm text-decoration-none" href="#"><i class="fab fa-twitter mr-3"></i><span class="text-muted">Twitter</span></a></li> -->
                     <!-- <li class="mb-2"> <a class=" text-sm text-decoration-none" href="#"><i class="fab fa-instagram mr-3"></i><span class="text-muted">Instagram</span></a></li> -->
@@ -233,6 +236,9 @@
         </div>
       </div>
     </section>
+
+<% if (false) { %>
+
     <div class="py-6 bg-gray-100"> 
       <div class="container">
         <h5 class="mb-0">Similar places</h5>
@@ -405,13 +411,15 @@
       </div>
     </div>
 
+<% } %>
+
     <script src="js/map-detail.js"></script>
     <script>
       createDetailMap({
           mapId: 'detailMap',
-          mapCenter: [<%= place.result.geometry.location.lat %>, <%= place.result.geometry.location.lng %>],
+          mapCenter: [<%= mongoplace.geometry.location.lat %>, <%= mongoplace.geometry.location.lng %>],
           markerShow: true,
-          markerPosition: [<%= place.result.geometry.location.lat %>, <%= place.result.geometry.location.lng %>],
+          markerPosition: [<%= mongoplace.geometry.location.lat %>, <%= mongoplace.geometry.location.lng %>],
           markerPath: 'img/marker.svg',
           tileLayer: tileLayers[6]
       })
