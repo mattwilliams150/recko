@@ -1,4 +1,5 @@
 var Review = require('../models/review');
+var Places = require('../models/places');
 var gdata = require('../models/googledata');
 
 module.exports = (app) => {
@@ -30,13 +31,14 @@ module.exports = (app) => {
             .catch(err => res.status(500).send('An error occured'));
 
             */
-
+            var place = await Places.find({placeId: placeid});
             var mongoplace = await gdata.find({placeid: placeid});
 
             res.render('listing', {
                     title: title,
                     placeid: placeid,
                     mongoplace: mongoplace[0].data.result,
+                    place: place,
                     loggedIn: loggedIn,
                     reviews: review,
                     clientPlacesApiKey: clientPlacesApiKey
