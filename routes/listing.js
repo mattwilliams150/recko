@@ -1,4 +1,5 @@
 var Review = require('../models/review');
+var gdata = require('../models/googledata');
 
 module.exports = (app) => {
     app.get('/listing', (req, res) => {
@@ -10,14 +11,17 @@ module.exports = (app) => {
         Review.find({'placeid':placeid}, (err, review) => {
             //console.log(review);
             getGooglePlace(placeid)
-            .then((place) => res.render('listing', {
-                title: title,
-                placeid: placeid,
-                place: place,
-                loggedIn: loggedIn,
-                reviews: review,
-                clientPlacesApiKey: clientPlacesApiKey
-            }))
+            .then(async(place) => {
+                await saveplace(placeid, place);
+                res.render('listing', {
+                    title: title,
+                    placeid: placeid,
+                    place: place,
+                    loggedIn: loggedIn,
+                    reviews: review,
+                    clientPlacesApiKey: clientPlacesApiKey
+                })
+            })
             .catch(err => res.status(500).send('An error occured'));
         });
     });
@@ -56,3 +60,16 @@ function getGooglePlace(placeid){
         });
     });
 };
+
+async function saveplace(placeid, place) {
+    gdata.findOne({'placeid':placeid}, (err, dbplace) => {
+       if(!dbplace){
+           var newPlace = new gdata();
+           newPlace.placeid = placeid;
+           newPlace.data = place;
+           newPlace.save((err) => {
+               console.log(err);
+           });
+       }
+    })
+}

@@ -1,11 +1,15 @@
 var mongoose = require('mongoose');
 
 var placesSchema = mongoose.Schema({
-    placeid: {type: String, required: true},
+    placeId: {type: String, required: true},
+    photo: {type: String},
+    lat: {type: String},
+    long: {type: String},
     placeName: {type: String},
     review: {type: String},
     price: {type: String},
     address: {type: String},
+    location: {type: String},
     sw4: {type: String},
     sw11: {type: String},
     sw12: {type: String},
@@ -17,7 +21,39 @@ var placesSchema = mongoose.Schema({
     tag2: {type: String},
     tag3: {type: String},
     subcategory: {type: String},
-    amenities: {type: String}
+    amenities: {type: String},
+    arty: {type: String},
+    design: {type: String},
+    authentic: {type: String},
+    brunch: {type: String},
+    cocktails: {type: String},
+    food: {type: String},
+    dogs: {type: String},
+    elegant: {type: String},
+    entertaining: {type: String},
+    beer: {type: String},
+    family: {type: String},
+    service: {type: String},
+    wines: {type: String},
+    portions: {type: String},
+    glamorous: {type: String},
+    groups: {type: String},
+    atmosphere: {type: String},
+    meetings: {type: String},
+    music: {type: String},
+    healthy: {type: String},
+    intimate: {type: String},
+    lgbtq: {type: String},
+    modern: {type: String},
+    party: {type: String},
+    popup: {type: String},
+    quirky: {type: String},
+    relaxed: {type: String},
+    romantic: {type: String},
+    rustic: {type: String},
+    vegan: {type: String},
+    vegetarian: {type: String}
+
 });
 
 module.exports = mongoose.model('Places', placesSchema);

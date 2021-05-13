@@ -67,9 +67,9 @@ function createMap(options, places) {
     // --- add marker to map and set map bounds to include all coordinates ---
 
     var bounds = []
-    places.results.forEach((place) => {
-        var coords = [place.geometry.location.lat,place.geometry.location.lng];
-        L.marker(coords, {icon: icon, id: place.place_id})
+    places.forEach((place) => {
+        var coords = [place.lat,place.long];
+        L.marker(coords, {icon: icon, id: place.placeId})
             .on('mouseover', function (e) {
                 this.setIcon(highlightIcon);
                 var divid = '#' + this.options.id;

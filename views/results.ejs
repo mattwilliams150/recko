@@ -1,5 +1,6 @@
 <% layout('layout') %>
       
+
     <script>var data = <%- JSON.stringify(data) %></script>
 
     <div class="container-fluid">
@@ -146,13 +147,11 @@
             <div class="col-sm-6 mb-4 hover-animate" data-marker-id="<%= data.places[i].placeId %>">
                 
               <div class="card h-100 border-0 shadow" id="<%= data.places[i].placeId %>">
-                <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url(https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=photo_reference&key=clientPlacesApiKey%>); min-height: 200px;">
+                <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url('../img/place_photos/<%= data.places[i].placeId %>.png'); min-height: 200px;">
                   <div class="card-img-overlay-bottom z-index-20">
                     <h4 class="text-white text-shadow"><%= data.places[i].placeName %></h4>
                     <p class="mb-2 text-xs">
-                        <%  
-                             
-                            for (j = 0; j < 5; j++) {
+                        <% for (j = 0; j < 5; j++) {
                                 if (Math.round(data.places[i].review) > j) {  %>
                                     <i class="fa fa-star text-warning"></i>
                                 <% } else { %>
@@ -163,7 +162,7 @@
                     </p>
                   </div>
                   <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
-                    <div class="badge badge-transparent badge-pill px-3 py-2"><%= data.places[i].type%></div>
+                    <div class="badge badge-transparent badge-pill px-3 py-2"><%= data.places[i].subcategory%></div>
                       <% if (false) { /*favorite icon*/ %>
                       <a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
                       <svg class="svg-icon text-white">
@@ -175,9 +174,9 @@
                 </div>
                 <div class="card-body">
                   <p class="text-sm mb-0">
-                      <a class="mr-1 badge badge-pill tag-pill"><%= data.places[i].tag1%></a>
-                      <a class="mr-1 badge badge-pill tag-pill"><%= data.places[i].tag2%></a>
-                      <a class="mr-1 badge badge-pill tag-pill"><%= data.places[i].tag3%></a>
+                      <a class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2"><%= data.places[i].tag1%></a>
+                      <a class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2"><%= data.places[i].tag2%></a>
+                      <a class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2"><%= data.places[i].tag3%></a>
                   </p>
                 </div>
               </div>
@@ -228,7 +227,7 @@
 
       createMap({
           mapId: 'categorySideMap',
-      },places);
+      }, data.places);
       
     </script>
 
