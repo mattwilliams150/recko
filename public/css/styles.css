@@ -17,3 +17,15 @@ a:hover {
     background-color: #17a2b8;
     color: white;
 }
+
+.tag-pill-button label {
+    margin-bottom: 0;
+}
+
+.tagcheckbox {
+    display: none;
+}
+
+.tag-pill-button input:checked + div {
+    background-color:#0f3474;
+}
