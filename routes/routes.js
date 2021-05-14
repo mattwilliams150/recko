@@ -1,6 +1,8 @@
 var locations = require("../config/locations.json");
 var helpers = require('./helpers');
 var Newsletter = require('../models/newsletter');
+var categories = require("../config/categories.json");
+
 
 module.exports = (app) => {
 
@@ -8,7 +10,7 @@ module.exports = (app) => {
         helpers.articlesThumbnails(function(articles) {
             if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
             var emailMessage = req.flash('emailMessage');
-            res.render('index', {title: 'Recko', loggedIn: loggedIn, locations: locations, articles: articles, emailMessage: emailMessage});
+            res.render('index', {title: 'Recko', loggedIn: loggedIn, locations: locations, articles: articles, emailMessage: emailMessage, categories: categories});
         });
     });
 

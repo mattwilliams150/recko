@@ -149,7 +149,8 @@ module.exports = (app) => {
             type: type,
             place: place,
             data: data,
-            loggedIn: loggedIn
+            loggedIn: loggedIn,
+            categories: categories
         })
 
 

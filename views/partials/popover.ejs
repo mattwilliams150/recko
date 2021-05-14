@@ -2,30 +2,128 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <h4 class="modal-title text-primary" id="exampleModalLabel">To give you more relevant recommendations so you can stay ahead of the curve on new places we need to know a little more about you. </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form>
-                    <div class="form-group">
-                        <label for="recipient-name" class="col-form-label">Recipient:</label>
-                        <input type="text" class="form-control" id="recipient-name">
-                    </div>
-                    <div class="form-group">
-                        <label for="message-text" class="col-form-label">Message:</label>
-                        <textarea class="form-control" id="message-text"></textarea>
-                    </div>
+            <form id="popform" class="form-validate">
+                <div class="modal-body">
+
+                        <div id="popoverpage1">
+                            <div class="mb-3"><h5>Which cuisines do you like when it comes to restaurants?</h5></div>
+                            <div class="form-group tag-pill-button">
+                                <% for (i=0; i<categories.cuisines.length; i++) { %>
+                                <% var cuisines = categories.cuisines[i] %>
+                                    <label for="<%=cuisines%>_pop">
+                                        <input type="checkbox" class="tagcheckbox" id="<%=cuisines%>_pop" name="<%=cuisines%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=cuisines%></div>
+                                    </label>
+                                <% } %>
+                            </div>
+
+                            <div class="mb-3"><h5>What do you go for when it comes to bars?</h5></div>
+                            <div class="form-group tag-pill-button">
+                                <% for (i=0; i<categories.bars.length; i++) { %>
+                                <% var bars = categories.bars[i] %>
+                                    <label for="<%=bars%>_pop">
+                                        <input type="checkbox" class="tagcheckbox" id="<%=bars%>_pop" name="<%=bars%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=bars%></div>
+                                    </label>
+                                <% } %>
+                            </div>
+
+                            <div class="mb-3"><h5>What sort of activities do you like?</h5></div>
+                            <div class="form-group tag-pill-button">
+                                <% for (i=0; i<categories.thingsToDo.length; i++) { %>
+                                <% var thingsToDo = categories.thingsToDo[i] %>
+                                    <label for="<%=thingsToDo%>_pop">
+                                        <input type="checkbox" class="tagcheckbox" id="<%=thingsToDo%>_pop" name="<%=thingsToDo%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=thingsToDo%></div>
+                                    </label>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div id="popoverpage2" style="display: none">
+                            <div class="mb-3"><h5>Our users tag our places according to their interests, which of these are important to you when finding new places?</h5></div>
+                            <div class="form-group tag-pill-button">
+                                <% for (i=0; i<categories.tags.length; i++) { %>
+                                <% var tagReadable = categories.tags[i] %>
+                                <% var tagId = categories.tagIds[categories.tags[i]] %>
+                                    <label for="<%=tagId%>_pop">
+                                        <input type="checkbox" class="tagcheckbox" id="<%=tagId%>_pop" name="<%=tagId%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                                    </label>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div id="popoverpage3" style="display: none">
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="loginUsername">Email Address</label>
+                                <input class="form-control" name="loginUsername" id="loginUsername" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
+                                <span id="email_alert" class="text-danger" style="display: none">*please enter an email</span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="loginPassword">Password</label>
+                                <input class="form-control" name="loginPassword" id="loginPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
+                                <span id="pw_alert" class="text-danger" style="display: none">*please enter a password</span>
+                            </div>
+                        </div>
+
+                </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Send message</button>
-            </div>
+
+                <div class="modal-footer">
+                    <button id="popnext1" class="btn btn-primary" onclick="popnext(1)">Next</button>
+                    <button id="popnext2" class="btn btn-primary" onclick="popnext(2)" style="display: none">Next</button>
+                    <% //<button id="popoverlater" type="button" class="btn btn-secondary" onclick="popsubmit('later')">Maybe Later</button> %>
+                    <button id="popoversubmit" class="btn btn-primary" onclick="popsubmit()" style="display: none">Submit</button>
+                </div>
+
         </div>
     </div>
 </div>
 <script>
-    //$('#popover').modal('show')
+    $('#popover').modal('show')
+
+    function popnext(page) {
+        if(page == 1) {
+            $("#popoverpage1").hide();
+            $("#popoverpage2").show();
+
+            $("#popnext1").hide();
+            $("#popnext2").show();
+        } else {
+            $("#popoverpage2").hide();
+            $("#popoverpage3").show();
+
+            $("#popnext2").hide();
+            $("#popoversubmit").show();
+        }
+    };
+
+    function popsubmit(action) {
+        if (document.getElementById('loginUsername').value.length == 0) {
+            $("#email_alert").show();
+            var email = 0
+        } else {
+            var email = 1
+        }
+        if (document.getElementById('loginPassword').value.length == 0) {
+            $("#pw_alert").show();
+            var pw = 0
+        } else {
+            var pw = 1
+        }
+
+        if (email == 1 && pw == 1) {
+            $.ajax({
+                url: "/popover",
+                type: "POST",
+                data: $('#popform').serialize(),
+                success: function(data){
+                    console.log(data);
+                }
+            })
+        }
+    };
+
 </script>

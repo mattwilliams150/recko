@@ -1,5 +1,7 @@
 var fs = require('fs');
 var helpers = require('./helpers')
+var categories = require("../config/categories.json");
+
 
 module.exports =
 function(app) {
@@ -13,7 +15,7 @@ function(app) {
             } else {
                 var article = JSON.parse(content);
                 if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-                res.render('post', {title: 'Recko', loggedIn: loggedIn, article: article});
+                res.render('post', {title: 'Recko', loggedIn: loggedIn, article: article, categories: categories});
             }
         });
     });

@@ -4,15 +4,23 @@ var async = require('async');
 var crypto = require('crypto');
 var User = require('../models/user');
 //var secret = require('../secret/secret');
+var categories = require("../config/categories.json");
+
 
 
 module.exports = (app, passport) => {
     
+    app.post('/popover', function(req, res) {
+        //console.log(req.headers.referer)
+        res.status(200).send({ cityID: '123' });
+    });
+
+
     app.get('/register', (req, res) => {
         var errors = req.flash('error');
         console.log(errors);
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-        res.render('user/register', {title: 'Recko | Register', loggedIn: loggedIn, messages: errors, hasErrors: errors.length > 0});
+        res.render('user/register', {title: 'Recko | Register', loggedIn: loggedIn, messages: errors, categories: categories, hasErrors: errors.length > 0});
     });
     
     app.post('/register', validate, passport.authenticate('local.signup', {
@@ -24,7 +32,7 @@ module.exports = (app, passport) => {
     app.get('/login', (req, res) => {
         var errors = req.flash('error');
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-        res.render('user/login', {title: 'Recko | Login', loggedIn: loggedIn, messages: errors, hasErrors: errors.length > 0});
+        res.render('user/login', {title: 'Recko | Login', loggedIn: loggedIn, messages: errors, categories: categories, hasErrors: errors.length > 0});
     });
     
     app.post('/login', loginValidate, passport.authenticate('local.login', {
@@ -52,7 +60,7 @@ module.exports = (app, passport) => {
         var errors = req.flash('error');
         var info = req.flash('info');
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-        res.render('user/forgot', {title: 'Request Password Reset', loggedIn: loggedIn, messages: errors, hasErrors: errors.length > 0, info: info, noErrors: info.length > 0})
+        res.render('user/forgot', {title: 'Request Password Reset', loggedIn: loggedIn, messages: errors, categories: categories, hasErrors: errors.length > 0, info: info, noErrors: info.length > 0})
     });  
     
     app.post('/forgot', (req, res, next) => {
@@ -120,7 +128,7 @@ module.exports = (app, passport) => {
             var errors = req.flash('error');
             var success = req.flash('success');
             if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
-            res.render('user/reset', {title: 'Reset your password', loggedIn: loggedIn, messages: errors, hasErrors: errors.length > 0, success: success, noErrors: success.length>0});
+            res.render('user/reset', {title: 'Reset your password', loggedIn: loggedIn, messages: errors, categories: categories, hasErrors: errors.length > 0, success: success, noErrors: success.length>0});
   
         });
     });
