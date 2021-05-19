@@ -67,20 +67,20 @@
             <div class="row collapse" id="moreFilters">
               <div class="col-xl-4 col-md-6 mb-4">
 
-                <% if (type == "Restaurants") { var categories = data.categories.cuisines %>
+                <% if (type == "Restaurants") { var filter_categories = data.categories.cuisines %>
                 <label class="form-label" for="form_category">Cuisine</label>
-                <% } else if (type == "Bars") { var categories = data.categories.bars %>
+                <% } else if (type == "Bars") { var filter_categories = data.categories.bars %>
                 <label class="form-label" for="form_category">Category</label>
-                <% } else { var categories = data.categories.thingsToDo %>
+                <% } else { var filter_categories = data.categories.thingsToDo %>
                 <label class="form-label" for="form_category">Category</label>
                   <% } %>
                 <select class="selectpicker form-control" name="category" id="form_category" data-style="btn-selectpicker" data-selected-text-format="count &gt; 1" title="">
                     <option style="display:none"></option>
-                    <% for (i=0; i<categories.length; i++) { %>
-                        <% if(categories[i] == data.parameters.category) { %>
-                            <option selected="selected"><%=categories[i]%></option>
+                    <% for (i=0; i<filter_categories.length; i++) { %>
+                        <% if(filter_categories[i] == data.parameters.category) { %>
+                            <option selected="selected"><%=filter_categories[i]%></option>
                         <% } else { %>
-                            <option><%=categories[i]%></option>
+                            <option><%=filter_categories[i]%></option>
                         <% } %>
                     <% } %>
                 </select>
