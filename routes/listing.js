@@ -36,6 +36,11 @@ module.exports = (app) => {
             var place = await Places.find({placeId: placeid});
             var mongoplace = await gdata.find({placeid: placeid});
 
+            //console.log(place)
+            //console.log(req.user)
+            var prefcount = Object.keys(req.user.preferences).length
+            console.log(prefcount)
+
             res.render('listing', {
                     title: title,
                     placeid: placeid,

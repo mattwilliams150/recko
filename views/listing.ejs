@@ -9,7 +9,24 @@
             <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%=place[0].subcategory%></div>
             <h1 class="text-shadow verified"><%= mongoplace.name %></h1>
             <p><i class="fa-map-marker-alt fas mr-2"></i> <%= mongoplace.formatted_address %></p>
-            <p class="mb-0 d-flex align-items-center"><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-primary"></i><i class="fa fa-xs fa-star text-gray-200 mr-4">                   </i><%=parseInt(mongoplace.reviews.length) + parseInt(reviews.length)%> Reviews</p>
+            <p class="mb-0 d-flex align-items-center">
+
+                <% for (j = 0; j < 5; j++) {
+                    if (Math.round(mongoplace.rating) > j) {  %>
+                        <% if (j == 4 ) { %>
+                            <i class="fa fa-xs fa-star text-primary mr-4"></i>
+                        <% } else { %>
+                            <i class="fa fa-xs fa-star text-primary"></i>
+                        <% } %>
+                    <% } else { %>
+                        <% if (j == 4 ) { %>
+                            <i class="fa fa-xs fa-star text-gray-200 mr-4"></i>
+                        <% } else { %>
+                            <i class="fa fa-xs fa-star text-gray-200"></i>
+                        <% } %>
+                    <% } %>
+                <% } %>
+                <%=parseInt(mongoplace.reviews.length) + parseInt(reviews.length)%> Reviews</p>
           </div>
           <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
         </div>
