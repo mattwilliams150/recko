@@ -33,14 +33,19 @@ module.exports = (app) => {
             .catch(err => res.status(500).send('An error occured'));
 
             */
+
             var place = await Places.find({placeId: placeid});
             var mongoplace = await gdata.find({placeid: placeid});
 
-            //console.log(place)
-            //console.log(req.user)
-            var prefcount = Object.keys(req.user.preferences).length
-            console.log(prefcount)
 
+            // work out relevance score
+            var relevance = 16.0 * parseFloat(place[0].review) // 16 so 5/5 maps to 80% then remaining 20% is on tag and category matches
+            for (pref in req.user.preferences) {
+                if (place[pref] !== undefined) {relevance += 5};
+                if (pref == place[0].subcategory) {relevance += 5};
+            };
+
+            // render
             res.render('listing', {
                     title: title,
                     placeid: placeid,
@@ -49,7 +54,8 @@ module.exports = (app) => {
                     categories: categories,
                     loggedIn: loggedIn,
                     reviews: review,
-                    clientPlacesApiKey: clientPlacesApiKey
+                    clientPlacesApiKey: clientPlacesApiKey,
+                    relevance: relevance
             })
 
 

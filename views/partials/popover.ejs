@@ -85,7 +85,6 @@
     var pref = localStorage.getItem('preferences');
     if (pref != 1 && <%=loggedIn%> == false) {$('#popover').modal('show')}
 
-    console.log(<%=loggedIn%>)
     function popnext(page) {
         if(page == 1) {
             $("#popoverpage1").hide();
@@ -128,7 +127,7 @@
                         $('#popover').modal('hide')
                         localStorage.setItem('preferences', 1);
                     }
-                    console.log(data);
+                    //console.log(data);
                 },
                 error: function(XMLHttpRequest, textStatus, errorThrown) {
                     console.log("Status: " + textStatus);
