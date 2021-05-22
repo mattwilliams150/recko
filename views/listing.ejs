@@ -26,7 +26,9 @@
                         <% } %>
                     <% } %>
                 <% } %>
+                <% if(relevanceAvailable) { %>
                 <span class="lead"><span class="badge badge-secondary"><%=relevance%>%</span>  Match for you</span>
+                <% } %>
               </p>
           </div>
           <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
@@ -40,6 +42,7 @@
                         <div class="text-block">
               <p class="subtitle text-sm text-primary">Reviews    </p>
               <h5 class="mb-4">Listing Reviews </h5>
+
             <!-- Recko Reviews--->
             <% for (i = 0; i < reviews.length; i++) { %>
              <div class="media d-block d-sm-flex review">
@@ -74,6 +77,7 @@
                 </div>
               </div>
             <% } %>
+
             <!-- Google Reviews--->
             <% for (i = 0; i < mongoplace.reviews.length; i++) { %>
               <div class="media d-block d-sm-flex review">

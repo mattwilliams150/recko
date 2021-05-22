@@ -38,18 +38,23 @@ module.exports = (app) => {
             var mongoplace = await gdata.find({placeid: placeid});
 
             // work out relevance score
-            var reviewnum = parseFloat(place[0].review);
-            console.log(reviewnum)
-            if (reviewnum > 0) { // return zero if review is undefined / null / negative
-                var relevance = 15.0 * (reviewnum - 1.0)
-                for (pref in req.user.preferences) {
-                    if (place[0][pref] == 1) {relevance += (reviewnum + 5.0)};
-                    if (pref == place[0].subcategory) {relevance += (reviewnum + 5.0)};
-                };
-                relevance = relevance.toFixed(1)
+            if (req.user !== undefined) {
+                var relevanceAvailable = true;
+                var reviewnum = parseFloat(place[0].review);
+                console.log(reviewnum)
+                if (reviewnum > 0) { // return zero if review is undefined / null / negative
+                    var relevance = 15.0 * (reviewnum - 1.0)
+                    for (pref in req.user.preferences) {
+                        if (place[0][pref] == 1) {relevance += (reviewnum + 5.0)};
+                        if (pref == place[0].subcategory) {relevance += (reviewnum + 5.0)};
+                    };
+                    relevance = relevance.toFixed(1)
+                } else {
+                    var relevance = 0;
+                }
             } else {
-                var relevance = 0;
-            }
+                var relevanceAvailable = false;
+            };
 
             // render
             res.render('listing', {
@@ -61,7 +66,8 @@ module.exports = (app) => {
                     loggedIn: loggedIn,
                     reviews: review,
                     clientPlacesApiKey: clientPlacesApiKey,
-                    relevance: relevance
+                    relevance: relevance,
+                    relevanceAvailable: relevanceAvailable
             })
 
 

@@ -87,21 +87,26 @@ module.exports = (app) => {
         var mongoplaces = await Places.find(query).lean();
 
         // match perc for each user
-        mongoplaces.forEach((mongoplace, key) => {
-            var reviewnum = parseFloat(mongoplace.review);
-            if (reviewnum > 0) { // return zero if review is undefined / null / negative
-                var relevance = 15.0 * (reviewnum - 1.0)
-                for (pref in req.user.preferences) {
-                    if (mongoplace[pref] == 1) {relevance += (reviewnum + 5.0)};
-                    if (pref == mongoplace.subcategory) {relevance += (reviewnum + 5.0)};
-                };
-                relevance = relevance.toFixed(1)
-            } else {
-                var relevance = 0;
-            }
-            mongoplace.relevance = relevance;
-            mongoplaces[key] = mongoplace;
-        })
+        if (req.user !== undefined) {
+            var relevanceAvailable = true;
+            mongoplaces.forEach((mongoplace, key) => {
+                var reviewnum = parseFloat(mongoplace.review);
+                if (reviewnum > 0) { // return zero if review is undefined / null / negative
+                    var relevance = 15.0 * (reviewnum - 1.0)
+                    for (pref in req.user.preferences) {
+                        if (mongoplace[pref] == 1) {relevance += (reviewnum + 5.0)};
+                        if (pref == mongoplace.subcategory) {relevance += (reviewnum + 5.0)};
+                    };
+                    relevance = relevance.toFixed(1)
+                } else {
+                    var relevance = 0;
+                }
+                mongoplace.relevance = relevance;
+                mongoplaces[key] = mongoplace;
+            });
+        } else {
+            var relevanceAvailable = false;
+        }
 
         // sort places
         function GetSortOrder(prop) {
@@ -188,7 +193,8 @@ module.exports = (app) => {
             place: place,
             data: data,
             loggedIn: loggedIn,
-            categories: categories
+            categories: categories,
+            relevanceAvailable: relevanceAvailable
         })
 
 
