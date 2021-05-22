@@ -212,24 +212,38 @@
 
     <script>
     function pageChange(page) {
-        if(data.parameters.sort !== undefined) {
-            var sortstring = "&sort=" + data.parameters.sort;
-        } else {
-            var sortstring = "";
+        var params = "results";
+        var paramcnt = 0;
+        for (i in data.parameters) {
+            if (i != "page") {
+                if (paramcnt == 0) {
+                    params += "?"
+                    paramcnt = 1
+                } else {
+                    params += "&"
+                }
+                params += i + "=" + data.parameters[i]
+            }
         };
-        window.location.href =
-            'results?'
-            + 'type=' + encodeURI(data.parameters.type)
-            + '&place=' + encodeURI(data.parameters.place)
-            + '&page=' + page
-            + sortstring
+        params += "&page=" + page;
+        window.location.href = params;
     }
     function resultsSort(sortby){
-         window.location.href =
-            'results?'
-            + 'type=' + encodeURI(data.parameters.type)
-            + '&place=' + encodeURI(data.parameters.place)
-            + '&sort=' + sortby
+        var params = "results";
+        var paramcnt = 0;
+        for (i in data.parameters) {
+            if (i != "page" && i != "sort") {
+                if (paramcnt == 0) {
+                    params += "?"
+                    paramcnt = 1
+                } else {
+                    params += "&"
+                }
+                params += i + "=" + data.parameters[i]
+            }
+        };
+        params += "&sort=" + sortby;
+        window.location.href = params;
     }
     </script>
 
