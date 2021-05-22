@@ -10,6 +10,8 @@ module.exports = (app) => {
         var place = req.query.place;
         var category = req.query.category;
         var page = parseInt(req.query.page) || 1; // current page defaults to 1
+        var sort = req.query.sort;
+
         //tags
         var arty = req.query.arty;
         var design = req.query.design;
@@ -86,14 +88,35 @@ module.exports = (app) => {
 
         // match perc for each user
         mongoplaces.forEach((mongoplace, key) => {
-            var relevance = 16.0 * parseFloat(mongoplace.review) // 16 so 5/5 maps to 80% then remaining 20% is on tag and category matches
-            for (pref in req.user.preferences) {
-                if (mongoplace[pref] !== undefined) {relevance += 5};
-                if (pref == mongoplace.subcategory) {relevance += 5};
-            };
+            if (mongoplace.review > 0) { // return zero if review is undefined / null / negative
+                var relevance = 16.0 * parseFloat(mongoplace.review) // 16 so 5/5 maps to 80% then remaining 20% is on tag and category matches
+                for (pref in req.user.preferences) {
+                    if (mongoplace[pref] !== undefined) {relevance += 5};
+                    if (pref == mongoplace.subcategory) {relevance += 5};
+                };
+            } else {
+                var relevance = 0;
+            }
             mongoplace.relevance = relevance;
             mongoplaces[key] = mongoplace;
         })
+
+        // sort places
+        function GetSortOrder(prop) {
+            return function(a, b) {
+                if (a[prop] > b[prop]) {
+                    return -1;
+                } else if (a[prop] < b[prop]) {
+                    return 1;
+                }
+                return 0;
+            }
+        }
+        if (sort == "rating") {
+            mongoplaces.sort(GetSortOrder("review"))
+        } else {
+            mongoplaces.sort(GetSortOrder("relevance"))
+        }
 
         // cut out the number of records per page for the current page
         var recordsPerPage = 10;
@@ -110,6 +133,7 @@ module.exports = (app) => {
                 type: type,
                 place: place,
                 page: page,
+                sort: sort,
                 category: category,
                 arty: arty,
                 design: design,

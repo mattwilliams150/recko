@@ -130,12 +130,9 @@
             </div>
             <div>
               <label class="form-label mr-2" for="form_sort">Sort by</label>
-              <select class="selectpicker" name="sort" id="form_sort" data-style="btn-selectpicker" title="">
-                <option value="sortBy_0">Most popular   </option>
-                <option value="sortBy_1">Recommended   </option>
-                <option value="sortBy_2">Newest   </option>
-                <option value="sortBy_3">Oldest   </option>
-                <option value="sortBy_4">Closest   </option>
+              <select class="selectpicker" name="sort" id="form_sort" data-style="btn-selectpicker" title="" onchange="resultsSort(this.value)">
+                <option value="match"<% if (data.parameters.sort == "match") {%> selected="selected" <% } %>>Recommended for you</option>
+                <option value="rating"<% if (data.parameters.sort == "rating") {%> selected="selected" <% } %>>Rating</option>
               </select>
             </div>
           </div>
@@ -215,13 +212,25 @@
 
     <script>
     function pageChange(page) {
+        if(data.parameters.sort !== undefined) {
+            var sortstring = "&sort=" + data.parameters.sort;
+        } else {
+            var sortstring = "";
+        };
         window.location.href =
             'results?'
             + 'type=' + encodeURI(data.parameters.type)
             + '&place=' + encodeURI(data.parameters.place)
             + '&page=' + page
+            + sortstring
     }
-
+    function resultsSort(sortby){
+         window.location.href =
+            'results?'
+            + 'type=' + encodeURI(data.parameters.type)
+            + '&place=' + encodeURI(data.parameters.place)
+            + '&sort=' + sortby
+    }
     </script>
 
     <script>
