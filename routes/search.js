@@ -88,12 +88,14 @@ module.exports = (app) => {
 
         // match perc for each user
         mongoplaces.forEach((mongoplace, key) => {
-            if (mongoplace.review > 0) { // return zero if review is undefined / null / negative
-                var relevance = 16.0 * parseFloat(mongoplace.review) // 16 so 5/5 maps to 80% then remaining 20% is on tag and category matches
+            var reviewnum = parseFloat(mongoplace.review);
+            if (reviewnum > 0) { // return zero if review is undefined / null / negative
+                var relevance = 15.0 * (reviewnum - 1.0)
                 for (pref in req.user.preferences) {
-                    if (mongoplace[pref] !== undefined) {relevance += 5};
-                    if (pref == mongoplace.subcategory) {relevance += 5};
+                    if (mongoplace[pref] == 1) {relevance += (reviewnum + 5.0)};
+                    if (pref == mongoplace.subcategory) {relevance += (reviewnum + 5.0)};
                 };
+                relevance = relevance.toFixed(1)
             } else {
                 var relevance = 0;
             }

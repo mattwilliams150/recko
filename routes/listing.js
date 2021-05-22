@@ -37,13 +37,19 @@ module.exports = (app) => {
             var place = await Places.find({placeId: placeid});
             var mongoplace = await gdata.find({placeid: placeid});
 
-
             // work out relevance score
-            var relevance = 16.0 * parseFloat(place[0].review) // 16 so 5/5 maps to 80% then remaining 20% is on tag and category matches
-            for (pref in req.user.preferences) {
-                if (place[pref] !== undefined) {relevance += 5};
-                if (pref == place[0].subcategory) {relevance += 5};
-            };
+            var reviewnum = parseFloat(place[0].review);
+            console.log(reviewnum)
+            if (reviewnum > 0) { // return zero if review is undefined / null / negative
+                var relevance = 15.0 * (reviewnum - 1.0)
+                for (pref in req.user.preferences) {
+                    if (place[0][pref] == 1) {relevance += (reviewnum + 5.0)};
+                    if (pref == place[0].subcategory) {relevance += (reviewnum + 5.0)};
+                };
+                relevance = relevance.toFixed(1)
+            } else {
+                var relevance = 0;
+            }
 
             // render
             res.render('listing', {
