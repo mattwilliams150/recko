@@ -68,9 +68,7 @@ module.exports = (app) => {
                     clientPlacesApiKey: clientPlacesApiKey,
                     relevance: relevance,
                     relevanceAvailable: relevanceAvailable
-            })
-
-
+            });
         });
     });
 
