@@ -81,10 +81,22 @@ module.exports = (app) => {
         if (vegan == 'on') { query.vegan = "1"}
         if (vegetarian == 'on') { query.vegetarian = "1"}
 
-        var mongoplaces = await Places.find(query);
-        var recordsPerPage = 10;
+        // get places
+        var mongoplaces = await Places.find(query).lean();
+
+        // match perc for each user
+        mongoplaces.forEach((mongoplace, key) => {
+            var relevance = 16.0 * parseFloat(mongoplace.review) // 16 so 5/5 maps to 80% then remaining 20% is on tag and category matches
+            for (pref in req.user.preferences) {
+                if (mongoplace[pref] !== undefined) {relevance += 5};
+                if (pref == mongoplace.subcategory) {relevance += 5};
+            };
+            mongoplace.relevance = relevance;
+            mongoplaces[key] = mongoplace;
+        })
 
         // cut out the number of records per page for the current page
+        var recordsPerPage = 10;
         var places = mongoplaces.slice((page-1)*recordsPerPage,page*recordsPerPage);
 
         // pagination
