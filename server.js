@@ -35,7 +35,7 @@ app.use(function (req, res, next) {
         res.redirect(href);
     }
     
-    if (!/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url) && process.env.ENVIRONMENT == 'QA') {
+    if (process.env.ENVIRONMENT == 'QA') {
         if (req.query.qvk == process.env.QA_VALIDATION_KEY || req.cookies.qvk == process.env.QA_VALIDATION_KEY) {
             res.cookie('qvk', process.env.QA_VALIDATION_KEY);
             var qaIdCheck = true;
