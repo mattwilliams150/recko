@@ -22,6 +22,7 @@ mongoose.connect(process.env.MONGODB_URI, {
  });
 
 require('./config/passport');
+app.use(cookieParser());
 
 // only allow localhost or testing IPs.
 app.use(function (req, res, next) {
@@ -33,12 +34,21 @@ app.use(function (req, res, next) {
         href = "https://www.recko.co.uk" + req.url;
         res.redirect(href);
     }
+    
+    if (!/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url) && process.env.ENVIRONMENT == 'QA') {
+        if (req.query.qvk == process.env.QA_VALIDATION_KEY || req.cookies.qvk == process.env.QA_VALIDATION_KEY) {
+            res.cookie('qvk', process.env.QA_VALIDATION_KEY);
+            var qaIdCheck = true;
+        } else {
+            var qaIdCheck = false;
+        }
+    }
 
-    if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production') {
+    if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production' || qaIdCheck) {
         next();
     } else {
         res.end();
-        console.log('IP Denied: ' + testip);
+        console.log('Access Denied');
     };
 });
 // require('./secret/secret');
@@ -46,7 +56,6 @@ app.use(function (req, res, next) {
 app.use(express.static('public'));
 app.engine('ejs', engine);
 app.set('view engine', 'ejs');
-app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(validator());
