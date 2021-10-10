@@ -1,4 +1,4 @@
-<div id="popover" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+<div id="popover-tag" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
@@ -7,10 +7,68 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form id="popform" class="form-validate">
+            <form id="popform-tag" class="form-validate">
                 <div class="modal-body">
 
                         <div id="popoverpage1">
+                            <div class="mb-2"><h5>Our users tag our places according to their interests, which of these are important to you when finding new places?</h5></div>
+                            <div class="mb-3">Please select at least 3 tags, maximum of 5. This is help our algorithm be most effective at finding things you like.</div>
+                            <div class="form-group tag-pill-button">
+                                <% for (i=0; i<categories.tags.length; i++) { %>
+                                <% var tagReadable = categories.tags[i] %>
+                                <% var tagId = categories.tagIds[categories.tags[i]] %>
+                                    <label for="<%=tagId%>_pop">
+                                        <input type="checkbox" class="tagcheckbox tagscheck" id="<%=tagId%>_pop" name="<%=tagId%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                                    </label>
+                                <% } %>
+                            </div>
+                        </div>
+
+                        <div id="popoverpage2" style="display: none">
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="popUsername">Email Address</label>
+                                <input class="form-control" name="popUsername" id="popUsername" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
+                                <span id="email_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="popPassword">Password</label>
+                                <input class="form-control" name="popPassword" id="popPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
+                                <span id="pw_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="popConfirmPassword">Confirm Password</label>
+                                <input class="form-control" name="popConfirmPassword" id="popConfirmPassword" placeholder="Password" type="password" required data-msg="Confirm your password">
+                                <span id="pw_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                        </div>
+
+                </div>
+                </form>
+
+                <div class="modal-footer">
+                    <div id="tagpopalert" class="alert alert-danger" style="display: none"s></div>
+                    <button id="popnext1" class="btn btn-primary" onclick="popnext(1)">Next</button>
+                    <% //<button id="popoverlater" type="button" class="btn btn-secondary" onclick="popsubmit('later')">Maybe Later</button> %>
+                    <button id="popoversubmit" class="btn btn-primary" onclick="popsubmit()" style="display: none">Submit</button>
+                </div>
+
+        </div>
+    </div>
+</div>
+
+<div id="popover-type" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title text-primary" id="exampleModalLabel">To give you more relevant recommendations so you can stay ahead of the curve on new places we need to know a little more about you. </h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form id="popform-type" class="form-validate">
+                <div class="modal-body">
+
+                        <div id="popoverpage1" style="display: none">
                             <div class="mb-3"><h5>Which cuisines do you like when it comes to restaurants?</h5></div>
                             <div class="form-group tag-pill-button">
                                 <% for (i=0; i<categories.cuisines.length; i++) { %>
@@ -40,43 +98,12 @@
                                     </label>
                                 <% } %>
                             </div>
-                        </div>
-
-                        <div id="popoverpage2" style="display: none">
-                            <div class="mb-3"><h5>Our users tag our places according to their interests, which of these are important to you when finding new places?</h5></div>
-                            <div class="form-group tag-pill-button">
-                                <% for (i=0; i<categories.tags.length; i++) { %>
-                                <% var tagReadable = categories.tags[i] %>
-                                <% var tagId = categories.tagIds[categories.tags[i]] %>
-                                    <label for="<%=tagId%>_pop">
-                                        <input type="checkbox" class="tagcheckbox" id="<%=tagId%>_pop" name="<%=tagId%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
-                                    </label>
-                                <% } %>
-                            </div>
-                        </div>
-
-                        <div id="popoverpage3" style="display: none">
-                            <div class="form-group mx-4">
-                                <label class="form-label" for="popUsername">Email Address</label>
-                                <input class="form-control" name="popUsername" id="popUsername" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
-                                <span id="email_alert" class="text-danger" style="display: none"></span>
-                            </div>
-                            <div class="form-group mx-4">
-                                <label class="form-label" for="popPassword">Password</label>
-                                <input class="form-control" name="popPassword" id="popPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
-                                <span id="pw_alert" class="text-danger" style="display: none"></span>
-                            </div>
-                            <div class="form-group mx-4">
-                                <label class="form-label" for="popPassword">Confirm Password</label>
-                                <input class="form-control" name="popPassword" id="popPassword" placeholder="Password" type="password" required data-msg="Please enter your password">
-                                <span id="pw_alert" class="text-danger" style="display: none"></span>
-                            </div>
-                        </div>
-
+                    </div>
                 </div>
                 </form>
 
                 <div class="modal-footer">
+                    
                     <button id="popnext1" class="btn btn-primary" onclick="popnext(1)">Next</button>
                     <button id="popnext2" class="btn btn-primary" onclick="popnext(2)" style="display: none">Next</button>
                     <% //<button id="popoverlater" type="button" class="btn btn-secondary" onclick="popsubmit('later')">Maybe Later</button> %>
@@ -86,24 +113,31 @@
         </div>
     </div>
 </div>
+
+
+
 <script>
+    
+    var checklimit = 5;
+    var checkmin = 3;
+    
     var pref = localStorage.getItem('preferences');
-    if (pref != 1 && <%=loggedIn%> == false) {$('#popover').modal('show')}
+    if (pref != 1 && <%=loggedIn%> == false) {$('#popover-tag').modal('show')}
 
-    function popnext(page) {
-        if(page == 1) {
-            $("#popoverpage1").hide();
-            $("#popoverpage2").show();
+    function popnext() {
+        
+            if($('.tagscheck:checked').length < checkmin) {
+                $("#tagpopalert").text('Please select at least 3 tags').show();
+            } else {
+                $("#tagpopalert").hide();
+                
+                $("#popoverpage1").hide();
+                $("#popoverpage2").show();
 
-            $("#popnext1").hide();
-            $("#popnext2").show();
-        } else {
-            $("#popoverpage2").hide();
-            $("#popoverpage3").show();
+                $("#popnext1").hide();
+                $("#popoversubmit").show();
+            }
 
-            $("#popnext2").hide();
-            $("#popoversubmit").show();
-        }
     };
 
     function popsubmit(action) {
@@ -124,7 +158,7 @@
             $.ajax({
                 url: "/popover",
                 type: "POST",
-                data: $('#popform').serialize(),
+                data: $('#popform-tag').serialize(),
                 success: function(data){
                     if(data.loggedIn == false) {
                         $("#email_alert").text(data.errors[0]).show();
@@ -141,5 +175,12 @@
             })
         }
     };
+    
+
+$('input.tagscheck').on('change', function(evt) { 
+    if($('.tagscheck:checked').length > checklimit) {
+        this.checked = false;
+    }
+});
 
 </script>
