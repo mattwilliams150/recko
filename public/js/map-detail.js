@@ -20,7 +20,7 @@ function createDetailMap(options) {
         circleOpacity: .5,
         circleRadius: 500,
         circlePosition: [51.505, -0.09],
-        tileLayer: {tiles: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>', subdomains: 'abcd'},
+        tileLayer: {tiles: 'http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>', subdomains: 'abcd'},
     };
 
     var settings = $.extend({}, defaults, options);
