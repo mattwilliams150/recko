@@ -10,6 +10,8 @@ var maplayout1 = {tiles: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/
 
 var maplayout2 = {tiles: 'https://maps.wikimedia.org/osm-intl/{z}/{x}/{y}{r}.png', attribution: '&copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://wikimediafoundation.org/wiki/Maps_Terms_of_Use">Wikimedia maps</a>'}
 
+var maplayout3 = {tiles: 'https://stamen-tiles-{s}.a.ssl.fastly.net/toner-lite/{z}/{x}/{y}{r}.png', attribution: 'Map tiles by <a href="http://stamen.com">Stamen Design</a>, <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}
+
 function createMap(options, places) {
     var defaults = {
         mapId: 'detailMap',
@@ -18,7 +20,7 @@ function createMap(options, places) {
         markerShow: true,
         markerPath: 'img/marker2.svg',
         markerPathHighlight: 'img/marker2-hover.svg',
-        tileLayer: maplayout2
+        tileLayer: maplayout3
     };
 
     var settings = $.extend({}, defaults, options);
