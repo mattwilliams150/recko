@@ -13,37 +13,41 @@ module.exports = (app) => {
         var sort = req.query.sort;
 
         //tags
-        var arty = req.query.arty;
-        var design = req.query.design;
-        var authentic = req.query.authentic;
-        var brunch = req.query.brunch;
-        var cocktails = req.query.cocktails;
-        var food = req.query.food;
-        var dogs = req.query.dogs;
-        var elegant = req.query.elegant;
+        var culturally_authentic_dishes = req.query.culturally_authentic_dishes;
+        var exciting_menu = req.query.exciting_menu;
+        var fresh_flavours = req.query.fresh_flavours;
+        var generous_portions = req.query.generous_portions;
+        var fine_dining = req.query.fine_dining;
+        var small_plates_sharing = req.query.small_plates_sharing;
+        var street_food_vibes = req.query.street_food_vibes;
+        var delicious_cocktails = req.query.delicious_cocktails;
+        var craft_local_beer = req.query.craft_local_beer;
+        var fantastic_wine_list = req.query.fantastic_wine_list;
+        var awesome_architecture = req.query.awesome_architecture;
         var entertaining = req.query.entertaining;
-        var beer = req.query.beer;
-        var family = req.query.family;
-        var service = req.query.service;
-        var wines = req.query.wines;
-        var portions = req.query.portions;
-        var glamorous = req.query.glamorous;
-        var groups = req.query.groups;
-        var atmosphere = req.query.atmosphere;
-        var meetings = req.query.meetings;
-        var music = req.query.music;
-        var healthy = req.query.healthy;
+        var fantastic_service = req.query.fantastic_service;
+        var luxurious = req.query.luxurious;
+        var buzzing_atmosphere = req.query.buzzing_atmosphere;
+        var great_music = req.query.great_music;
         var intimate = req.query.intimate;
-        var lgbtq = req.query.lgbtq;
-        var modern = req.query.modern;
-        var party = req.query.party;
-        var popup = req.query.popup;
+        var modern_design = req.query.modern_design;
+        var party_vibes = req.query.party_vibes;
         var quirky = req.query.quirky;
-        var relaxed = req.query.relaxed;
+        var relaxing = req.query.relaxing;
         var romantic = req.query.romantic;
         var rustic = req.query.rustic;
-        var vegan = req.query.vegan;
-        var vegetarian = req.query.vegetarian;
+        var chic = req.query.chic;
+        var working_from_home = req.query.working_from_home;
+        var young_kids_families = req.query.young_kids_families;
+        var large_groups = req.query.large_groups;
+        var vegans_vegetarians = req.query.vegans_vegetarians;
+        var bringing_the_dog = req.query.bringing_the_dog;
+        var a_date = req.query.a_date;
+        var a_special_occasion = req.query.a_special_occasion;
+        var a_quiet_catch_up = req.query.a_quiet_catch_up;
+        var watching_sport = req.query.watching_sport;
+        var an_evening_with_friends = req.query.an_evening_with_friends;
+        var bottomless_brunch = req.query.bottomless_brunch;
 
         var title = "Recko | " + type + " in " + place
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
@@ -51,37 +55,41 @@ module.exports = (app) => {
         // search places in database
         var query = {type: type, location: place};
         if (category) { query.subcategory = category}
-        if (arty == 'on') { query.arty = "1"}
-        if (design == 'on') { query.design = "1"}
-        if (authentic == 'on') { query.authentic = "1"}
-        if (brunch == 'on') { query.brunch = "1"}
-        if (cocktails == 'on') { query.cocktails = "1"}
-        if (food == 'on') { query.food = "1"}
-        if (dogs == 'on') { query.dogs = "1"}
-        if (elegant == 'on') { query.elegant = "1"}
-        if (entertaining == 'on') { query.entertaining = "1"}
-        if (beer == 'on') { query.beer = "1"}
-        if (family == 'on') { query.family = "1"}
-        if (service == 'on') { query.service = "1"}
-        if (wines == 'on') { query.wines = "1"}
-        if (portions == 'on') { query.portions = "1"}
-        if (glamorous == 'on') { query.glamorous = "1"}
-        if (groups == 'on') { query.groups = "1"}
-        if (atmosphere == 'on') { query.atmosphere = "1"}
-        if (meetings == 'on') { query.meetings = "1"}
-        if (music == 'on') { query.music = "1"}
-        if (healthy == 'on') { query.healthy = "1"}
-        if (intimate == 'on') { query.intimate = "1"}
-        if (lgbtq == 'on') { query.lgbtq = "1"}
-        if (modern == 'on') { query.modern = "1"}
-        if (party == 'on') { query.party = "1"}
-        if (popup == 'on') { query.popup = "1"}
-        if (quirky == 'on') { query.quirky = "1"}
-        if (relaxed == 'on') { query.relaxed = "1"}
-        if (romantic == 'on') { query.romantic = "1"}
-        if (rustic == 'on') { query.rustic = "1"}
-        if (vegan == 'on') { query.vegan = "1"}
-        if (vegetarian == 'on') { query.vegetarian = "1"}
+        if (culturally_authentic_dishes == 'on') {query.culturally_authentic_dishes = '1'}
+        if (exciting_menu == 'on') {query.exciting_menu = '1'}
+        if (fresh_flavours == 'on') {query.fresh_flavours = '1'}
+        if (generous_portions == 'on') {query.generous_portions = '1'}
+        if (fine_dining == 'on') {query.fine_dining = '1'}
+        if (small_plates_sharing == 'on') {query.small_plates_sharing = '1'}
+        if (street_food_vibes == 'on') {query.street_food_vibes = '1'}
+        if (delicious_cocktails == 'on') {query.delicious_cocktails = '1'}
+        if (craft_local_beer == 'on') {query.craft_local_beer = '1'}
+        if (fantastic_wine_list == 'on') {query.fantastic_wine_list = '1'}
+        if (awesome_architecture == 'on') {query.awesome_architecture = '1'}
+        if (entertaining == 'on') {query.entertaining = '1'}
+        if (fantastic_service == 'on') {query.fantastic_service = '1'}
+        if (luxurious == 'on') {query.luxurious = '1'}
+        if (buzzing_atmosphere == 'on') {query.buzzing_atmosphere = '1'}
+        if (great_music == 'on') {query.great_music = '1'}
+        if (intimate == 'on') {query.intimate = '1'}
+        if (modern_design == 'on') {query.modern_design = '1'}
+        if (party_vibes == 'on') {query.party_vibes = '1'}
+        if (quirky == 'on') {query.quirky = '1'}
+        if (relaxing == 'on') {query.relaxing = '1'}
+        if (romantic == 'on') {query.romantic = '1'}
+        if (rustic == 'on') {query.rustic = '1'}
+        if (chic == 'on') {query.chic = '1'}
+        if (working_from_home == 'on') {query.working_from_home = '1'}
+        if (young_kids_families == 'on') {query.young_kids_families = '1'}
+        if (large_groups == 'on') {query.large_groups = '1'}
+        if (vegans_vegetarians == 'on') {query.vegans_vegetarians = '1'}
+        if (bringing_the_dog == 'on') {query.bringing_the_dog = '1'}
+        if (a_date == 'on') {query.a_date = '1'}
+        if (a_special_occasion == 'on') {query.a_special_occasion = '1'}
+        if (a_quiet_catch_up == 'on') {query.a_quiet_catch_up = '1'}
+        if (watching_sport == 'on') {query.watching_sport = '1'}
+        if (an_evening_with_friends == 'on') {query.an_evening_with_friends = '1'}
+        if (bottomless_brunch == 'on') {query.bottomless_brunch = '1'}
 
         // get places
         var mongoplaces = await Places.find(query).lean();
@@ -142,37 +150,41 @@ module.exports = (app) => {
                 page: page,
                 sort: sort,
                 category: category,
-                arty: arty,
-                design: design,
-                authentic: authentic,
-                brunch: brunch,
-                cocktails: cocktails,
-                food: food,
-                dogs: dogs,
-                elegant: elegant,
+                culturally_authentic_dishes: culturally_authentic_dishes,
+                exciting_menu: exciting_menu,
+                fresh_flavours: fresh_flavours,
+                generous_portions: generous_portions,
+                fine_dining: fine_dining,
+                small_plates_sharing: small_plates_sharing,
+                street_food_vibes: street_food_vibes,
+                delicious_cocktails: delicious_cocktails,
+                craft_local_beer: craft_local_beer,
+                fantastic_wine_list: fantastic_wine_list,
+                awesome_architecture: awesome_architecture,
                 entertaining: entertaining,
-                beer: beer,
-                family: family,
-                service: service,
-                wines: wines,
-                portions: portions,
-                glamorous: glamorous,
-                groups: groups,
-                atmosphere: atmosphere,
-                meetings: meetings,
-                music: music,
-                healthy: healthy,
+                fantastic_service: fantastic_service,
+                luxurious: luxurious,
+                buzzing_atmosphere: buzzing_atmosphere,
+                great_music: great_music,
                 intimate: intimate,
-                lgbtq: lgbtq,
-                modern: modern,
-                party: party,
-                popup: popup,
+                modern_design: modern_design,
+                party_vibes: party_vibes,
                 quirky: quirky,
-                relaxed: relaxed,
+                relaxing: relaxing,
                 romantic: romantic,
                 rustic: rustic,
-                vegan: vegan,
-                vegetarian: vegetarian
+                chic: chic,
+                working_from_home: working_from_home,
+                young_kids_families: young_kids_families,
+                large_groups: large_groups,
+                vegans_vegetarians: vegans_vegetarians,
+                bringing_the_dog: bringing_the_dog,
+                a_date: a_date,
+                a_special_occasion: a_special_occasion,
+                a_quiet_catch_up: a_quiet_catch_up,
+                watching_sport: watching_sport,
+                an_evening_with_friends: an_evening_with_friends,
+                bottomless_brunch: bottomless_brunch,
             },
             pagination: {
                 totalRecords: totalRecords,
