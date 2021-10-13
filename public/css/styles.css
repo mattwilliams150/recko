@@ -22,6 +22,10 @@ a:hover {
     margin-bottom: 0;
 }
 
+.tag-pill-large {
+    font-size: 11pt;
+}
+
 .tagcheckbox {
     display: none;
 }

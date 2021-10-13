@@ -17,8 +17,13 @@
                                 <% for (i=0; i<categories.tags.length; i++) { %>
                                 <% var tagReadable = categories.tags[i] %>
                                 <% var tagId = categories.tagIds[categories.tags[i]] %>
+                                <% var tagImage = categories.tagImages[tagId] %>
                                     <label for="<%=tagId%>_pop">
-                                        <input type="checkbox" class="tagcheckbox tagscheck" id="<%=tagId%>_pop" name="<%=tagId%>_pop" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                                        <input type="checkbox" class="tagcheckbox tagscheck" id="<%=tagId%>_pop" name="<%=tagId%>_pop" >
+                                        <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button tag-pill-large">
+                                            <img class="pr-2" style="width: 32px" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                                            <%=tagReadable%>
+                                        </div>
                                     </label>
                                 <% } %>
                             </div>
