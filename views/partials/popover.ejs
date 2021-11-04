@@ -43,7 +43,7 @@
                             <div class="form-group mx-4">
                                 <label class="form-label" for="popConfirmPassword">Confirm Password</label>
                                 <input class="form-control" name="popConfirmPassword" id="popConfirmPassword" placeholder="Password" type="password" required data-msg="Confirm your password">
-                                <span id="pw_alert" class="text-danger" style="display: none"></span>
+                                <span id="conpw_alert" class="text-danger" style="display: none"></span>
                             </div>
                         </div>
 
@@ -125,9 +125,15 @@
     
     var checklimit = 5;
     var checkmin = 3;
+
+    var excludePopupUrls = 
+        [
+            "/login",
+            "/register"
+        ];
     
     var pref = localStorage.getItem('preferences');
-    if (pref != 1 && <%=loggedIn%> == false) {$('#popover-tag').modal('show')}
+    if (pref != 1 && <%=loggedIn%> == false && !excludePopupUrls.includes(window.location.pathname)) {$('#popover-tag').modal('show')}
 
     function popnext() {
         
@@ -146,29 +152,38 @@
     };
 
     function popsubmit(action) {
-        if (document.getElementById('popUsername').value.length == 0) {
-            $("#email_alert").text('*please enter an email').show();
-            var email = 0
-        } else {
+        if (document.getElementById('popUsername').value.length !== 0 && document.getElementById('popUsername').value.includes("@")) {
+            $("#email_alert").hide();
             var email = 1
+        } else {
+            $("#email_alert").text('*please enter a valid email').show();
+            var email = 0
         }
         if (document.getElementById('popPassword').value.length == 0) {
             $("#pw_alert").text('*please enter a password').show();
             var pw = 0
         } else {
+            $("#pw_alert").hide();
             var pw = 1
         }
+        if (document.getElementById('popPassword').value !==  document.getElementById('popConfirmPassword').value) {
+            $("#conpw_alert").text('*passwords do not match').show();
+            var cpw = 0
+        } else {
+            $("#conpw_alert").hide();
+            var cpw = 1
+        }
 
-        if (email == 1 && pw == 1) {
+        if (email == 1 && pw == 1 && cpw == 1) {
             $.ajax({
                 url: "/popover",
                 type: "POST",
                 data: $('#popform-tag').serialize(),
                 success: function(data){
                     if(data.loggedIn == false) {
-                        $("#email_alert").text(data.errors[0]).show();
+                        $("#email_alert").html(data.errors[0]).show();
                     } else {
-                        $('#popover').modal('hide')
+                        $('#popover-tag').modal('hide')
                         localStorage.setItem('preferences', 1);
                     }
                     //console.log(data);

@@ -9,19 +9,22 @@ var categories = require("../config/categories.json");
 
 
 module.exports = (app, passport) => {
-
-
+    
     app.post('/popover', function(req, res, next) {
         passport.authenticate('local.popsignup', function(err, user, info) {
-            if (user !== undefined) {loggedIn = true} else {loggedIn = false};
-            var errors = req.flash('error')
-            req.login(user, function(err) {
+            var errors = req.flash('error');
+            if (user == false) {
                 if (err) return next(err);
-                res.status(200).send({errors: errors, loggedIn: loggedIn});
-            });
+                res.status(200).send({errors: errors, loggedIn: false});
+            } else {           
+                req.login(user, function(err) {
+                    if (err) return next(err);
+                    res.status(200).send({errors: errors, loggedIn: true});
+                });      
+            }
         })(req, res, next);
     });
-
+    
     app.get('/register', (req, res) => {
         var errors = req.flash('error');
         console.log(errors);

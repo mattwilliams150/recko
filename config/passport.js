@@ -66,6 +66,7 @@ passport.use('local.popsignup', new LocalStrategy({
        var preferences = req.body;
        delete preferences.popUsername;
        delete preferences.popPassword;
+       delete preferences.popConfirmPassword;
         for(name in preferences){
             var replaced_key = name.replace('_pop', '');
             preferences[replaced_key] = preferences[name];
@@ -77,7 +78,7 @@ passport.use('local.popsignup', new LocalStrategy({
        }
 
        if(user){
-           return done(null, false, req.flash('error', 'Email already exists, please login.'))
+           return done(null, false, req.flash('error', 'Email already exists, <a href = "/login">click here to login</a>.'))
        }
 
        var newUser = new User();
