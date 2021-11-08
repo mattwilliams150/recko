@@ -41,7 +41,6 @@ module.exports = (app) => {
             if (req.user !== undefined) {
                 var relevanceAvailable = true;
                 var reviewnum = parseFloat(place[0].review);
-                console.log(reviewnum)
                 if (reviewnum > 0) { // return zero if review is undefined / null / negative
                     var relevance = 15.0 * (reviewnum - 1.0)
                     for (pref in req.user.preferences) {
@@ -55,6 +54,24 @@ module.exports = (app) => {
             } else {
                 var relevanceAvailable = false;
             };
+            
+            // work out top tags
+            var toptags = [];
+            for (let t in categories.tagIds) {
+                let tag = categories.tagIds[t]
+                let tagcount = 0;
+                for (let i = 0; i < review.length; i++) {
+                    let rev = review[i];
+                    if (rev[tag] == "on") {
+                        tagcount++
+                    }
+                 }
+               
+                toptags.push([tag, tagcount])
+            }
+            toptags.sort(function(a, b) {
+                return b[1] - a[1];
+            });
 
             // render
             res.render('listing', {
@@ -67,7 +84,8 @@ module.exports = (app) => {
                     reviews: review,
                     clientPlacesApiKey: clientPlacesApiKey,
                     relevance: relevance,
-                    relevanceAvailable: relevanceAvailable
+                    relevanceAvailable: relevanceAvailable,
+                    toptags: toptags
             });
         });
     });

@@ -1,6 +1,12 @@
 <% layout('layout') %>
 
  <script>var mongoplace = <%- JSON.stringify(mongoplace) %></script>
+ <script>var reviews = <%- JSON.stringify(reviews) %></script>
+ <script>var place = <%- JSON.stringify(place) %></script>
+ <script>var categories = <%- JSON.stringify(categories) %></script>
+ <script>var toptags = <%- JSON.stringify(toptags) %></script>
+
+
     <!-- Hero Section-->
     <section class="pt-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('../img/place_photos/<%= mongoplace.place_id %>.png');">
       <div class="container overlay-content">
@@ -9,7 +15,7 @@
             <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%=place[0].subcategory%></div>
             <h1 class="text-shadow verified"><%= mongoplace.name %></h1>
             <p><i class="fa-map-marker-alt fas mr-2"></i> <%= mongoplace.formatted_address %></p>
-            <p class="mb-0 d-flex align-items-center">
+            <p class="d-flex align-items-center">
 
                 <% for (j = 0; j < 5; j++) {
                     if (Math.round(mongoplace.rating) > j) {  %>
@@ -30,6 +36,26 @@
                 <% if(relevanceAvailable) { %>
                 <span class="lead"><span class="badge badge-secondary"><%=relevance%>%</span>  Match for you</span>
                 <% } %>
+              </p>
+              <p class="mb-0" >
+                <div class="form-group tag-pill-button">
+                <% 
+                     for (t=0; t<3; t++) {
+                     var toptag = toptags[t]
+                     var tagId = toptag[0]
+                     var tagcount = toptag[1]
+                     var tagReadable = categories.tagObj[tagId].name
+                     var tagImage = categories.tagObj[tagId].image
+                     if (tagcount > 0) {
+                     %>
+                        <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button tag-pill-large">
+                            <img class="pr-2" style="width: 32px" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                            <%=tagReadable%> (<%=tagcount%>)
+                        </div>
+                     <%
+                    }
+                  }%>
+                </div>
               </p>
           </div>
           <div class="calltoactions"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
@@ -81,9 +107,7 @@
                         <% var tagId = categories.tagIds[categories.tags[k]] %>
 
                         <% if(reviews[i][tagId] !== undefined) { %>
-                            <label for="<%=tagId%>">
-                                <input type="checkbox" class="tagcheckbox" id="<%=tagId%>" name="<%=tagId%>" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 tag-pill-button"><%=tagReadable%></div>
-                            </label>
+                            <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
                         <% } %>
                     <% } %>
                     </p>
