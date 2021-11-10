@@ -90,21 +90,22 @@
                    <div class="col-12 mb-4">
                     <label class="form-label">Tag</label>
                     <ul class="list-inline mb-0">
-
-                     <% for (i=0; i<data.categories.tags.length; i++) { %>
-                    <% var tagReadable = data.categories.tags[i] %>
-                    <% var tagId = data.categories.tagIds[data.categories.tags[i]] %>
-                      <li>
-                        <div class="custom-control custom-checkbox">
-                            <% if(data.parameters[tagId] == "on") { %>
-                                <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>" checked="true">
-                            <% } else { %>
-                                <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>">
-                            <% } %>
-                          <label class="custom-control-label" for="<%=tagId%>"><%=tagReadable%></label>
-                        </div>
-                      </li>
-                       <% } %>
+                        
+                    <% for (i=0; i<filters.length; i++) { %>
+                        <% var tagId = filters[i][0] %>
+                        <% var tagReadable = data.categories.tagObj[tagId].name %>
+                        <% var tagCount = filters[i][1] %>
+                          <li>
+                            <div class="custom-control custom-checkbox">
+                                <% if(data.parameters[tagId] == "on") { %>
+                                    <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>" checked="true">
+                                <% } else { %>
+                                    <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>">
+                                <% } %>
+                              <label class="custom-control-label" for="<%=tagId%>"><%=tagReadable%> (<%=tagCount%>)</label>
+                            </div>
+                          </li>
+                     <% } %>
                     </ul>
                   </div>
               </div>

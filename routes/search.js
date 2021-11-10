@@ -93,6 +93,21 @@ module.exports = (app) => {
 
         // get places
         var mongoplaces = await Places.find(query).lean();
+        
+        // count number of places per filter
+        var filters = [];
+        for (tag in categories.tagObj) {
+            let tagcount = 0;
+            for (var i in mongoplaces) {
+                if (mongoplaces[i][tag] == '1') {tagcount++}
+            }
+            if (tagcount > 0) {
+                filters.push([tag, tagcount]);
+            }
+        };
+        filters.sort(function(a, b) {
+            return b[1] - a[1];
+        });
 
         // match perc for each user
         if (req.user !== undefined) {
@@ -206,7 +221,8 @@ module.exports = (app) => {
             data: data,
             loggedIn: loggedIn,
             categories: categories,
-            relevanceAvailable: relevanceAvailable
+            relevanceAvailable: relevanceAvailable,
+            filters: filters
         })
 
 
