@@ -120,7 +120,7 @@
             <!-- Google Reviews--->
             <% for (i = 0; i < mongoplace.reviews.length; i++) { %>
               <div class="media d-block d-sm-flex review">
-                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="<%= mongoplace.reviews[i].profile_photo_url %>" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm"><%= mongoplace.reviews[i].relative_time_description %></span></div>
+                <div class="text-md-center mr-4 mr-xl-5"><img class="d-block avatar avatar-xl p-2 mb-2" src="img/letters/<%= mongoplace.reviews[i].author_name.charAt(0)%>.png" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm"><%= mongoplace.reviews[i].relative_time_description %></span></div>
                 <div class="media-body">
                   <h6 class="mt-2 mb-1"><%= mongoplace.reviews[i].author_name %></h6>
                   <div class="mb-2">
