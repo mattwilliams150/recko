@@ -90,7 +90,7 @@ module.exports = (app) => {
         });
     });
 
-    app.post('/listingreview', (req, res) => {
+    app.post('/listingreview', async (req, res) => {
         var newReview = new Review();
         newReview.placeid = req.query.placeid
         newReview.name = req.body.review_name
@@ -137,8 +137,22 @@ module.exports = (app) => {
         newReview.save((err) => {
             console.log(err);
         });
-
-        res.redirect('/listing?placeid='+req.query.placeid);
+        
+        var place = await Places.find({placeId: req.query.placeid});
+        
+        // update value of tag on place record when review is left.
+        for (tag in categories.tagObj) {
+            if (req.body[tag] == 'on') {
+                let newTagValue = place[0][tag] + 1;                
+                await Places.findOneAndUpdate( {placeId: req.query.placeid}, 
+                    {$set : {[tag] : newTagValue}}, 
+                    function(err, response) { 
+                        console.log('tag update error: ' + err);
+                    });
+            }
+        }
+        
+        await res.redirect('/listing?placeid='+req.query.placeid);
     });
 }
 
