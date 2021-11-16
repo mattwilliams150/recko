@@ -2,7 +2,7 @@
     <div class="modal-dialog modal-lg modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-header">
-                <h4 class="modal-title text-primary" id="exampleModalLabel">To give you more relevant recommendations so you can stay ahead of the curve on new places we need to know a little more about you. </h4>
+                <h4 class="md-poptitle sm-poptitle text-primary" id="exampleModalLabel">To give you more relevant recommendations so you can stay ahead of the curve on new places we need to know a little more about you. </h4>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -19,8 +19,8 @@
                                 <% var tagImage = categories.tagObj[tagId].image %>
                                     <label for="<%=tagId%>_pop">
                                         <input type="checkbox" class="tagcheckbox tagscheck" id="<%=tagId%>_pop" name="<%=tagId%>_pop" >
-                                        <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button tag-pill-large">
-                                            <img class="pr-2" style="width: 32px" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                                        <div class="badge badge-pill tag-pill tag-pill-button sm-tag-pill-large md-tag-pill-large">
+                                            <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
                                             <%=tagReadable%>
                                         </div>
                                     </label>
