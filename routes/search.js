@@ -26,7 +26,7 @@ module.exports = (app) => {
         if (category) { query.subcategory = category}
         
         for (tag in categories.tagObj) {
-            if(req.query[tag] == 'on') {query['tags.'+tag] = 1}
+            if(req.query[tag] == 'on') {query['tags.'+tag] = {$gt:0}}
         }
         
         // get places
