@@ -97,7 +97,7 @@
                         <% var tagCount = filters[i][1] %>
                           <li>
                             <div class="custom-control custom-checkbox">
-                                <% if(data.parameters[tagId] == "on") { %>
+                                <% if(data.parameters.tags[tagId] == "on") { %>
                                     <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>" checked="true">
                                 <% } else { %>
                                     <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>">
@@ -226,7 +226,13 @@
                 } else {
                     params += "&"
                 }
-                params += i + "=" + data.parameters[i]
+                if (i == 'tags') {
+                    for (j in data.parameters.tags) {
+                        params += j + "=" + data.parameters.tags[j]
+                    }
+                } else {
+                    params += i + "=" + data.parameters[i]
+                }
             }
         };
         params += "&page=" + page;
@@ -243,7 +249,13 @@
                 } else {
                     params += "&"
                 }
-                params += i + "=" + data.parameters[i]
+                if (i == 'tags') {
+                    for (j in data.parameters.tags) {
+                        params += j + "=" + data.parameters.tags[j]
+                    }
+                } else {
+                    params += i + "=" + data.parameters[i]
+                }
             }
         };
         params += "&sort=" + sortby;
