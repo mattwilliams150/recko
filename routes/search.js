@@ -22,7 +22,13 @@ module.exports = (app) => {
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
 
         // search places in database
-        var query = {type: type, location: place};
+        var query = {type: type};
+        if (req.query.place == "Battersea") {
+            query.sw11 = 1;
+        } else if (req.query.place == "Balham") { 
+            query.sw12 = 1;
+        }
+        
         if (category) { query.subcategory = category}
         
         for (tag in categories.tagObj) {
