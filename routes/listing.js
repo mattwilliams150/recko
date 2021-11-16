@@ -91,29 +91,36 @@ module.exports = (app) => {
     });
 
     app.post('/listingreview', async (req, res) => {
+        
+        // add record to review database
         var newReview = new Review();
+        var reviewTags = {};
         newReview.placeid = req.query.placeid
         newReview.name = req.body.review_name
         newReview.email = req.body.review_email
         newReview.rating = req.body.review_rating
         newReview.review = req.body.review_review
         newReview.date = Date.now()
+        
         for (tag in categories.tagObj) {
-            newReview[tag] = req.body[tag];
+            if (req.body[tag] == 'on'){
+                reviewTags[tag] = 'on'
+            }
         };
+        newReview.tags = reviewTags;
 
         newReview.save((err) => {
             console.log(err);
         });
         
-        var place = await Places.find({placeId: req.query.placeid});
-        
         // update value of tag on place record when review is left.
+        var place = await Places.find({placeId: req.query.placeid});
         for (tag in categories.tagObj) {
             if (req.body[tag] == 'on') {
-                let newTagValue = place[0][tag] + 1;                
+                let newTagValue = place[0]['tags'][tag] + 1;
+                let setquery = {['tags.'+tag]: newTagValue}
                 await Places.findOneAndUpdate( {placeId: req.query.placeid}, 
-                    {$set : {[tag] : newTagValue}}, 
+                    {$set : setquery}, 
                     function(err, response) { 
                         console.log('tag update error: ' + err);
                     });

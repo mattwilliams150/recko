@@ -114,12 +114,13 @@
                   </div>
                   <p class="text-muted text-sm"><%= reviews[i].review %></p>
                   <p>
-                    <% for (k=0; k<categories.tags.length; k++) { %>
-                        <% var tagReadable = categories.tags[k] %>
-                        <% var tagId = categories.tagIds[categories.tags[k]] %>
-
-                        <% if(reviews[i][tagId] !== undefined) { %>
-                            <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                    <% console.log(reviews[i]); for (tagId in categories.tagObj) {%>
+                        <% var tagReadable = categories.tagObj[tagId].name %>
+                      
+                        <% if(reviews[i]['tags'] !== undefined) {%>
+                            <% if(reviews[i]['tags'][tagId] == 'on') {  %>
+                                <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                            <% } %>
                         <% } %>
                     <% } %>
                     </p>
@@ -202,9 +203,8 @@
 
                       <div class="form-group tag-pill-button">
 
-                    <% for (i=0; i<categories.tags.length; i++) { %>
-                    <% var tagReadable = categories.tags[i] %>
-                    <% var tagId = categories.tagIds[categories.tags[i]] %>
+                    <% for (tagId in categories.tagObj) { %>
+                    <% var tagReadable = categories.tagObj[tagId].name %>
                         <label for="<%=tagId%>">
                             <input type="checkbox" class="tagcheckbox" id="<%=tagId%>" name="<%=tagId%>" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
                         </label>
