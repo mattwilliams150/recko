@@ -26,9 +26,9 @@ module.exports = (app) => {
         if (category) { query.subcategory = category}
         
         for (tag in categories.tagObj) {
-            if(req.query[tag] == 'on') {query[tag] = 1}
+            if(req.query[tag] == 'on') {query['tags.'+tag] = 1}
         }
-
+        
         // get places
         var mongoplaces = await Places.find(query).lean();
         
@@ -37,7 +37,7 @@ module.exports = (app) => {
         for (tag in categories.tagObj) {
             let tagcount = 0;
             for (var i in mongoplaces) {
-                if (mongoplaces[i][tag] == '1') {tagcount++}
+                if (mongoplaces[i]['tags'][tag] == '1') {tagcount++}
             }
             if (tagcount > 0) {
                 filters.push([tag, tagcount]);
