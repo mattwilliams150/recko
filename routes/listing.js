@@ -54,24 +54,7 @@ module.exports = (app) => {
             } else {
                 var relevanceAvailable = false;
             };
-            
-            // work out top tags
-            var toptags = [];
-            for (let t in categories.tagIds) {
-                let tag = categories.tagIds[t]
-                let tagcount = 0;
-                for (let i = 0; i < review.length; i++) {
-                    let rev = review[i];
-                    if (rev[tag] == "on") {
-                        tagcount++
-                    }
-                 }
-               
-                toptags.push([tag, tagcount])
-            }
-            toptags.sort(function(a, b) {
-                return b[1] - a[1];
-            });
+
 
             // render
             res.render('listing', {
@@ -84,8 +67,7 @@ module.exports = (app) => {
                     reviews: review,
                     clientPlacesApiKey: clientPlacesApiKey,
                     relevance: relevance,
-                    relevanceAvailable: relevanceAvailable,
-                    toptags: toptags
+                    relevanceAvailable: relevanceAvailable
             });
         });
     });

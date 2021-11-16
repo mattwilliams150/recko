@@ -4,7 +4,6 @@
  <script>var reviews = <%- JSON.stringify(reviews) %></script>
  <script>var place = <%- JSON.stringify(place) %></script>
  <script>var categories = <%- JSON.stringify(categories) %></script>
- <script>var toptags = <%- JSON.stringify(toptags) %></script>
 
 
     <!-- Hero Section-->
@@ -40,10 +39,22 @@
               <p class="mb-0" >
                 <div class="form-group tag-pill-button">
                 <% 
-                     for (t=0; t<3; t++) {
-                     var toptag = toptags[t]
-                     var tagId = toptag[0]
-                     var tagcount = toptag[1]
+                    // number of tags shown                    
+                    var tagLim = 3;
+                    
+                    // convert to array for sorting            
+                    var tagArr = Object.entries(place[0].tags);
+                    // sort
+                    tagArr.sort(function(a, b) {
+                        return b[1] - a[1];
+                    });
+                    // take first N items according to tagLim
+                    var slicedTagArr = tagArr.slice(0, tagLim);
+                    
+                    // display top tags
+                     for (t = 0; t < slicedTagArr.length; t++) {
+                     var tagId = slicedTagArr[t][0]
+                     var tagcount = slicedTagArr[t][1]
                      var tagReadable = categories.tagObj[tagId].name
                      var tagImage = categories.tagObj[tagId].image
                      if (tagcount > 0) {
@@ -54,7 +65,8 @@
                         </div>
                      <%
                     }
-                  }%>
+                  }
+                    %>
                 </div>
               </p>
           </div>
@@ -114,7 +126,7 @@
                   </div>
                   <p class="text-muted text-sm"><%= reviews[i].review %></p>
                   <p>
-                    <% console.log(reviews[i]); for (tagId in categories.tagObj) {%>
+                    <% for (tagId in categories.tagObj) {%>
                         <% var tagReadable = categories.tagObj[tagId].name %>
                       
                         <% if(reviews[i]['tags'] !== undefined) {%>
