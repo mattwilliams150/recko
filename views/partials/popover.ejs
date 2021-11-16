@@ -14,10 +14,9 @@
                             <div class="mb-2"><h5>Our users tag our places according to their interests, which of these are important to you when finding new places?</h5></div>
                             <div class="mb-3">Please select at least 3 tags, maximum of 5. This is help our algorithm be most effective at finding things you like.</div>
                             <div class="form-group tag-pill-button">
-                                <% for (i=0; i<categories.tags.length; i++) { %>
-                                <% var tagReadable = categories.tags[i] %>
-                                <% var tagId = categories.tagIds[categories.tags[i]] %>
-                                <% var tagImage = categories.tagImages[tagId] %>
+                                <% for (tagId in categories.tagObj) { %>
+                                <% var tagReadable = categories.tagObj[tagId].name %>
+                                <% var tagImage = categories.tagObj[tagId].image %>
                                     <label for="<%=tagId%>_pop">
                                         <input type="checkbox" class="tagcheckbox tagscheck" id="<%=tagId%>_pop" name="<%=tagId%>_pop" >
                                         <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button tag-pill-large">
