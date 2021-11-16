@@ -63,7 +63,7 @@
         },
         "fine_dining": {
             "name": "Fine Dining",
-            "image": "007-waiter-serving-a-drink-on-a-tray-w.pngg"
+            "image": "007-waiter-serving-a-drink-on-a-tray-w.png"
         },
         "small_plates_sharing": {
             "name": "Small Plates / Sharing",
@@ -79,7 +79,7 @@
         },
         "craft_local_beer": {
             "name": "Craft / Local Beer",
-            "image": "001-Beer-w.png"
+            "image": "001-beer-w.png"
         },
         "fantastic_wine_list": {
             "name": "Fantastic Wine List",
