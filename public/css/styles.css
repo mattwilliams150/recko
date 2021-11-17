@@ -17,6 +17,9 @@
     .sm-tag-pill-large-img {
         width: 26px;
     }
+    .mobile-hidden {
+        display: none !important;
+    }
 }
 
 @media (min-width: 768px) {
