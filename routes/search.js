@@ -1,6 +1,7 @@
 var Places = require('../models/places');
 var locations = require("../config/locations.json");
 var categories = require("../config/categories.json");
+var gdata = require('../models/googledata');
 
 module.exports = (app) => {
     app.get('/results', async (req, res) => {
@@ -37,6 +38,21 @@ module.exports = (app) => {
         
         // get places
         var mongoplaces = await Places.find(query).lean();
+        
+        // get lat long from crawl data        
+        for (p in mongoplaces) {
+            let placeId = mongoplaces[p].placeId;
+            try {
+                let gplace = await gdata.find({'placeid':placeId});
+                let location = gplace[0].data.result.geometry.location;
+                mongoplaces[p].lat = location.lat;
+                mongoplaces[p].long = location.lng;
+            } catch(e) {
+                console.log('place g lookup error: placeid:'+placeId+' : '+e);
+            }
+
+        }
+
         
         // count number of places per filter
         var filters = [];
