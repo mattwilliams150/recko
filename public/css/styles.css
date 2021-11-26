@@ -20,6 +20,9 @@
     .mobile-hidden {
         display: none !important;
     }
+    .sm-search-title {
+        font-size: 2.0rem;
+    }
 }
 
 @media (min-width: 768px) {
@@ -40,6 +43,9 @@
     }
     .md-tag-pill-large-img {
         width: 32px;
+    }
+    .md-search-title {
+        font-size: 2.5rem;
     }
 }
 

@@ -6,7 +6,7 @@
     <div class="container-fluid">
       <div class="row">
         <div class="col-lg-6 py-5 p-xl-5">
-          <h1><%= type %> in <%= place %></h1>
+          <h1 class="sm-search-title md-search-title"><%= type %> in <%= place %></h1>
 
             <form method="GET" action="/results">
                 <div class="row collapse" id="editSearch">
@@ -56,7 +56,7 @@
 
 
 
-        <hr>
+        <hr class="my-2">
 
 
 
@@ -124,7 +124,7 @@
 
 
 
-          <hr class="my-4">
+          <hr class="mb-3 mt-2">
           <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
             <div class="mr-3">
               <p class="mb-3 mb-md-0"><strong><%= data.pagination.totalRecords %></strong> results found</p>
