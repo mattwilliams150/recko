@@ -28,7 +28,9 @@ passport.use('local.signup', new LocalStrategy({
        }
        
        var newUser = new User();
-       newUser.fullname = req.body.fullname;
+       newUser.firstName = req.body.firstName;
+       newUser.lastName = req.body.lastName;
+       newUser.username = req.body.username;
        newUser.email = req.body.email;
        newUser.password = newUser.encryptPassword(req.body.password);
        newUser.save((err) => {
@@ -57,14 +59,33 @@ passport.use('local.login', new LocalStrategy({
 }));
 
 passport.use('local.popsignup', new LocalStrategy({
-    usernameField: 'popUsername',
+    usernameField: 'popEmail',
     passwordField: 'popPassword',
     passReqToCallback: true
 }, (req, email, password, done) => {
    User.findOne({'email':email}, (err, user) => {
+       
+       if(err){
+           return done(err);
+       }
+
+       if(user){
+           return done(null, false, req.flash('error', 'Email already exists, <a href = "/login">click here to login</a>.'))
+       }
+       
+       var newUser = new User();
+       newUser.firstName = req.body.popFirstName;
+       newUser.lastName = req.body.popLastName;
+       newUser.username = req.body.popUsername;
+       newUser.email = email;
+       newUser.password = newUser.encryptPassword(password);
+    
        // clean preferences
        var preferences = req.body;
+       delete preferences.popFirstName;
+       delete preferences.popLastName;
        delete preferences.popUsername;
+       delete preferences.popEmail;
        delete preferences.popPassword;
        delete preferences.popConfirmPassword;
         for(name in preferences){
@@ -73,17 +94,6 @@ passport.use('local.popsignup', new LocalStrategy({
             delete preferences[name];
         }
 
-        if(err){
-           return done(err);
-       }
-
-       if(user){
-           return done(null, false, req.flash('error', 'Email already exists, <a href = "/login">click here to login</a>.'))
-       }
-
-       var newUser = new User();
-       newUser.email = email;
-       newUser.password = newUser.encryptPassword(password);
        newUser.preferences = preferences;
        newUser.save((err) => {
            return done(null, newUser);

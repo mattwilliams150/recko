@@ -30,8 +30,23 @@
 
                         <div id="popoverpage2" style="display: none">
                             <div class="form-group mx-4">
-                                <label class="form-label" for="popUsername">Email Address</label>
-                                <input class="form-control" name="popUsername" id="popUsername" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
+                                <label class="form-label" for="popFirstName">First Name</label>
+                                <input class="form-control" name="popFirstName" id="popFirstName" type="text" placeholder="Joe" autocomplete="given-name">
+                                <span id="fn_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="popLastName">Last Name</label>
+                                <input class="form-control" name="popLastName" id="popLastName" type="text" placeholder="Bloggs" autocomplete="family-name">
+                                <span id="ln_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="popUsername">Username</label>
+                                <input class="form-control" name="popUsername" id="popUsername" type="text" placeholder="jbloggs1976" autocomplete="nickname">
+                                <span id="un_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label" for="popEmail">Email Address</label>
+                                <input class="form-control" name="popEmail" id="popEmail" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
                                 <span id="email_alert" class="text-danger" style="display: none"></span>
                             </div>
                             <div class="form-group mx-4">
@@ -153,7 +168,7 @@
     };
 
     function popsubmit(action) {
-        if (document.getElementById('popUsername').value.length !== 0 && document.getElementById('popUsername').value.includes("@")) {
+        if (document.getElementById('popEmail').value.length !== 0 && document.getElementById('popEmail').value.includes("@")) {
             $("#email_alert").hide();
             var email = 1
         } else {
