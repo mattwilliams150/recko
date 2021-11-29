@@ -89,7 +89,7 @@
             
         <!--REVIEWS-->    
           
-                        <div class="text-block">
+            <div class="text-block">
               <h3 class="mb-4">Reviews </h3>
 
             <!-- Recko Reviews--->
@@ -188,10 +188,15 @@
               </div>
             <% } %>    
                 
+                
+    <!-- leave a review -->
+                
               <div class="py-5">
                 <button class="btn btn-outline-primary" type="button" data-toggle="collapse" data-target="#leaveReview" aria-expanded="false" aria-controls="leaveReview">Leave a review</button>
                 <div class="collapse mt-4" id="leaveReview">
-                  <h5 class="mb-4">Leave a review</h5>
+                  
+<% if (loggedIn) { %>                  
+                <h5 class="mb-4">Leave a review</h5>
                   <form class="form" id="contact-form" method="post" action="/listingreview?placeid=<%= placeid %>">
                     <div class="row">
                       <div class="col-sm-8">
@@ -233,7 +238,14 @@
 
                     <button class="btn btn-primary" type="submit">Post review</button>
                   </form>
-                </div>
+                
+                  
+<% } else { %>
+
+            <p>Please <a href="/register">Register</a> or <a href="/login">Login</a> to leave a review</p>
+            
+<% } %>               
+                  </div>
               </div>
             </div>
 
