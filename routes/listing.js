@@ -78,9 +78,9 @@ module.exports = (app) => {
         var newReview = new Review();
         var reviewTags = {};
         newReview.placeid = req.query.placeid
-        newReview.name = req.body.review_name
-        newReview.email = req.body.review_email
+        newReview.username = req.user.username
         newReview.rating = req.body.review_rating
+        newReview.title = req.body.review_title
         newReview.review = req.body.review_review
         newReview.date = Date.now()
         

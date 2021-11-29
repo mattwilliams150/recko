@@ -107,7 +107,7 @@
             %>
             <% for (i = 0; i < reviews.length; i++) { %>
              <div class="media d-block d-sm-flex review">
-                <div class="text-md-center mr-4 mr-xl-5"><img class="mobile-hidden d-block avatar avatar-xl p-2 mb-2" src="img/letters/<%= reviews[i].name.charAt(0).toLowerCase() %>.png" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm">
+                <div class="text-md-center mr-4 mr-xl-5"><img class="mobile-hidden d-block avatar avatar-xl p-2 mb-2" src="img/letters/<%= reviews[i].username.charAt(0).toLowerCase() %>.png" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm">
 
                     <% let datediff = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24))
                         let monthsago = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24*30)) %>
@@ -145,7 +145,7 @@
                         <% } %>
                     <% } %>
                     </p>
-                    <h6 class="text-muted mt-2 mb-1"><%= reviews[i].name %></h6>
+                    <h6 class="text-muted mt-2 mb-1"><%= reviews[i].username %></h6>
 
                 </div>
 
@@ -193,13 +193,13 @@
                   <h5 class="mb-4">Leave a review</h5>
                   <form class="form" id="contact-form" method="post" action="/listingreview?placeid=<%= placeid %>">
                     <div class="row">
-                      <div class="col-sm-6">
+                      <div class="col-sm-8">
                         <div class="form-group">
-                          <label class="form-label" for="name">Your name *</label>
-                          <input class="form-control" type="text" name="review_name" id="name" placeholder="Enter your name" required="required">
+                          <label class="form-label" for="title">Review Title *</label>
+                          <input class="form-control" type="text" name="review_title" id="title" placeholder="Enter your review title" required="required">
                         </div>
                       </div>
-                      <div class="col-sm-6">
+                      <div class="col-sm-4">
                         <div class="form-group">
                           <label class="form-label" for="rating">Your rating *</label>
                           <select class="custom-select focus-shadow-0" name="review_rating" id="rating">
@@ -211,10 +211,6 @@
                           </select>
                         </div>
                       </div>
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" for="email">Your email *</label>
-                      <input class="form-control" type="email" name="review_email" id="email" placeholder="Enter your  email" required="required">
                     </div>
                     <div class="form-group">
                       <label class="form-label" for="review">Review text *</label>
