@@ -73,6 +73,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 require('./routes/routes')(app);
+require('./routes/account')(app);
 require('./routes/listing')(app);
 require('./routes/search')(app);
 require('./routes/blog')(app);
