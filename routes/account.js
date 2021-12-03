@@ -1,6 +1,7 @@
 var categories = require("../config/categories.json");
 var Review = require('../models/review');
 var Places = require('../models/places');
+var qrcode = require('qrcode');
 
 
 module.exports = (app) => {
@@ -13,7 +14,12 @@ module.exports = (app) => {
         if (req.user !== undefined) {loggedIn = true} else {loggedIn = false};
         
         Review.find({'username':username}, async (err, review) => {
-            //console.log(review);
+            // generate QR codes for vouchers
+            var vouchers = [];
+            var qr = await qrcode.toDataURL('https://www.recko.co.uk');
+            vouchers[0] = qr;
+            
+            // get place names for reviews
             for (i in review) {
                 await Places.find({placeId: review[i].placeid}, async (err, place) =>{
                     review[i].placeName = place[0].placeName;
@@ -24,7 +30,8 @@ module.exports = (app) => {
                 categories: categories,
                 loggedIn: loggedIn,
                 reviews: review,
-                username: username
+                username: username,
+                vouchers: vouchers
             });
         });
     });
