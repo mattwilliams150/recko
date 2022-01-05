@@ -196,12 +196,13 @@
                   
 <% if (loggedIn) { %>                  
                 <h5 class="mb-4">Leave a review</h5>
-                  <form class="form" id="contact-form" method="post" action="/listingreview?placeid=<%= placeid %>">
+                  <form class="form" id="contact-form" method="post" onsubmit="return reviewValidate();" action="/listingreview?placeid=<%= placeid %>">
                     <div class="row">
-                      <div class="col-sm-4">
+                      <div class="col-sm-5">
                         <div class="form-group">
                           <label class="form-label" for="rating">Your rating *</label>
                           <select class="custom-select focus-shadow-0" name="review_rating" id="rating">
+                            <option hidden disabled selected value> -- select an option -- </option>
                             <option value="5">&#9733;&#9733;&#9733;&#9733;&#9733; (5/5)</option>
                             <option value="4">&#9733;&#9733;&#9733;&#9733;&#9734; (4/5)</option>
                             <option value="3">&#9733;&#9733;&#9733;&#9734;&#9734; (3/5)</option>
@@ -209,13 +210,15 @@
                             <option value="1">&#9733;&#9734;&#9734;&#9734;&#9734; (1/5)</option>
                           </select>
                         </div>
+                        <p id="review_rating_alert" class="alert alert-danger" style="display: none;">Please rate this place</p>
+
                       </div>
                     </div>
                     <div class="form-group">
-                      <label class="form-label" for="review">Review text *</label>
-                      <textarea class="form-control" rows="4" name="review_review" id="review" placeholder="Enter your review" required="required"></textarea>
+                      <label class="form-label" for="review">Review text</label>
+                      <textarea class="form-control" rows="4" name="review_review" id="review" placeholder="Enter your review"></textarea>
                     </div>
-                      <div class="form-group"><label class="form-label" for="review">Select any tags for this place</label>   </div>
+                      <div class="form-group"><label class="form-label" for="review">Select at least one tag for this place *</label>   </div>
 
 
 
@@ -228,7 +231,10 @@
                         </label>
                     <% } %>
                       </div>
+                      
+                    <p id="review_tag_alert" class="alert alert-danger" style="display: none; ">Please select at least one tag</p>
 
+                    <br>
                     <button class="btn btn-primary" type="submit">Post review</button>
                   </form>
                 
@@ -556,4 +562,37 @@
           markerPath: 'img/marker.svg',
           tileLayer: tileLayers[7]
       })
+    </script>
+
+    <script type="text/javascript">
+        function reviewValidate()
+        {
+            let rating = document.getElementById("rating").value;
+            let tagcheck = 0;
+            
+            if(rating != "") { 
+                $("#review_rating_alert").hide();
+            } else {
+                $("#review_rating_alert").css('display', 'inline-block');   
+            }
+            
+            for (cat in categories.tagObj){
+                if ($('#'+cat).prop('checked') == true ){
+                    tagcheck = 1;
+                }
+            }
+            
+            if(tagcheck == 1) { 
+                $("#review_tag_alert").hide();
+            } else {
+                $("#review_tag_alert").css('display', 'inline-block');   
+            }
+            
+            if( rating != "" && tagcheck == 1) { 
+                return true;
+            } else {
+                return false;  
+            }
+
+        }
     </script>
