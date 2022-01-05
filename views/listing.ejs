@@ -124,7 +124,6 @@
 
                 </span></div>
                 <div class="media-body">
-                <h5><%= reviews[i].title %></h5>    
                   <div class="mb-2">
                     <% for (j = 0; j < 5; j++) { %>
                              <%  if (reviews[i].rating > j) {  %>
@@ -199,12 +198,6 @@
                 <h5 class="mb-4">Leave a review</h5>
                   <form class="form" id="contact-form" method="post" action="/listingreview?placeid=<%= placeid %>">
                     <div class="row">
-                      <div class="col-sm-8">
-                        <div class="form-group">
-                          <label class="form-label" for="title">Review Title *</label>
-                          <input class="form-control" type="text" name="review_title" id="title" placeholder="Enter your review title" required="required">
-                        </div>
-                      </div>
                       <div class="col-sm-4">
                         <div class="form-group">
                           <label class="form-label" for="rating">Your rating *</label>
