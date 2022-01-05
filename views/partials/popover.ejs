@@ -29,22 +29,7 @@
                         </div>
 
                         <div id="popoverpage2" style="display: none">
-                            <div class="form-group mx-4">
-                                <label class="form-label" for="popFirstName">First Name</label>
-                                <input class="form-control" name="popFirstName" id="popFirstName" type="text" placeholder="Joe" autocomplete="given-name">
-                                <span id="fn_alert" class="text-danger" style="display: none"></span>
-                            </div>
-                            <div class="form-group mx-4">
-                                <label class="form-label" for="popLastName">Last Name</label>
-                                <input class="form-control" name="popLastName" id="popLastName" type="text" placeholder="Bloggs" autocomplete="family-name">
-                                <span id="ln_alert" class="text-danger" style="display: none"></span>
-                            </div>
-                            <div class="form-group mx-4">
-                                <label class="form-label mb-0" for="username">Display Name</label>
-                                <p class="text-sm text-muted"><small>(DISPLAYED ON YOUR REVIEWS SO DON'T USE YOUR EMAIL ADDRESS)</small></p>
-                                <input class="form-control" name="username" id="username" type="text" placeholder="jbloggs1976" autocomplete="nickname">
-                                <span id="un_alert" class="text-danger" style="display: none"></span>
-                            </div>
+
                             <div class="form-group mx-4">
                                 <label class="form-label" for="popEmail">Email Address</label>
                                 <input class="form-control" name="popEmail" id="popEmail" type="email" placeholder="name@address.com" autocomplete="off" required data-msg="Please enter your email">
@@ -59,6 +44,12 @@
                                 <label class="form-label" for="popConfirmPassword">Confirm Password</label>
                                 <input class="form-control" name="popConfirmPassword" id="popConfirmPassword" placeholder="Password" type="password" required data-msg="Confirm your password">
                                 <span id="conpw_alert" class="text-danger" style="display: none"></span>
+                            </div>
+                            <div class="form-group mx-4">
+                                <label class="form-label mb-0" for="username">Display Name</label>
+                                <p class="text-sm text-muted"><small>(DISPLAYED ON YOUR REVIEWS SO DON'T USE YOUR EMAIL ADDRESS)</small></p>
+                                <input class="form-control" name="username" id="username" type="text" placeholder="jbloggs1976" autocomplete="nickname" required data-msg="Please enter your display name">
+                                <span id="popusername_alert" class="text-danger" style="display: none"></span>
                             </div>
                         </div>
 
@@ -191,8 +182,15 @@
             $("#conpw_alert").hide();
             var cpw = 1
         }
+        if (document.getElementById('username').value.length == 0) {
+            $("#popusername_alert").text('*please enter a display name').show();
+            var pu = 0
+        } else {
+            $("#popusername_alert").hide();
+            var pu = 1
+        }
 
-        if (email == 1 && pw == 1 && cpw == 1) {
+        if (email == 1 && pw == 1 && cpw == 1 && pu == 1) {
             $.ajax({
                 url: "/popover",
                 type: "POST",
