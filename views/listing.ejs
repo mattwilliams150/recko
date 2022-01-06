@@ -63,9 +63,19 @@
                      var tagcount = slicedTagArr[t][1]
                      var tagReadable = categories.tagObj[tagId].name
                      var tagImage = categories.tagObj[tagId].image
+                     var tagType = categories.tagObj[tagId].type
+                     if (tagType == "foodAndDrink") {
+                         var tagClass = "tag-pill-food";
+                     } else if (tagType == "experience") {
+                         var tagClass = "tag-pill-experience";  
+                     } else if (tagType == "foodAndDrink") {
+                         var tagClass = "tag-pill-greatfor";   
+                     } else {
+                         var tagClass = "tag-pill";
+                     }
                      if (tagcount > 0) {
                      %>
-                        <div class="badge badge-pill tag-pill tag-pill-button sm-tag-pill-large md-tag-pill-large">
+                        <div class="badge badge-pill <%= tagClass %> tag-pill-button sm-tag-pill-large md-tag-pill-large">
                             <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
                             <%=tagReadable%> (<%=tagcount%>)
                         </div>
@@ -73,7 +83,7 @@
                     }
                   }
                     %>
-                    <a class="btn btn-light btn-sm" href="#allTags" data-smooth-scroll>See all tags...</a>
+                    <a class="btn btn-light btn-sm" href="#allTags" data-smooth-scroll>See all tags</a>
                 </div>
               </p>
 
@@ -138,10 +148,20 @@
                   <p>
                     <% for (tagId in categories.tagObj) {%>
                         <% var tagReadable = categories.tagObj[tagId].name %>
+                        <% var tagType = categories.tagObj[tagId].type 
+                        if (tagType == "foodAndDrink") {
+                            var tagClass = "tag-pill-food"
+                        } else if (tagType == "experience") {
+                            var tagClass = "tag-pill-experience"
+                        } else if (tagType == "greatFor") {
+                            var tagClass = "tag-pill-greatfor"
+                        } else {
+                            var tagClass = "tag-pill"
+                        }
                       
-                        <% if(reviews[i]['tags'] !== undefined) {%>
+                         if(reviews[i]['tags'] !== undefined) {%>
                             <% if(reviews[i]['tags'][tagId] == 'on') {  %>
-                                <div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                                <div class="mr-1 badge badge-pill <%= tagClass %> px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
                             <% } %>
                         <% } %>
                     <% } %>
@@ -226,12 +246,47 @@
 
                       <div class="form-group tag-pill-button">
 
+                    <div class="tag-food">
+                    <h6>Food & Drink</h6>    
                     <% for (tagId in categories.tagObj) { %>
                     <% var tagReadable = categories.tagObj[tagId].name %>
+                    <% var tagType = categories.tagObj[tagId].type %>
+                    <% if (tagType == "foodAndDrink") {%>     
                         <label for="<%=tagId%>">
-                            <input type="checkbox" class="tagcheckbox" id="<%=tagId%>" name="<%=tagId%>" ><div class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                            <input type="checkbox" class="tagcheckbox" id="<%=tagId%>" name="<%=tagId%>" ><div class="mr-1 badge badge-pill tag-pill-food px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
                         </label>
+                          <% } %>
                     <% } %>
+                    </div>  
+                          
+                    <div class="tag-experience">
+                    <h6>Experience</h6>    
+                    <% for (tagId in categories.tagObj) { %>
+                    <% var tagReadable = categories.tagObj[tagId].name %>
+                    <% var tagType = categories.tagObj[tagId].type %>
+                    <% if (tagType == "experience") {%>     
+                        <label for="<%=tagId%>">
+                            <input type="checkbox" class="tagcheckbox" id="<%=tagId%>" name="<%=tagId%>" ><div class="mr-1 badge badge-pill tag-pill-experience px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                        </label>
+                          <% } %>
+                    <% } %>
+                    </div>      
+                          
+                    <div class="tag-greatfor">
+                    <h6>Great for...</h6>    
+                    <% for (tagId in categories.tagObj) { %>
+                    <% var tagReadable = categories.tagObj[tagId].name %>
+                    <% var tagType = categories.tagObj[tagId].type %>
+                    <% if (tagType == "greatFor") {%>     
+                        <label for="<%=tagId%>">
+                            <input type="checkbox" class="tagcheckbox" id="<%=tagId%>" name="<%=tagId%>" ><div class="mr-1 badge badge-pill tag-pill-greatfor px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                        </label>
+                          <% } %>
+                    <% } %>
+                    </div>      
+                          
+                          
+                          
                       </div>
                       
                     <p id="review_tag_alert" class="alert alert-danger" style="display: none; ">Please select at least one tag</p>
@@ -264,22 +319,79 @@
 
                 <div id="allTags" class="text-block">
                     <h3 class="mb-4">Tags</h3>
-                <% 
-                     for (t = 0; t < tagArr.length; t++) {
-                     var tagId = tagArr[t][0]
-                     var tagcount = tagArr[t][1]
-                     var tagReadable = categories.tagObj[tagId].name
-                     var tagImage = categories.tagObj[tagId].image
-                     if (tagcount > 0) {
-                     %>
-                        <div class="badge badge-pill tag-pill tag-pill-button sm-tag-pill-large md-tag-pill-large">
-                            <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
-                            <%=tagReadable%> (<%=tagcount%>)
-                        </div>
-                     <%
-                    }
-                  }
-                    %>
+                      
+                <%  var typeCount = 0;
+                    for (t = 0; t < tagArr.length; t++) {
+                     var tagId = tagArr[t][0];
+                     var tagcount = tagArr[t][1];
+                     var tagReadable = categories.tagObj[tagId].name;
+                     var tagImage = categories.tagObj[tagId].image;
+                     var tagType = categories.tagObj[tagId].type;
+                     if (tagType == "foodAndDrink" && tagcount > 0) {
+                         if (typeCount == 0) {
+                             %>
+                             <h4>Food & Drink</h4>
+                             <%
+                             typeCount += 1
+                         }
+                         %>
+                            <div class="badge badge-pill tag-pill-food tag-pill-button sm-tag-pill-large md-tag-pill-large">
+                                <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                                <%=tagReadable%> (<%=tagcount%>)
+                            </div>
+                         <%
+                     }
+                }
+                %>  
+                    
+                <%  var typeCount = 0;
+                    for (t = 0; t < tagArr.length; t++) {
+                     var tagId = tagArr[t][0];
+                     var tagcount = tagArr[t][1];
+                     var tagReadable = categories.tagObj[tagId].name;
+                     var tagImage = categories.tagObj[tagId].image;
+                     var tagType = categories.tagObj[tagId].type;
+                     if (tagType == "experience" && tagcount > 0) {
+                         if (typeCount == 0) {
+                             %>
+                             <h4>Experience</h4>
+                             <%
+                             typeCount += 1
+                         }
+                         %>
+                            <div class="badge badge-pill tag-pill-experience tag-pill-button sm-tag-pill-large md-tag-pill-large">
+                                <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                                <%=tagReadable%> (<%=tagcount%>)
+                            </div>
+                         <%
+                     }
+                }
+                %>     
+                
+                <%  var typeCount = 0;
+                    for (t = 0; t < tagArr.length; t++) {
+                     var tagId = tagArr[t][0];
+                     var tagcount = tagArr[t][1];
+                     var tagReadable = categories.tagObj[tagId].name;
+                     var tagImage = categories.tagObj[tagId].image;
+                     var tagType = categories.tagObj[tagId].type;
+                     if (tagType == "greatFor" && tagcount > 0) {
+                         if (typeCount == 0) {
+                             %>
+                             <h4>Great for...</h4>
+                             <%
+                             typeCount += 1
+                         }
+                         %>
+                            <div class="badge badge-pill tag-pill-greatfor tag-pill-button sm-tag-pill-large md-tag-pill-large">
+                                <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                                <%=tagReadable%> (<%=tagcount%>)
+                            </div>
+                         <%
+                     }
+                }
+                %>     
+                    
                 </div>
 
             <% if(false) { %>

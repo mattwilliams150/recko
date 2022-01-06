@@ -198,9 +198,19 @@
                          var tagcount = slicedTagArr[t][1]
                          var tagReadable = categories.tagObj[tagId].name
                          var tagImage = categories.tagObj[tagId].image
+                         var tagType = categories.tagObj[tagId].type
+                         if (tagType == "foodAndDrink") {
+                             var tagClass = "tag-pill-food";
+                         } else if (tagType == "experience") {
+                             var tagClass = "tag-pill-experience";  
+                         } else if (tagType == "foodAndDrink") {
+                             var tagClass = "tag-pill-greatfor";   
+                         } else {
+                             var tagClass = "tag-pill";
+                         }
                          if (tagcount > 0) {
                             %>
-                                <a class="mr-1 badge badge-pill tag-pill px-3 py-2 mb-2"><%= tagReadable%></a>
+                                <a class="mr-1 badge badge-pill <%= tagClass %> px-3 py-2 mb-2"><%= tagReadable%></a>
                             <%
                             }
                         }
