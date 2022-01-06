@@ -39,6 +39,9 @@
               </p>
                 <% } %>
               
+            <!-- ABOUT -->    
+              <p><%= place[0].description %></p>
+              
               <p class="mb-0" >
                 <div class="form-group tag-pill-button">
                 <% 
@@ -70,13 +73,11 @@
                     }
                   }
                     %>
+                    <a class="btn btn-light btn-sm" href="#allTags" data-smooth-scroll>See all tags...</a>
                 </div>
               </p>
-            <p>
-            <!-- ABOUT -->    
-              <p><%= place[0].description %></p>
+
             
-            </p>
           </div>
           <div class="calltoactions w-200"><a class="btn btn-primary" href="#leaveReview" onclick="$('#leaveReview').collapse('show')" data-smooth-scroll>Leave a Review</a></div>
         </div>
@@ -186,7 +187,8 @@
                 </div>
               </div>
             <% } %>    
-                
+            
+              
                 
     <!-- leave a review -->
                 
@@ -250,12 +252,35 @@
 
 
             <div class="text-block">
-              <!-- Listing Location-->
+                
+<!-- Listing Location-->
               <h3 class="mb-4">Location</h3>
               <div class="map-wrapper-300 mb-3">
                 <div class="h-100" id="detailMap"></div>
               </div>
             </div>
+            
+    <!-- all tags -->           
+
+                <div id="allTags" class="text-block">
+                    <h3 class="mb-4">Tags</h3>
+                <% 
+                     for (t = 0; t < tagArr.length; t++) {
+                     var tagId = tagArr[t][0]
+                     var tagcount = tagArr[t][1]
+                     var tagReadable = categories.tagObj[tagId].name
+                     var tagImage = categories.tagObj[tagId].image
+                     if (tagcount > 0) {
+                     %>
+                        <div class="badge badge-pill tag-pill tag-pill-button sm-tag-pill-large md-tag-pill-large">
+                            <img class="pr-2 sm-tag-pill-large-img md-tag-pill-large-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon">
+                            <%=tagReadable%> (<%=tagcount%>)
+                        </div>
+                     <%
+                    }
+                  }
+                    %>
+                </div>
 
             <% if(false) { %>
             <div class="text-block">
