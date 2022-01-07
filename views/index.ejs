@@ -13,17 +13,17 @@
 
     <div class="container">
       <div class="search-bar rounded p-3 p-lg-4 position-relative mt-n5 z-index-20">
-        <form method="GET" action="/results">
+        <form method="GET" action="/results" onsubmit="return searchValidate();">
           <div class="row">
             <div class="col-lg-4 d-flex align-items-center align-items-center form-group">
-              <select class="selectpicker" title="What are you looking for?" data-style="btn-form-control" name="type">
+              <select class="selectpicker" title="What are you looking for?" data-style="btn-form-control" name="type" id="type">
                 <option>Restaurants</option>
                 <option>Bars</option>
                 <option>Activities</option>
               </select>
             </div>
             <div class="col-lg-4 d-flex align-items-center align-items-center form-group">
-              <select class="selectpicker" title="Where?" data-style="btn-form-control" name="place">
+              <select class="selectpicker" title="Where?" data-style="btn-form-control" name="place" id="place">
                   <% for (i=0; i<locations.locations.length; i++) { %>
                   <option><%=locations.locations[i]%></option>
                   <% } %>
@@ -528,3 +528,29 @@
         </div>
       </div>
     </section>
+
+ <script type="text/javascript">
+        function searchValidate()
+        {
+            let place = document.getElementById("place").value;
+            let type = document.getElementById("type").value;
+            
+            if (type == "") {
+                $("div.search-bar>form>div>div:nth-child(1)>div>button").css("border", "solid #f7d7db").fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+            } else {
+                $("div.search-bar>form>div>div:nth-child(1)>div>button").css("border", "none")
+            }
+            
+            if (place == "") {
+                $("div.search-bar>form>div>div:nth-child(2)>div>button").css("border", "solid #f7d7db").fadeOut(100).fadeIn(100).fadeOut(100).fadeIn(100);
+            } else {
+                $("div.search-bar>form>div>div:nth-child(2)>div>button").css("border", "none")
+            }
+            
+            if (type != "" && place != "") {
+                return true
+            } else {
+                return false
+            }
+        }
+    </script>
