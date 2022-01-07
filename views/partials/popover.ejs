@@ -179,7 +179,15 @@
         ];
     
     var pref = localStorage.getItem('preferences');
-    if (pref != 1 && <%=loggedIn%> == false && !excludePopupUrls.includes(window.location.pathname)) {$('#popover-tag').modal('show')}
+    var popuptimer = Number(localStorage.getItem('popuptimer'))
+    var popdelay = 1000 * 60 * 60 * 24 // shown once per day
+    console.log(popuptimer);
+    console.log(popuptimer + popdelay)
+    console.log(Date.now())
+    if (pref != 1 && <%=loggedIn%> == false && !excludePopupUrls.includes(window.location.pathname) && (popuptimer + popdelay) < Date.now()) {
+        $('#popover-tag').modal('show');
+        localStorage.setItem('popuptimer', Date.now());
+    }
 
     function popnext() {
         
