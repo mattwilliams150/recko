@@ -22,7 +22,8 @@ var placesSchema = mongoose.Schema({
     tag3: {type: String},
     subcategory: {type: String},
     amenities: {type: String},
-    tags: {type: Object}
+    tags: {type: Object},
+    posTags: {type: Object}
 });
 
 module.exports = mongoose.model('Places', placesSchema);

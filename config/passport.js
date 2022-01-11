@@ -1,6 +1,6 @@
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-
+var categories = require("../config/categories.json");
 var User = require('../models/user');
 
 passport.serializeUser((user, done) => {
@@ -93,8 +93,18 @@ passport.use('local.popsignup', new LocalStrategy({
             preferences[replaced_key] = preferences[name];
             delete preferences[name];
         }
-
        newUser.preferences = preferences;
+       
+       var posTags = {};
+       for (tagId in categories.tagObj) {
+           if (tagId in preferences) {
+               posTags[tagId] = 1;
+           } else {
+               posTags[tagId] = 0;
+           }
+       }
+       
+       newUser.posTags = posTags;
        newUser.save((err) => {
            return done(null, newUser);
        });

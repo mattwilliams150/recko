@@ -1,5 +1,6 @@
 var Review = require('../models/review');
 var Places = require('../models/places');
+var Users = require('../models/user');
 var gdata = require('../models/googledata');
 var categories = require("../config/categories.json");
 
@@ -79,6 +80,7 @@ module.exports = (app) => {
         var reviewTags = {};
         newReview.placeid = req.query.placeid
         newReview.username = req.user.username
+        newReview.userId = req.user.id
         newReview.rating = req.body.review_rating
         newReview.title = req.body.review_title
         newReview.review = req.body.review_review
@@ -97,14 +99,33 @@ module.exports = (app) => {
         
         // update value of tag on place record when review is left.
         var place = await Places.find({placeId: req.query.placeid});
+        
         for (tag in categories.tagObj) {
             if (req.body[tag] == 'on') {
-                let newTagValue = place[0]['tags'][tag] + 1;
+                if (req.user['tags'] === undefined) {req.user['tags'] = {}}
+                if (req.user['posTags'] === undefined) {req.user['posTags'] = {}}
+                
+                let newTagValue = (place[0]['tags'][tag] || 0) + 1;
                 let setquery = {['tags.'+tag]: newTagValue}
+                let newUserTagValue = (req.user['tags'][tag] || 0) + 1;
+                let setUserquery = {['tags.'+tag]: newUserTagValue}
+                
+                // if positive review also increment postags object on place record.
+                if (Number(req.body.review_rating) > 2) {
+                    setquery['posTags.'+tag] = (place[0]['posTags'][tag] || 0) + 1;
+                    setUserquery['posTags.'+tag] = (req.user['posTags'][tag] || 0) + 1;
+                }
+
                 await Places.findOneAndUpdate( {placeId: req.query.placeid}, 
                     {$set : setquery}, 
                     function(err, response) { 
                         console.log('tag update error: ' + err);
+                    });
+                
+                await Users.findOneAndUpdate( {_id: req.user.id}, 
+                    {$set : setUserquery}, 
+                    function(err, response) { 
+                        console.log('user tag update error: ' + err);
                     });
             }
         }

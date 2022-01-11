@@ -2,6 +2,7 @@ var mongoose = require('mongoose');
 
 var reviewSchema = mongoose.Schema({
     placeid: {type: String, required: true},
+    userId: {type: String},
     placeName: {type:String},
     username: {type: String},
     rating: {type: Number},
