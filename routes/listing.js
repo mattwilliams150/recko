@@ -2,6 +2,7 @@ var Review = require('../models/review');
 var Places = require('../models/places');
 var Users = require('../models/user');
 var gdata = require('../models/googledata');
+var algorithm = require('./algorithm');
 var categories = require("../config/categories.json");
 
 
@@ -39,22 +40,9 @@ module.exports = (app) => {
             var mongoplace = await gdata.find({placeid: placeid});
 
             // work out relevance score
-            if (req.user !== undefined) {
-                var relevanceAvailable = true;
-                var reviewnum = parseFloat(place[0].review);
-                if (reviewnum > 0) { // return zero if review is undefined / null / negative
-                    var relevance = 15.0 * (reviewnum - 1.0)
-                    for (pref in req.user.preferences) {
-                        if (place[0][pref] == 1) {relevance += (reviewnum + 5.0)};
-                        if (pref == place[0].subcategory) {relevance += (reviewnum + 5.0)};
-                    };
-                    relevance = relevance.toFixed(1)
-                } else {
-                    var relevance = 0;
-                }
-            } else {
-                var relevanceAvailable = false;
-            };
+            var relv = algorithm.relevance(req.user, place[0]);            
+            var relevance = relv.relevance;
+            var relevanceAvailable = relv.relevanceAvailable;
 
 
             // render
@@ -112,8 +100,16 @@ module.exports = (app) => {
                 
                 // if positive review also increment postags object on place record.
                 if (Number(req.body.review_rating) > 2) {
-                    setquery['posTags.'+tag] = (place[0]['posTags'][tag] || 0) + 1;
-                    setUserquery['posTags.'+tag] = (req.user['posTags'][tag] || 0) + 1;
+                    if (place[0]['posTags'] !== undefined) {
+                        setquery['posTags.'+tag] = (place[0]['posTags'][tag] || 0) + 1;
+                    } else {
+                        setquery['posTags.'+tag] = 1;
+                    }
+                    if (req.user['posTags'] !== undefined) {
+                        setUserquery['posTags.'+tag] = (req.user['posTags'][tag] || 0) + 1;
+                    } else {
+                        setUserquery['posTags.'+tag] = 1;
+                    }
                 }
 
                 await Places.findOneAndUpdate( {placeId: req.query.placeid}, 

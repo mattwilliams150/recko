@@ -2,6 +2,7 @@ var Places = require('../models/places');
 var locations = require("../config/locations.json");
 var categories = require("../config/categories.json");
 var gdata = require('../models/googledata');
+var algorithm = require('./algorithm');
 
 module.exports = (app) => {
     app.get('/results', async (req, res) => {
@@ -70,7 +71,7 @@ module.exports = (app) => {
         });
 
         // match perc for each user
-        if (req.user !== undefined) {
+        /*if (req.user !== undefined) {
             var relevanceAvailable = true;
             mongoplaces.forEach((mongoplace, key) => {
                 var reviewnum = parseFloat(mongoplace.review);
@@ -84,12 +85,26 @@ module.exports = (app) => {
                 } else {
                     var relevance = 0;
                 }
+                console.log(mongoplace)
+                console.log(key)
+                console.log(relevance)
+                
                 mongoplace.relevance = relevance;
                 mongoplaces[key] = mongoplace;
+                
             });
         } else {
             var relevanceAvailable = false;
-        }
+        }*/
+        
+        mongoplaces.forEach((mongoplace, key) => {
+            var relv = algorithm.relevance(req.user, mongoplace);  
+            mongoplace.relevance = relv.relevance;
+            mongoplace.relevanceAvailable = relv.relevanceAvailable;
+            mongoplaces[key] = mongoplace;
+        });
+        
+        var relevanceAvailable = mongoplaces[0].relevanceAvailable;
 
         // sort places
         function GetSortOrder(prop) {
