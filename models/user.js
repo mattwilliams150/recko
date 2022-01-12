@@ -14,7 +14,9 @@ var userSchema = mongoose.Schema({
     tokens: Array,
     preferences: Object,
     tags: {type: Object},
-    posTags: {type: Object}
+    posTags: {type: Object},
+    subCatCounts: {type: Object},
+    subCatPosCounts: {type: Object}
 });
 
 userSchema.methods.encryptPassword = (password) => {

@@ -126,6 +126,35 @@ module.exports = (app) => {
             }
         }
         
+        // count reviews for each subcategory
+        
+        var subcat = place[0].subcategory;
+        
+        if (req.user.subCatCounts !== undefined) {
+            var setUserSubcatQuery = {subCatCounts:req.user.subCatCounts};
+            setUserSubcatQuery.subCatCounts[subcat] = (req.user.subCatCounts[subcat] || 0) + 1;
+        } else {
+            var setUserSubcatQuery = {subCatCounts:{}};
+            setUserSubcatQuery.subCatCounts[subcat] = 1;
+        }
+        
+        if (Number(req.body.review_rating) > 2) {
+            if (req.user.subCatPosCounts !== undefined) {
+                setUserSubcatQuery.subCatPosCounts = req.user.subCatPosCounts;
+                setUserSubcatQuery.subCatPosCounts[subcat] = (req.user.subCatPosCounts[subcat] || 0) + 1;
+            } else {
+                setUserSubcatQuery.subCatPosCounts = {};
+                setUserSubcatQuery.subCatPosCounts[subcat] = 1;
+            }
+        }
+        
+        await Users.findOneAndUpdate( {_id: req.user.id}, 
+            {$set : setUserSubcatQuery}, 
+            function(err, response) { 
+                console.log('user tag update error: ' + err);
+            });        
+        
+        
         await res.redirect('/listing?placeid='+req.query.placeid);
     });
 }

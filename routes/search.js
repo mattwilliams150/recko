@@ -53,7 +53,6 @@ module.exports = (app) => {
             }
 
         }
-
         
         // count number of places per filter
         var filters = [];
@@ -69,33 +68,6 @@ module.exports = (app) => {
         filters.sort(function(a, b) {
             return b[1] - a[1];
         });
-
-        // match perc for each user
-        /*if (req.user !== undefined) {
-            var relevanceAvailable = true;
-            mongoplaces.forEach((mongoplace, key) => {
-                var reviewnum = parseFloat(mongoplace.review);
-                if (reviewnum > 0) { // return zero if review is undefined / null / negative
-                    var relevance = 15.0 * (reviewnum - 1.0)
-                    for (pref in req.user.preferences) {
-                        if (mongoplace[pref] == 1) {relevance += (reviewnum + 5.0)};
-                        if (pref == mongoplace.subcategory) {relevance += (reviewnum + 5.0)};
-                    };
-                    relevance = relevance.toFixed(1)
-                } else {
-                    var relevance = 0;
-                }
-                console.log(mongoplace)
-                console.log(key)
-                console.log(relevance)
-                
-                mongoplace.relevance = relevance;
-                mongoplaces[key] = mongoplace;
-                
-            });
-        } else {
-            var relevanceAvailable = false;
-        }*/
         
         mongoplaces.forEach((mongoplace, key) => {
             var relv = algorithm.relevance(req.user, mongoplace);  
