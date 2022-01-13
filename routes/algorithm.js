@@ -9,7 +9,7 @@ module.exports.relevance = function relavance(user, place) {
     var subCatCap = 20.0;
     var subCatBase = 40.0;
     var tagCap = 30.0;
-    var tagBase = 60.0;
+    var tagBase = 150.0;
     var reviewCap = 50.0;
     
     var subCatRelevance = 0.0;
@@ -25,9 +25,8 @@ module.exports.relevance = function relavance(user, place) {
         reviewRelevance = reviewCap * (Math.sin((7 - reviewnum) * Math.PI / 4) + 1) / 2
         
     // calculate percentages of each tag for the place...    
-        // total positive tags
         if(place.posTags !== undefined) {
-            var totalPosTags = Object.values(place.posTags).reduce((a, b) => a + b);
+            var totalPosTags = Object.values(place.posTags).reduce((a, b) => a + b); // total positive tags
             placeTagPercentages = {};
 
             for (posTag in place.posTags) {
@@ -36,9 +35,8 @@ module.exports.relevance = function relavance(user, place) {
         }
 
     // calculate percentages of each tag for the user...    
-        // total positive tags
         if(user.posTags !== undefined) {
-            var totalUserPosTags = Object.values(user.posTags).reduce((a, b) => a + b);
+            var totalUserPosTags = Object.values(user.posTags).reduce((a, b) => a + b); // total positive tags
             userTagPercentages = {};
 
             for (posTag in user.posTags) {
@@ -55,6 +53,47 @@ module.exports.relevance = function relavance(user, place) {
                 }
             }
         }
+        
+    // calculate percentages of pos subcat for the user, but just for the type (restaurant/bar/todo) of the current place ...    
+        if(user.subCatPosCounts !== undefined) {
+            
+            let userSubPosCounts = {};
+            userSubPosCounts = Object.assign({}, user.subCatPosCounts); // can't simply x = y. see https://stackoverflow.com/questions/33918926/javascript-how-to-delete-key-from-copied-object
+            
+            if (Object.keys(userSubPosCounts).includes(place.subcategory)) { // if place type isnt in the users subcatposcounts theres no need to calculate the subcatrelevance as it's zero
+            
+                if (place.type == "Restaurants") {
+                    var subcatlabel = "cuisines";
+                } else if (place.type == "Bars") {
+                    var subcatlabel = "bars";
+                } else if (place.type == "Activities") {
+                    var subcatlabel = "thingsToDo";
+                }
+
+                for (let prop of Object.keys(userSubPosCounts)) {
+                   if (!categories[subcatlabel].includes(prop)) {
+                       delete userSubPosCounts[prop];
+                   }
+                }
+
+                if (Object.keys(userSubPosCounts).length !== 0) { // exclude case where user has some possubcats, but not any for current subcatlabel
+
+                    var totalSubCatPosCounts = Object.values(userSubPosCounts).reduce((a, b) => a + b);
+                    subCatPosPercentages = {};
+
+                    for (subCatPosCount in userSubPosCounts) {
+                        subCatPosPercentages[subCatPosCount] = Number(userSubPosCounts[subCatPosCount]) / totalSubCatPosCounts;
+                    }
+
+                    subCatRelevance = subCatPosPercentages[place.subcategory] * subCatBase;
+                }
+            }
+        }    
+        
+        
+        //console.log("review:"+reviewRelevance+" tag:"+tagRelevance+" subcat:"+ subCatRelevance)
+        //console.log(userTagPercentages)
+        //console.log(placeTagPercentages)
         
         relevance = (reviewRelevance + Math.min(tagCap, tagRelevance) + Math.min(subCatRelevance, subCatCap)).toFixed(1)
         var relevanceAvailable = true;
