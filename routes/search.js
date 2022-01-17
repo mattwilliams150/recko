@@ -2,7 +2,7 @@ var Places = require('../models/places');
 var locations = require("../config/locations.json");
 var categories = require("../config/categories.json");
 var gdata = require('../models/googledata');
-var algorithm = require('./algorithm');
+var algorithm = require('./algorithm-simple');
 
 module.exports = (app) => {
     app.get('/results', async (req, res) => {
@@ -81,18 +81,18 @@ module.exports = (app) => {
         // sort places
         function GetSortOrder(prop) {
             return function(a, b) {
-                if (a[prop] > b[prop]) {
+                if (Number(a[prop]) > Number(b[prop])) {
                     return -1;
-                } else if (a[prop] < b[prop]) {
+                } else if (Number(a[prop]) < Number(b[prop])) {
                     return 1;
                 }
                 return 0;
             }
         }
-        if (sort == "rating") {
-            mongoplaces.sort(GetSortOrder("review"))
-        } else {
+        if (sort == "relevance") {
             mongoplaces.sort(GetSortOrder("relevance"))
+        } else {
+            mongoplaces.sort(GetSortOrder("review"))
         }
 
         // cut out the number of records per page for the current page

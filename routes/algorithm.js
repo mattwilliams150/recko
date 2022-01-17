@@ -2,101 +2,97 @@ var categories = require("../config/categories.json");
 var Review = require('../models/review');
 var Places = require('../models/places');
 var Users = require('../models/user');
-var algorithm = require('./algorithm');
+var helpers = require('./helpers')
 
 module.exports.relevance = function relavance(user, place) {
-
-    var subCatCap = 20.0;
-    var subCatBase = 40.0;
-    var tagCap = 30.0;
-    var tagBase = 150.0;
-    var reviewCap = 50.0;
+    
+    var subCatCap = 40.0;
+    var tagCap = 60.0;
+    var simpleTagAlgoPenalty = 0.8;
+    var pearsonScaleUp = 0.8; // pearson value to map to 100% tag score. anything above this will also be 100%
     
     var subCatRelevance = 0.0;
     var tagRelevance = 0.0;
-    var reviewRelevance = 0.0;
     var relevance = 0.0;
     
     var reviewnum = parseFloat(place.review);
     
     if (user !== undefined && reviewnum > 0) {
         
-    // calculate contribution from review score
-        reviewRelevance = reviewCap * (Math.sin((7 - reviewnum) * Math.PI / 4) + 1) / 2
+        //console.log(user.posTags);
+        //console.log(place.posTags);
         
-    // calculate percentages of each tag for the place...    
-        if(place.posTags !== undefined) {
-            var totalPosTags = Object.values(place.posTags).reduce((a, b) => a + b); // total positive tags
-            placeTagPercentages = {};
-
-            for (posTag in place.posTags) {
-                placeTagPercentages[posTag] = Number(place.posTags[posTag]) / totalPosTags;
-            }
-        }
-
-    // calculate percentages of each tag for the user...    
-        if(user.posTags !== undefined) {
-            var totalUserPosTags = Object.values(user.posTags).reduce((a, b) => a + b); // total positive tags
-            userTagPercentages = {};
-
-            for (posTag in user.posTags) {
-                userTagPercentages[posTag] = Number(user.posTags[posTag]) / totalUserPosTags;
-            }
-        }
-        
-    // find matches between user pos tags and place pos tags
-        if(place.posTags !== undefined && user.posTags !== undefined) {
-            for (userTagPerc in userTagPercentages) {
-                
-                if(placeTagPercentages[userTagPerc] !== undefined) {
-                    tagRelevance += (userTagPercentages[userTagPerc] * placeTagPercentages[userTagPerc] * tagBase);
+        if (user.posTags !== undefined && place.posTags !== undefined) {
+            var combinedPosTags = {}
+            for (tag in categories.tagObj) {
+                if (user.posTags[tag] !== undefined) {
+                    combinedPosTags[tag] = {"user": user.posTags[tag]};
+                } else {
+                    combinedPosTags[tag] = {"user": 0};
                 }
-            }
-        }
-        
-    // calculate percentages of pos subcat for the user, but just for the type (restaurant/bar/todo) of the current place ...    
-        if(user.subCatPosCounts !== undefined) {
-            
-            let userSubPosCounts = {};
-            userSubPosCounts = Object.assign({}, user.subCatPosCounts); // can't simply x = y. see https://stackoverflow.com/questions/33918926/javascript-how-to-delete-key-from-copied-object
-            
-            if (Object.keys(userSubPosCounts).includes(place.subcategory)) { // if place type isnt in the users subcatposcounts theres no need to calculate the subcatrelevance as it's zero
-            
-                if (place.type == "Restaurants") {
-                    var subcatlabel = "cuisines";
-                } else if (place.type == "Bars") {
-                    var subcatlabel = "bars";
-                } else if (place.type == "Activities") {
-                    var subcatlabel = "thingsToDo";
+                if (place.posTags[tag] !== undefined) {
+                    combinedPosTags[tag]["place"] = place.posTags[tag];
+                } else {
+                    combinedPosTags[tag]["place"] = 0;
                 }
+            }    
+            
+            // console.log(combinedPosTags);
+            
+            // check if either user tags or place tags have entry that has more than one. if not pearsons wont work so fallback to simple algo.
+            var maxPlaceTags = Object.values(place.posTags).reduce((a, b) => Math.max(a, b)) // highest count of place tags
+            var maxUserTags = Object.values(user.posTags).reduce((a, b) => Math.max(a, b)) // highest count of user tags
+            if (Math.max(maxPlaceTags, maxUserTags) < 2) {
 
-                for (let prop of Object.keys(userSubPosCounts)) {
-                   if (!categories[subcatlabel].includes(prop)) {
-                       delete userSubPosCounts[prop];
-                   }
-                }
-
-                if (Object.keys(userSubPosCounts).length !== 0) { // exclude case where user has some possubcats, but not any for current subcatlabel
-
-                    var totalSubCatPosCounts = Object.values(userSubPosCounts).reduce((a, b) => a + b);
-                    subCatPosPercentages = {};
-
-                    for (subCatPosCount in userSubPosCounts) {
-                        subCatPosPercentages[subCatPosCount] = Number(userSubPosCounts[subCatPosCount]) / totalSubCatPosCounts;
+                // simple tag algo fallback - never greater than 80% - percentage match of tags from both user and place multiplied by tagcap by a penalty for only having 1 postag and not being able to user the proper algo    
+                var userTagCount = 0;
+                var matchTagCount = 0;
+                for (tag in combinedPosTags) {
+                    if (combinedPosTags[tag].user > 0) {
+                        userTagCount += 1;
+                        if (combinedPosTags[tag].place > 0) {
+                            matchTagCount += 1;
+                        }
                     }
+                }
+                tagRelevance = (matchTagCount / userTagCount) * simpleTagAlgoPenalty * tagCap;
 
-                    subCatRelevance = subCatPosPercentages[place.subcategory] * subCatBase;
+            } else {
+
+                // main tag algo - pearsons of tags from both user and place multiplied by tagcap    
+                var userPosTagArr = [];
+                var placePosTagArr = [];
+                for (tag in combinedPosTags) {
+                    userPosTagArr.push(combinedPosTags[tag].user);
+                    placePosTagArr.push(combinedPosTags[tag].place);
+                }
+                
+                if ( helpers.pearsons(userPosTagArr, placePosTagArr))
+                
+                
+                var pearsonTagScore = helpers.pearsons(userPosTagArr, placePosTagArr)
+                console.log(pearsonTagScore);
+                if (pearsonTagScore > 0){ // keeps tagRelevance at zero if pearson is negative
+                    tagRelevance = Math.min((pearsonTagScore / pearsonScaleUp), 1) * tagCap
                 }
             }
-        }    
+        }
         
-        
-        //console.log("review:"+reviewRelevance+" tag:"+tagRelevance+" subcat:"+ subCatRelevance)
-        //console.log(userTagPercentages)
-        //console.log(placeTagPercentages)
-        
-        relevance = (reviewRelevance + Math.min(tagCap, tagRelevance) + Math.min(subCatRelevance, subCatCap)).toFixed(1)
+        if (user.subCatPosCounts !== undefined){
+            // subcat component - percentage match place's subcat against users subcats multipled by subcatcap
+            var maxSubCatPosCount = Object.values(user.subCatPosCounts).reduce((a, b) => Math.max(a, b));
+            var placeUserSubcatCount = user.subCatPosCounts[place.subcategory];
+            if (placeUserSubcatCount !== undefined) {
+                subCatRelevance = (placeUserSubcatCount / maxSubCatPosCount) * subCatCap;
+            } 
+        }
+
+        // multiply by review / 5
+        var reviewNumScaled = (Math.sin((7 - reviewnum) * Math.PI / 4) + 1) / 2
+        relevance = ((tagRelevance + subCatRelevance) * reviewNumScaled).toFixed(1)
         var relevanceAvailable = true;
+        
+        console.log("tag relevance:" + tagRelevance + " subcatrelevance:" + subCatRelevance)
         
     } else {
         var relevanceAvailable = false;

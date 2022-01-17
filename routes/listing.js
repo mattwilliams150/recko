@@ -2,7 +2,7 @@ var Review = require('../models/review');
 var Places = require('../models/places');
 var Users = require('../models/user');
 var gdata = require('../models/googledata');
-var algorithm = require('./algorithm');
+var algorithm = require('./algorithm-simple');
 var categories = require("../config/categories.json");
 
 

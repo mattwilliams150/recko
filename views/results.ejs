@@ -133,8 +133,8 @@
             <div>
               <label class="form-label mr-2" for="form_sort">Sort by</label>
               <select class="selectpicker" name="sort" id="form_sort" data-style="btn-selectpicker" title="" onchange="resultsSort(this.value)">
-                <option value="match"<% if (data.parameters.sort == "match") {%> selected="selected" <% } %>>Recommended for you</option>
-                <option value="rating"<% if (data.parameters.sort == "rating") {%> selected="selected" <% } %>>Rating</option>
+                <option value="review"<% if (data.parameters.sort == "review") {%> selected="selected" <% } %>>Rating</option>
+                <option value="relevance"<% if (data.parameters.sort == "relevance") {%> selected="selected" <% } %>>Recommended for you</option>
               </select>
             </div>
           </div>
@@ -296,7 +296,10 @@
                 }
             }
         };
+        
+        
         params += "&sort=" + sortby;
+        console.log(params)
         window.location.href = params;
     }
     </script>

@@ -58,3 +58,43 @@ module.exports.articlesThumbnails =
             });
         });
     };
+
+module.exports.pearsons = function pearsons(array1, array2) {
+    var n = array1.length;
+    sum1 = array1.reduce((a, b) => a + b);
+    sum2 = array2.reduce((a, b) => a + b);
+    prod1 = array1.reduce((a, b) => a * b);
+    prod2 = array2.reduce((a, b) => a * b);
+    var sumprod = 0;
+    for(var i = 0; i < array1.length; i++) {
+        sumprod += array1[i] * array2[i];
+    };
+    var sumsq1 = 0.0;
+    for(var i = 0; i < array1.length; i++) {
+        sumsq1 += array1[i] * array1[i];
+    };
+    var sumsq2 = 0.0;
+    for(var i = 0; i < array2.length; i++) {
+        sumsq2 += array2[i] * array2[i];
+    };
+    var pearsons = ((n * sumprod) - (sum1 * sum2))/(Math.sqrt(((n * sumsq1) - (sum1 * sum1)) * ((n * sumsq2) - (sum2 * sum2))))
+    
+    return pearsons;
+};
+
+module.exports.topn = function pearsons(object, n) { // get top N items from an object. object in form {a: x, b: y} result as an array [a, b]. ordered highest to lowest.
+    var array = [];
+    for (var a in object) {
+        array.push([a, object[a]]);
+    }
+    array.sort(function(a, b) {
+        return b[1] - a[1];
+    });
+    array = array.slice(0, n);
+    var array2 = [];
+    for (var b in array) {
+        array2.push(array[b][0])
+    }
+    return array2
+};
+        
