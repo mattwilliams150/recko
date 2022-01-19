@@ -44,6 +44,22 @@ module.exports = (app) => {
             var relevance = relv.relevance;
             var relevanceAvailable = relv.relevanceAvailable;
 
+            // define data layer
+            var flatTags = "";
+            for (tag in place[0].tags) {
+                flatTags = flatTags.concat(tag + ":" + place[0].tags[tag] + "|")
+            }
+            var datalayer = {
+                page: "listing",
+                loginStatus: loggedIn,
+                placeId: placeid,
+                relevance: relevance,
+                placeLocation: place[0].location,
+                placeName: place[0].placeName,
+                placeSubCategory: place[0].subcategory,
+                placeType: place[0].type,
+                placeTags: flatTags
+            };
 
             // render
             res.render('listing', {
@@ -56,7 +72,8 @@ module.exports = (app) => {
                     reviews: review,
                     clientPlacesApiKey: clientPlacesApiKey,
                     relevance: relevance,
-                    relevanceAvailable: relevanceAvailable
+                    relevanceAvailable: relevanceAvailable,
+                    datalayer: datalayer
             });
         });
     });

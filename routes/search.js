@@ -105,6 +105,34 @@ module.exports = (app) => {
         if (page*recordsPerPage < totalRecords) {var nextPage = page+1} else {var nextPage};
         var maxPage = Math.ceil(totalRecords / recordsPerPage)
 
+        // set datalayer
+        var flatTags = "";
+        var cnt = 0;
+        for (tag in tagParams) {
+            if (tagParams[tag] == "on") {
+                if (cnt == 0) {
+                    cnt = 1
+                } else {
+                    flatTags = flatTags.concat("|")
+                }
+                flatTags = flatTags.concat(tag)
+            }
+        };
+        
+        console.log(flatTags)
+
+        var datalayer = {
+            page: "search",
+            loginStatus: loggedIn,
+            placeLocation: place,
+            placeType: type,
+            placeSubCategory: category,
+            placeTags: flatTags,
+            searchResultCount: totalRecords,
+            sortBy: sort,
+            pageNumber: page
+        };
+                
         var data = {
             parameters: {
                 type: type,
@@ -135,7 +163,8 @@ module.exports = (app) => {
             loggedIn: loggedIn,
             categories: categories,
             relevanceAvailable: relevanceAvailable,
-            filters: filters
+            filters: filters,
+            datalayer: datalayer
         })
 
 
