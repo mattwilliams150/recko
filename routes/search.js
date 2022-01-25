@@ -76,7 +76,12 @@ module.exports = (app) => {
             mongoplaces[key] = mongoplace;
         });
         
-        var relevanceAvailable = mongoplaces[0].relevanceAvailable;
+        if (mongoplaces.length > 0) {
+            var relevanceAvailable = mongoplaces[0].relevanceAvailable;
+        } else {
+            var relevanceAvailable = false;
+        }
+        
 
         // sort places
         function GetSortOrder(prop) {
