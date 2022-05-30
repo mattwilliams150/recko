@@ -1,0 +1,71 @@
+{
+    "title": "Recko's Top 10 Virtual Tastings and Lockdown Party Ideas",
+    "heroImagePath": "dirty-martini.jpg",
+    "author": "Ryan Matthews",
+    "authorImagePath": "ryan-matthews.jpeg",
+    "publishDate": "2021-02-01",
+    "introText": "Whether you’ve got a birthday in lockdown that you are determined to not see go to waste, want to come up with an exciting date idea for lockdown or just fancy a social catch up with other households, virtual tastings are a fantastic way to keep things fresh and interesting. We’ve tirelessly explored the world of living room nights out to bring you our carefully curated list of the top ten virtual tastings on offer in London right now. Here you’ll find not only your more traditional explorations of wine regions and in-depth tastings led by master brewers, but also a break from tradition 2021-style with virtual cocktail parties and even a lesson in home brewing – enjoy!",
+    "article":
+    [
+        {
+            "name": "1. Lollipop",
+            "text": "If a virtual party is what you are looking for, then look no further than Lollipop. Lollipop delivers boxes of exciting premade cocktails throughout the UK and also offers a virtual party service where they handle the logistics of delivering the cocktails to everyone on the guestlist, set up the Zoom and get the party started with one of their lively bartenders. Their cocktails are crafted by mixologists and handmade before being bottled in West London, meaning that what you receive in each box is authentically created with care. With each box comes special garnishes for each cocktail, from vivid dried fruit to chilli and coffee beans, delivering that final kick to an already excellent cocktail.",
+            "imagePath": "lollipop.jpg",
+            "website": "https://wearelollipop.co.uk/cocktails-and-zoom-virtual-party"
+        },
+        {
+            "name": "2. 67 Pall Mall",
+            "text": "Created by wine lovers for wine lovers, 67 Pall Mall’s goal is simple – to uncork some of the world’s finest wine to share amongst wine lovers at a reasonable price. With a diverse wine list including both the less well known and some of the most iconic fine wines, the list is designed with the wine lover at heart. For lockdown, there is a fantastic selection of tastings being held with tasting packs available to order on their website. Planning to host an average of 2 virtual tastings every day, 67 Pall Mall is delivering the largest selection of virtual wine tastings to Londoners this lockdown.",
+            "imagePath": "67-pall-mall.jpg",
+            "website": "https://www.67pallmall.com/virtual-events/"
+        },
+        {
+            "name": "3. La Fromagerie",
+            "text": "The award-winning chain of London cheese and wine shops, La Fromagerie, is bringing the perfect pairing of hand-picked wine and fresh, artisan farmhouse cheese to Londoners this lockdown. On their website you’ll find an excellent selection of virtual tastings on offer. They have also put together cook-at-home kits including fresh produce from their stores to enjoy pre- or post-wine tasting! Alternatively, their usual deli shop is open online if you fancy creating your very own wine and cheese pairings to try at home.",
+            "imagePath": "la-fromagerie.jpg",
+            "website": "https://www.lafromagerie.co.uk/virtual-cheese-wine-tastings"
+        },
+        {
+            "name": "4. Gosnells of Peckham",
+            "text": "Gosnells has taken mead and made it cool (in the way only a Peckham-based brewery can!). If you fancy a bit of a change from yet another pale ale with citrus notes, then Gosnell has a range of unique beers that you can sample on virtual tastings running during lockdown. For those of you that don’t quite fancy a beer, they are also running a virtual cocktail making class showing you how to make the perfect honey Vermouth – their signature cocktail. And for the more adventurous, there are even virtual classes on brewing at home!",
+            "imagePath": "gosnells.jpeg",
+            "website": "https://www.gosnells.co.uk/collections/home-tastings-and-mead-making"
+        },
+        {
+            "name": "5. The Whisky Exchange",
+            "text": "The London chain of spirits and wine shops, the Whisky Exchange, is offering an excellent selection of spirit and wine tasting events this lockdown. From mezcal and tequila to sugar cane rum and a fine selection of wine and champagne tastings, there is something for everyone to enjoy. For those of you who prefer to mix your spirits, they are also offering pre-made cocktails (and cocktail recipes for the DIY drink enthusiasts among you) on their website.",
+            "imagePath": "whisky-exchange.jpg",
+            "website": "https://www.thewhiskyexchange.com/d/1034/virtual-tastings"
+        },
+        {
+            "name": "6. Honest Grapes",
+            "text": "The London chain of wine shops and bars has also established an excellent online presence, which is particularly helpful for those seeking virtual wine tastings in London during lockdown! Dedicated to offering a wide selection of quality wines at reasonable prices, you can rarely go wrong at Honest Grapes. Their virtual wine tastings are currently available to book throughout February and offer a wide selection. Their “Meet the Grower” series in particular offers a variety of options for virtual wine tastings, from the more traditional exploration of French burgundy wines to a viticultural tour of Portugal.",
+            "imagePath": "honest-grapes.jpg",
+            "website": "https://www.honestgrapes.co.uk/events"
+        },
+        {
+            "name": "7. Dirty Martini",
+            "text": "Missing the dancefloor and a cheeky night out during lockdown? Dirty Martini is offering private virtual cocktail making masterclasses for groups of friends across households to re-create the fun and glamour of a night out in London – all from the comfort of your living room! Cocktail making kits are sent directly to your door and the class is hosted by one of the Dirty Martini Mixology Team, so you may even learn a thing or two about making cocktails (if you can remember them after…).",
+            "imagePath": "dirty-martini.jpg",
+            "website": "https://dirtymartini.uk.com/virtual-masterclasses/"
+        },
+        {
+            "name": "8. Hedonism",
+            "text": "The fine wine and spirits boutique based in Mayfair prides itself on bringing Londoners the crème de la crème of wine and spirits from around the world. Hedonism regularly hosts tastings and hasn’t let lockdown stop it from offering a truly excellent range of themed online tasting packages. You can explore the Old World of European Wine, take a tour and tasting led by the Master Sake Brewer of Tatenokawa Sake Brewery or even learn a thing or two about the origins of wine and chocolate this lockdown.",
+            "imagePath": "hedonism.jpg",
+            "website": "https://hedonism.co.uk/wine-spirits-tastings"
+        },
+        {
+            "name": "9. Newcomer Wines",
+            "text": "As the name suggests, Dalston wine shop Newcomer Wines stocks a wide range of exciting new and up-and-coming wines for Londoners to try. On their website so sleek you’d be forgiven for thinking you’d accidentally stumbled upon a graphic designer’s blog page, you’ll find not only a hand-picked seasonal selection of wines but also their “In-House” series of virtual talks and conversations with the winemakers. These talks aim to develop real connections between the shop’s customers and the people behind the wine, which are best enjoyed glass of wine in hand (of course!).",
+            "imagePath": "newcomer-wines.jpg",
+            "website": "https://www.newcomerwines.com/"
+        },
+        {
+            "name": "10. Milroys",
+            "text": "With London’s largest selection of whisky, Milroys in Soho quickly became synonymous with whisky, so much so that it become the official whisky supplier of the prime minister! In more usual times you can try out their excellent selection of whiskies in their in-house cellar bar. For lockdown, Milroys is offering a fantastic selection of virtual whisky tastings and plans to host its first Women’s Whisky Tasting Night of 2021 in February.",
+            "imagePath": "milroys.jpg",
+            "website": "https://shop.milroys.co.uk/tastings-at-home/"
+        }
+    ]
+}

@@ -1,0 +1,18 @@
+{
+	"type": "FeatureCollection",
+	"features": [{
+		"type": "Feature",
+		"geometry": {
+			"type": "Point",
+			"coordinates": [
+				-73.99967,
+				40.73723
+			]
+		},
+		"properties": {
+			"id": "59c0c8e33b1527bfe2abaf92",
+			"link": "detail.html",
+			"name": "Blue Hill"
+		}
+	}]
+}

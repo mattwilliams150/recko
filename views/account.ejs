@@ -1,0 +1,128 @@
+<% layout('layout') %>
+
+<%
+    function comparerec( a, b ) {
+        if ( a.date > b.date ){
+            return -1;
+        }  
+        if ( a.date < b.date ){
+            return 1;
+        }
+        return 0;
+    };
+    reviews.sort(comparerec);
+%>
+
+<section class="py-5">
+  <div class="container">
+    <div class="row">
+      <div class="col-lg-3 mr-lg-auto">
+        <div class="card border-0 shadow mb-6 mb-lg-0">
+          <div class="card-header bg-gray-100 py-4 border-0 text-center"><a class="d-inline-block" href="#"><img class="d-block avatar avatar-xxl p-2 mb-2" src="img/letters/<%= username.charAt(0).toLowerCase() %>.png" alt=""></a>
+            <h5><%= username %></h5>
+          </div>
+          <div class="card-body p-4">
+            <div class="media align-items-center mb-3">
+              <div class="icon-rounded icon-rounded-sm bg-primary-light mr-2">
+                <svg class="svg-icon text-primary svg-icon-md">
+                  <use xlink:href="#diploma-1"> </use>
+                </svg>
+              </div>
+              <div class="media-body">
+                <p class="mb-0"><%= reviews.length %> review<% if (reviews.length != 1) { %>s<% } %></p>
+              </div>
+            </div>
+              
+  <% if(false){%>            
+              
+            <div class="media align-items-center mb-3">
+              <div class="icon-rounded icon-rounded-sm bg-primary-light mr-2">
+                <svg class="svg-icon text-primary svg-icon-md">
+                  <use xlink:href="#checkmark-1"> </use>
+                </svg>
+              </div>
+              <div class="media-body">
+                <p class="mb-0">Verified</p>
+              </div>
+            </div>
+            <hr>
+            <h6>Jack provided</h6>
+            <ul class="card-text text-muted">
+              <li>Government ID</li>
+              <li>Email address</li>
+              <li>Phone number</li>
+            </ul>
+              
+<% } %>              
+              
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-9 pl-lg-5">
+          
+<!-- vouchers -->            
+          
+        <div class="text-block">
+          <h2 class="mb-4">Your Vouchers</h2>
+          <div class="card shadow">
+<div class="card-header bg-primary-light py-4">
+    
+<h4 class="text-primary mb-0">£10 off Restaurants Monday to Wednesday!</h4>
+</div>
+              <div class="card-body row">
+                  
+                      <div class="col-2">
+                            <img src="<%= vouchers[0] %>">
+                      </div>
+                      <div class="col-8 py-3 pl-4">
+                          £10 off any participating restaurant Monday to Wednesday. Click here to see which restaurants you can choose. Simply show the QR code to the waiter and enjoy £10 off any main course!
+                      </div>
+                      <div class="col-2 py-3 text-muted text-sm">
+                            Expires: 28/11/2022
+                      </div>
+                  </div>
+          </div>
+        </div>
+          
+<!-- reviews -->          
+          
+        <div class="text-block">
+          <h2 class="mb-4">Your Reviews</h2>
+            
+<% for (i in reviews) { %>          
+          <div class="media d-block d-sm-flex review">
+            <div class="media-body">
+              <h6 class="mt-2 mb-1"><a href="/listing?placeid=<%= reviews[i].placeid %>"><%= reviews[i].placeName %></a></h6>
+              <div class="mb-2">
+                <% for (j = 0; j < 5; j++) { %>
+                     <%  if (reviews[i].rating > j) {  %>
+                        <i class="fa fa-xs fa-star text-primary"></i>
+                    <% } else { %>
+                        <i class="fa fa-xs fa-star text-gray-300"></i>
+                    <% } %>
+                <% } %>
+              </div>
+              <p class="text-muted text-sm"><%= reviews[i].review %></p>
+                <span class="text-uppercase text-muted text-sm">
+                        <% let datediff = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24))
+                        let monthsago = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24*30)) %>
+
+                        <% if(datediff == 0) { %>
+                             Today
+                        <% } else if (datediff < 7) { %>
+                             This Week
+                        <% } else if (datediff < 30) { %>
+                             This Month
+                        <% } else { %>
+                             <%=monthsago%> Months Ago
+                         <% } %>
+                </span>
+            </div>
+          </div>
+<% } %>                          
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,52 @@
+<% layout('layout') %>
+    <script>var article = <%- JSON.stringify(article) %></script>
+    <section class="hero-home dark-overlay mb-5"><img class="bg-image" src="/img/articles/<%=article.heroImagePath%>" alt="">
+        <div class="container py-7">
+            <div class="overlay-content text-center text-white">
+                <h1 class="display-3 text-serif font-weight-bold text-shadow mb-0"><%=article.title%></h1>
+            </div>
+        </div>
+    </section>
+    <section>
+        <div class="container">
+
+            <div class="row">
+                <div class="col-xl-8 col-lg-10 mx-auto">
+                    <p class="py-3 text-muted text-center font-weight-light">
+                        <a href="">
+                            <img class="avatar mr-2" src="/img/articles/<%=article.authorImagePath%>" alt="">
+                        </a> Written by
+                        <span class="font-weight-bold" href="#">
+                            <%=article.author%>
+                        </span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-xl-10 mx-auto">
+                    <div class="text-content my-4">
+                        <span class="lead"><strong><%=article.introText%></strong></span>
+                    </div>
+                </div>
+            </div>
+
+            <% for (i = 0; i < article.article.length; i++) { %>
+
+            <div class="row">
+                <div class="col-xl-10 mx-auto">
+                    <div class="text-content my-4">
+                        <h2><%=article.article[i].name%></h2>
+                        <img <% if (i%2 == 0) {%>class="img-fluid mb-5 sm-post-img md-post-img mr-4" align="left"<% } else { %>class="img-fluid mb-5 sm-post-img md-post-img ml-4" align="right"<% } %>src="/img/articles/<%=article.article[i].imagePath%>" alt="">
+                        <span class="lead"><%=article.article[i].text%></span>
+                        <p class="mt-2"><a href="<%=article.article[i].website%>">Visit website</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <% if (i != article.article.length-1) { %><hr><% } %>
+
+            <% } %>
+
+        </div>
+    </section>

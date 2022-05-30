@@ -1,0 +1,94 @@
+@media (max-width: 768px) {
+    .sm-post-img {
+        width: 100%;
+    }
+    .sm-poptitle {
+        font-size: 1.3rem;
+    }
+    .sm-tag-pill-large {
+        font-size: 8pt;
+        padding-right: 0.5rem;
+        padding-left: 0.5rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.35rem;
+        margin-right: 0.0rem;
+    }
+    .sm-tag-pill-large-img {
+        width: 26px;
+    }
+    .mobile-hidden {
+        display: none !important;
+    }
+    .sm-search-title {
+        font-size: 2.0rem;
+    }
+}
+
+@media (min-width: 768px) {
+    .md-post-img {
+        max-height: 400px;
+    }
+    .md-poptitle {
+        font-size: 1.5rem;
+    }
+    .md-tag-pill-large {
+        font-size: 11pt;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        padding-top: 0.5rem;
+        padding-bottom: 0.5rem;
+        margin-bottom: 0.5rem;
+        margin-right: 0.25rem;
+    }
+    .md-tag-pill-large-img {
+        width: 32px;
+    }
+    .md-search-title {
+        font-size: 2.5rem;
+    }
+}
+
+a:hover {
+ cursor:pointer;
+}
+
+.tag-pill {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.tag-pill-food {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.tag-pill-experience {
+    background-color: #e83e8c;
+    color: white;
+}
+
+.tag-pill-greatfor {
+    background-color: #ffc107;
+    color: #212529;
+}
+
+.tag-pill-button label {
+    margin-bottom: 0;
+}
+
+.tagcheckbox {
+    display: none;
+}
+
+.tag-food input:checked + div {
+    background-color:#0E6875;
+}
+
+.tag-experience input:checked + div {
+    background-color:#94285A;
+}
+
+.tag-greatfor input:checked + div {
+    background-color:#BA8D06;
+}

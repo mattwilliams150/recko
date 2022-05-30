@@ -1,0 +1,43 @@
+{
+    "name": "recko",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "dev": "nodemon server.js",
+        "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "async": "^3.2.0",
+        "bcrypt-nodejs": "0.0.3",
+        "body-parser": "^1.19.0",
+        "connect-flash": "^0.1.1",
+        "connect-mongo": "^3.2.0",
+        "cookie-parser": "^1.4.5",
+        "crypto": "^1.0.1",
+        "dotenv": "^8.2.0",
+        "ejs": "^3.1.5",
+        "ejs-mate": "^3.0.0",
+        "express": "^4.17.1",
+        "express-ip-access-control": "^1.0.5",
+        "express-session": "^1.17.1",
+        "express-validator": "^4.3.0",
+        "googleplaces": "^0.6.1",
+        "mongoose": "^5.11.9",
+        "node-fs": "^0.1.7",
+        "nodemailer": "^6.4.17",
+        "nodemailer-smtp-transport": "^2.7.4",
+        "passport": "^0.4.1",
+        "passport-local": "^1.0.0",
+        "passport-local-mongoose": "^6.1.0",
+        "path": "^0.12.7",
+        "qrcode": "^1.5.0",
+        "url": "^0.11.0"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.6"
+    }
+}

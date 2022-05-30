@@ -1,0 +1,342 @@
+<% layout('layout') %>
+      
+
+    <script>var data = <%- JSON.stringify(data) %></script>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-6 py-5 p-xl-5">
+          <h1 class="sm-search-title md-search-title"><%= type %> in <%= place %></h1>
+
+            <form method="GET" action="/results">
+                <div class="row collapse" id="editSearch">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <label class="form-label" for="place">Type of place</label>
+                            <select class="selectpicker form-control" name="type" id="form_type" data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="" onchange="updateCategories()">
+
+
+                            <% var types = ["Restaurants", "Bars", "Activities"]  %>
+
+                            <% for (i=0; i<types.length; i++) { %>
+                                <% if(types[i] == data.parameters.type) { %>
+                                    <option selected="selected"><%=types[i]%></option>
+                                <% } else { %>
+                                    <option><%=types[i]%></option>
+                                <% } %>
+                            <% } %>
+
+                            </select>
+                          </div>
+
+                    <div class="col-xl-4 col-md-6 mb-4">
+                            <label class="form-label" for="place">Location</label>
+                            <select class="selectpicker form-control" name="place" id="form_place" data-style="btn-selectpicker" data-live-search="true" data-selected-text-format="count &gt; 1" title="">
+
+                                <% for (i=0; i<data.locations.locations.length; i++) { %>
+                                    <% if(data.locations.locations[i] == data.parameters.place) { %>
+                                        <option selected="selected"><%=data.locations.locations[i]%></option>
+                                    <% } else { %>
+                                        <option><%=data.locations.locations[i]%></option>
+                                    <% } %>
+                                <% } %>
+
+                            </select>
+                    </div>
+
+                    <div class="col-12 text-right mb-4">
+                        <button class="btn btn-primary" type="submit"> <i class="fas fa-search mr-1"></i>Search</button>
+                    </div>
+                </div>
+
+                <div class="col-12 text-right">
+                <button class="btn btn-link btn-collapse pl-0 text-secondary" type="button" data-toggle="collapse" data-target="#editSearch" aria-expanded="false" aria-controls="editSearch" data-expanded-text="Edit Search" data-collapsed-text="Edit Search">Edit Search</button>
+              </div>
+            </form>
+
+
+
+
+        <hr class="my-2">
+
+
+
+          <form method="GET" action="/results">
+              <input type="hidden" id="type" name="type" value="<%=data.parameters.type%>">
+              <input type="hidden" id="place" name="place" value="<%=data.parameters.place%>">
+
+            <div class="row collapse" id="moreFilters">
+              <div class="col-xl-4 col-md-6 mb-4">
+
+                <% if (type == "Restaurants") { var filter_categories = data.categories.cuisines %>
+                <label class="form-label" for="form_category">Cuisine</label>
+                <% } else if (type == "Bars") { var filter_categories = data.categories.bars %>
+                <label class="form-label" for="form_category">Category</label>
+                <% } else { var filter_categories = data.categories.thingsToDo %>
+                <label class="form-label" for="form_category">Category</label>
+                  <% } %>
+                <select class="selectpicker form-control" name="category" id="form_category" data-style="btn-selectpicker" data-selected-text-format="count &gt; 1" title="">
+                    <option style="display:none"></option>
+                    <% for (i=0; i<filter_categories.length; i++) { %>
+                        <% if(filter_categories[i] == data.parameters.category) { %>
+                            <option selected="selected"><%=filter_categories[i]%></option>
+                        <% } else { %>
+                            <option><%=filter_categories[i]%></option>
+                        <% } %>
+                    <% } %>
+                </select>
+              </div>
+
+              <div class="col-12 pb-4">
+                   <div class="col-12 mb-4">
+                    <label class="form-label">Tag</label>
+                    <ul class="list-inline mb-0">
+                        
+                    <% for (i=0; i<filters.length; i++) { %>
+                        <% var tagId = filters[i][0] %>
+                        <% var tagReadable = data.categories.tagObj[tagId].name %>
+                        <% var tagCount = filters[i][1] %>
+                          <li>
+                            <div class="custom-control custom-checkbox">
+                                <% if(data.parameters.tags[tagId] == "on") { %>
+                                    <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>" checked="true">
+                                <% } else { %>
+                                    <input class="custom-control-input" type="checkbox" id="<%=tagId%>" name="<%=tagId%>">
+                                <% } %>
+                              <label class="custom-control-label" for="<%=tagId%>"><%=tagReadable%> (<%=tagCount%>)</label>
+                            </div>
+                          </li>
+                     <% } %>
+                    </ul>
+                  </div>
+              </div>
+              <div class="col-12 text-right mb-4">
+                <button class="btn btn-link"><a href="/results?type=<%= data.parameters.type %>&place=<%= data.parameters.place %>">Reset Filters</a></button>  
+                <button class="btn btn-primary" type="submit"> <i class="fas fa-filter mr-1"></i>Filter                </button>
+              </div>
+
+              </div>
+              <div class="col-12 text-right">
+                <button class="btn btn-link btn-collapse pl-0 text-secondary" type="button" data-toggle="collapse" data-target="#moreFilters" aria-expanded="false" aria-controls="moreFilters" data-expanded-text="Filter Results" data-collapsed-text="Filter Results">Filter Results</button>
+              </div>
+
+
+          </form>
+
+
+
+
+          <hr class="mb-3 mt-2">
+          <div class="d-flex justify-content-between align-items-center flex-column flex-md-row mb-4">
+            <div class="mr-3">
+              <p class="mb-3 mb-md-0"><strong><%= data.pagination.totalRecords %></strong> results found</p>
+            </div>
+            <div>
+              <label class="form-label mr-2" for="form_sort">Sort by</label>
+              <select class="selectpicker" name="sort" id="form_sort" data-style="btn-selectpicker" title="" onchange="resultsSort(this.value)">
+                <option value="review"<% if (data.parameters.sort == "review") {%> selected="selected" <% } %>>Rating</option>
+                <option value="relevance"<% if (data.parameters.sort == "relevance") {%> selected="selected" <% } %>>Recommended for you</option>
+              </select>
+            </div>
+          </div>
+          <div class="row">
+            
+            <% for (i = 0; i < data.places.length; i++) { %>
+            <!-- venue item-->
+              <a href='/listing?placeid=<%= data.places[i].placeId %>'>
+            <div class="col-sm-6 mb-4 hover-animate" data-marker-id="<%= data.places[i].placeId %>">
+                
+              <div class="card h-100 border-0 shadow" id="<%= data.places[i].placeId %>">
+                <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url('../img/place_photos/thumb/<%= data.places[i].photo %>'); min-height: 200px;">
+                  <div class="card-img-overlay-bottom z-index-20">
+                    <h4 class="text-white text-shadow"><%= data.places[i].placeName %></h4>
+                    <p class="mb-2 text-xs">
+                        <% for (j = 0; j < 5; j++) {
+                                if (Math.round(data.places[i].review) > j) {  %>
+                                    <i class="fa fa-star text-warning"></i>
+                                <% } else { %>
+                                    <i class="fa fa-star text-gray-300"></i>
+                                <% } %>
+                                             
+                        <% } %>
+                    <span class="text-white text-s"><%= data.places[i].review %></span>
+                    </p>
+                    <% if(relevanceAvailable) { %>
+                        <p><span class="badge badge-secondary"><%= data.places[i].relevance%>%</span> <span class="card-text text-sm text-white">Match</span></p>
+                    <% } %>
+                  </div>
+                  <div class="card-img-overlay-top d-flex justify-content-between align-items-center">
+                    <div class="badge badge-transparent badge-pill px-3 py-2"><%= data.places[i].subcategory%></div>
+                      <% if (false) { /*favorite icon*/ %>
+                      <a class="card-fav-icon position-relative z-index-40" href="javascript: void();">
+                      <svg class="svg-icon text-white">
+                        <use xlink:href="#heart-1"> </use>
+                      </svg>
+                      </a>
+                      <% } %>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <p class="text-sm mb-0">
+                      
+                    <%
+                    // show top tags  
+                      
+                    // number of tags shown                    
+                    var tagLim = 3;
+                    
+                    // convert to array for sorting            
+                    var tagArr = Object.entries(data.places[i].tags);
+                    // sort
+                    tagArr.sort(function(a, b) {
+                        return b[1] - a[1];
+                    });
+                    // take first N items according to tagLim
+                    var slicedTagArr = tagArr.slice(0, tagLim);
+                    
+                    // display top tags
+                     for (t = 0; t < slicedTagArr.length; t++) {
+                         var tagId = slicedTagArr[t][0]
+                         var tagcount = slicedTagArr[t][1]
+                         var tagReadable = categories.tagObj[tagId].name
+                         var tagImage = categories.tagObj[tagId].image
+                         var tagType = categories.tagObj[tagId].type
+                         if (tagType == "foodAndDrink") {
+                             var tagClass = "tag-pill-food";
+                         } else if (tagType == "experience") {
+                             var tagClass = "tag-pill-experience";  
+                         } else if (tagType == "foodAndDrink") {
+                             var tagClass = "tag-pill-greatfor";   
+                         } else {
+                             var tagClass = "tag-pill";
+                         }
+                         if (tagcount > 0) {
+                            %>
+                                <a class="mr-1 badge badge-pill <%= tagClass %> px-3 py-2 mb-2"><%= tagReadable%></a>
+                            <%
+                            }
+                        }
+                    %>
+                      
+                  </p>
+                </div>
+              </div>
+                
+            </div>
+                </a>
+            <% } %>  
+              
+
+          </div>
+          <!-- Pagination -->
+          <nav aria-label="Page navigation example">
+            <ul class="pagination pagination-template d-flex justify-content-center">
+            <% if (data.pagination.previousPage !== undefined) { %>
+                <li class="page-item"><a class="page-link" onClick="pageChange(<%= data.pagination.previousPage %>)"> <i class="fa fa-angle-left"></i></a></li>
+                <li class="page-item"><a class="page-link" onClick="pageChange(<%= data.pagination.previousPage %>)"><%= data.pagination.previousPage %></a></li>
+            <% } %>
+            <% if (data.pagination.maxPage !== 1) { %>
+                <li class="page-item active "><a class="page-link"><%= data.pagination.currentPage %></a></li>
+            <% } %>
+            <% if (data.pagination.nextPage !== undefined) { %>
+                <li class="page-item"><a class="page-link" onClick="pageChange(<%= data.pagination.nextPage %>)"><%= data.pagination.nextPage %></a></li>
+                <li class="page-item"><a class="page-link" onClick="pageChange(<%= data.pagination.nextPage %>)"> <i class="fa fa-angle-right"></i></a></li>
+            <% } %>
+            </ul>
+          </nav>
+        </div>
+        <div class="col-lg-6 map-side-lg pr-lg-0">
+          <div class="map-full shadow-left" id="categorySideMap"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/map.js"></script>
+
+    <script>
+    function pageChange(page) {
+        var params = "results";
+        var paramcnt = 0;
+        for (i in data.parameters) {
+            if (i != "page") {
+                if (paramcnt == 0) {
+                    params += "?"
+                    paramcnt = 1
+                } else {
+                    params += "&"
+                }
+                if (i == 'tags') {
+                    for (j in data.parameters.tags) {
+                        params += j + "=" + data.parameters.tags[j]
+                    }
+                } else {
+                    params += i + "=" + data.parameters[i]
+                }
+            }
+        };
+        params += "&page=" + page;
+        window.location.href = params;
+    }
+    function resultsSort(sortby){
+        var params = "results";
+        var paramcnt = 0;
+        for (i in data.parameters) {
+            if (i != "page" && i != "sort") {
+                if (paramcnt == 0) {
+                    params += "?"
+                    paramcnt = 1
+                } else {
+                    params += "&"
+                }
+                if (i == 'tags') {
+                    for (j in data.parameters.tags) {
+                        params += j + "=" + data.parameters.tags[j]
+                    }
+                } else {
+                    params += i + "=" + data.parameters[i]
+                }
+            }
+        };
+        
+        
+        params += "&sort=" + sortby;
+        console.log(params)
+        window.location.href = params;
+    }
+    </script>
+
+    <script>
+
+      createMap({
+          mapId: 'categorySideMap',
+      }, data.places);
+      
+    </script>
+
+    <!-- Price Slider-->
+    <script src="vendor/nouislider/nouislider.min.js"></script>
+    <script>
+      var snapSlider = document.getElementById('slider-snap');
+      
+      noUiSlider.create(snapSlider, {
+          start: [ 40, 110 ],
+          snap: false,
+          connect: true,
+          step: 1,
+          range: {
+              'min': 40,
+              'max': 110
+          }
+      });
+      var snapValues = [
+          document.getElementById('slider-snap-value-from'),
+          document.getElementById('slider-snap-value-to')
+      ];
+      var inputValues = [
+          document.getElementById('slider-snap-input-from'),
+          document.getElementById('slider-snap-input-to')
+      ];
+      snapSlider.noUiSlider.on('update', function( values, handle ) {
+          snapValues[handle].innerHTML = values[handle];
+          inputValues[handle].value = values[handle];
+      })
+    </script>

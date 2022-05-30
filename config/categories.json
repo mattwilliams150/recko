@@ -1,0 +1,224 @@
+{
+    "cuisines": [
+        "Barbecue",
+        "Burgers",
+        "Chinese",
+        "Desserts",
+        "French",
+        "German",
+        "Greek",
+        "Indian",
+        "Italian",
+        "Japanese",
+        "Korean",
+        "Latin American",
+        "Mexican",
+        "Middle Eastern",
+        "Pizza",
+        "Seafood",
+        "Spanish",
+        "Steak",
+        "Sushi",
+        "Thai",
+        "Vietnamese"
+    ],
+    "bars": [
+        "Rooftop",
+        "Live music",
+        "Late night",
+        "Sport",
+        "Pub garden",
+        "Café",
+        "Cocktails",
+        "Wine",
+        "Pub",
+        "Brewery"
+    ],
+    "thingsToDo": [
+        "Free",
+        "Landmark",
+        "Outdoors",
+        "Educational",
+        "Cultural",
+        "Immersive",
+        "Active",
+        "Entertainment"
+    ],
+    "tagObj": {
+        "culturally_authentic_dishes": {
+            "name": "Culturally Authentic Dishes",
+            "image": "004-fried-rice-w.png",
+            "type": "foodAndDrink"
+        },
+        "exciting_menu": {
+            "name": "Exciting Menu",
+            "image": "005-menu-w.png",
+            "type": "foodAndDrink"
+        },
+        "fantastic_flavours": {
+            "name": "Stunning Flavours",
+            "image": "003-vegetable-w.png",
+            "type": "foodAndDrink"
+        },
+        "generous_portions": {
+            "name": "Generous Portions",
+            "image": "006-feast-w.png",
+            "type": "foodAndDrink"
+        },
+        "fine_dining": {
+            "name": "Fine Dining",
+            "image": "007-waiter-serving-a-drink-on-a-tray-w.png",
+            "type": "foodAndDrink"
+        },
+        "small_plates_sharing": {
+            "name": "Small Plates / Sharing",
+            "image": "009-tapas-w.png",
+            "type": "foodAndDrink"
+        },
+        "street_food_vibes": {
+            "name": "Street Food Vibes",
+            "image": "010-street-food-w.png",
+            "type": "foodAndDrink"
+        },
+        "delicious_cocktails": {
+            "name": "Delicious Cocktails",
+            "image": "008-luxury-w.png",
+            "type": "foodAndDrink"
+        },
+        "craft_local_beer": {
+            "name": "Craft / Local Beer",
+            "image": "001-beer-w.png",
+            "type": "foodAndDrink"
+        },
+        "fantastic_wine_list": {
+            "name": "Extensive Wine List",
+            "image": "011-wine-glass-and-bottle-w.png",
+            "type": "foodAndDrink"
+        },
+        "awesome_architecture": {
+            "name": "Awesome Architecture",
+            "image": "025-modern-architecture-w.png",
+            "type": "experience"
+        },
+        "entertaining": {
+            "name": "Entertaining",
+            "image": "013-theater-w.png",
+            "type": "experience"
+        },
+        "fantastic_service": {
+            "name": "Fantastic Service",
+            "image": "012-waiter-w.png",
+            "type": "experience"
+        },
+        "luxurious": {
+            "name": "Luxurious",
+            "image": "002-chandelier-w.png",
+            "type": "experience"
+        },
+        "buzzing_atmosphere": {
+            "name": "Buzzing Atmosphere",
+            "image": "015-crowd-w.png",
+            "type": "experience"
+        },
+        "great_music": {
+            "name": "Great Music",
+            "image": "016-dj-w.png",
+            "type": "experience"
+        },
+        "intimate": {
+            "name": "Intimate",
+            "image": "021-table-w.png",
+            "type": "experience"
+        },
+        "modern_design": {
+            "name": "Modern Design",
+            "image": "023-modern-house-w.png",
+            "type": "experience"
+        },
+        "party_vibes": {
+            "name": "Party Vibes",
+            "image": "014-man-in-a-party-dancing-with-people-w.png",
+            "type": "experience"
+        },
+        "quirky": {
+            "name": "Quirky",
+            "image": "027-hipster-w.png",
+            "type": "experience"
+        },
+        "relaxing": {
+            "name": "Relaxing",
+            "image": "028-relax-w.png",
+            "type": "experience"
+        },
+        "romantic": {
+            "name": "Romantic",
+            "image": "035-hearts-w.png",
+            "type": "experience"
+        },
+        "rustic": {
+            "name": "Rustic",
+            "image": "024-barn-w.png",
+            "type": "experience"
+        },
+        "chic": {
+            "name": "Fashionably Chic",
+            "image": "029-women-hippie-style-w.png",
+            "type": "experience"
+        },
+        "working_from_home": {
+            "name": "Working From Home",
+            "image": "030-laptop-w.png",
+            "type": "greatFor"
+        },
+        "young_kids_families": {
+            "name": "Young Kids / Families",
+            "image": "031-baby-carriage-w.png",
+            "type": "greatFor"
+        },
+        "large_groups": {
+            "name": "Large Groups",
+            "image": "032-crowd-of-users-w.png",
+            "type": "greatFor"
+        },
+        "vegans_vegetarians": {
+            "name": "Vegans/Vegetarians",
+            "image": "033-vegan-w.png",
+            "type": "greatFor"
+        },
+        "bringing_the_dog": {
+            "name": "Bringing the Dog",
+            "image": "034-dog-w.png",
+            "type": "greatFor"
+        },
+        "a_date": {
+            "name": "A Date",
+            "image": "026-dating-w.png",
+            "type": "greatFor"
+        },
+        "a_special_occasion": {
+            "name": "A Special Occasion",
+            "image": "036-birthday-cake-w.png",
+            "type": "greatFor"
+        },
+        "a_quiet_catch_up": {
+            "name": "A Quiet Catch-Up",
+            "image": "017-talking-w.png",
+            "type": "greatFor"
+        },
+        "watching_sport": {
+            "name": "Watching Sport",
+            "image": "037-rugby-ball-on-tv-monitor-w.png",
+            "type": "greatFor"
+        },
+        "an_evening_with_friends": {
+            "name": "An Evening with Friends",
+            "image": "038-group-w.png",
+            "type": "greatFor"
+        },
+        "bottomless_brunch": {
+            "name": "Bottomless Brunch",
+            "image": "039-champagne-w.png",
+            "type": "greatFor"
+        }
+    }
+}
