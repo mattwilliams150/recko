@@ -42,6 +42,7 @@ module.exports = (app) => {
         
         // get lat long from crawl data        
         for (p in mongoplaces) {
+            console.log(mongoplaces[p].placeId);
             let placeId = mongoplaces[p].placeId;
             try {
                 let gplace = await gdata.find({'placeid':placeId});
