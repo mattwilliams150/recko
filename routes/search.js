@@ -4,10 +4,40 @@ var locations = require("../config/locations.json");
 var categories = require("../config/categories.json");
 var gdata = require("../models/googledata");
 var algorithm = require("./algorithm-simple");
+const review = require("../models/review");
 
 module.exports = (app) => {
   app.get("/results", async (req, res) => {
-    
+    //hitting google api if any place google data is not saved in the database
+    let allPlaceList = await Places.find();
+    let allGplaces = await gdata.find();
+    if (allPlaceList.length > 0) {
+      let placesIds = [];
+      let gplacesIds = [];
+      for (index in allPlaceList) {
+        placesIds.push(allPlaceList[index].placeId);
+      }
+      for (index in allGplaces) {
+        gplacesIds.push(allGplaces[index].placeid);
+      }
+      var noGoogleDataplacesList = placesIds.filter(function (n) {
+        return !this.has(n);
+      }, new Set(gplacesIds));
+      noGoogleDataplacesList.map((item, index) => {
+        if (item == "#N/A") {
+          noGoogleDataplacesList.splice(index);
+        }
+      });
+      if (noGoogleDataplacesList.length > 0) {
+        for (index in noGoogleDataplacesList) {
+          // let gData = await getGooglePlace(noGoogleDataplacesList[index]);
+          // if (gData) {
+          //   await saveplace(noGoogleDataplacesList[index], gData);
+          // }
+        }
+      }
+    }
+
     // possible parameters
     var type = req.query.type;
     var place = req.query.place;
@@ -48,7 +78,24 @@ module.exports = (app) => {
 
     // get places
     var mongoplaces = await Places.find(query).lean();
+
     // rating_logic
+    var gplaces = await gdata.find();
+    let gPlacesId = [];
+    for (index in gplaces) {
+      if (gplaces[index].data.result) {
+        gPlacesId.push({
+          placeId: gplaces[index].placeid,
+          review: gplaces[index].data.result.rating,
+        });
+      }
+    }
+    for (index in gPlacesId) {
+      await Places.findOneAndUpdate(
+        { placeId: gPlacesId[index].placeId },
+        { review: gPlacesId[index].review }
+      );
+    }
     var placeIds = [];
     mongoplaces.forEach((record) => {
       placeIds.push(record.placeId);
@@ -57,41 +104,30 @@ module.exports = (app) => {
       var reviewlist = [];
       for (index in placeIds) {
         let r = await Review.find({ placeid: placeIds[index] });
-        if (r.length > 0) {
-          let pushReview = { placeId: r[0].placeid, reviewLength: r.length };
+        if (r.length >= 5) {
+          let reviewCount = await Review.find({ placeid: r[0].placeid });
+          let ratingArray = [];
+          for (reviewAdd in reviewCount) {
+            ratingArray.push(reviewCount[reviewAdd].rating);
+          }
+          let rating =
+            ratingArray.reduce((partialSum, a) => partialSum + a, 0) /
+            reviewCount.length;
+          let pushReview = {
+            placeId: r[0].placeid,
+            reviewLength: r.length,
+            rating: rating.toFixed(1),
+          };
           reviewlist.push(pushReview);
         }
       }
-      var reckoReviewlist = [];
-      for (index in reviewlist) {
-        let rl = await Places.findOne({
-          placeId: String(reviewlist[index].placeId),
-        });
-        if (reviewlist[index].reviewLength >= 5) {
-          reckoReviewlist.push(rl);
+      if (reviewlist.length > 0) {
+        for (index in reviewlist) {
+          await Places.findOneAndUpdate(
+            { placeId: reviewlist[index].placeId },
+            { review: reviewlist[index].rating }
+          );
         }
-      }
-      var googleReviewList = [];
-      let grl = await gdata.find();
-      for (index in grl) {
-        if (grl[index].data.result !== undefined) {
-          if (grl[index].data.result.rating !== undefined){
-            let grating = grl[index].data.result.rating;
-            let placeId = grl[index].placeid;
-            let pushReview = { rating: grating, placeId: placeId };
-            googleReviewList.push(pushReview);
-            // for (index in reckoReviewlist) {
-            //   if (reckoReviewlist[index].placeId !== placeId) {
-            //   }
-            // }
-          }
-        }
-      }
-      for (index in googleReviewList) {
-        await Places.findOneAndUpdate({
-          placeId: googleReviewList[index].placeId,
-          review: googleReviewList[index].rating,
-        });
       }
     }
 
@@ -232,29 +268,62 @@ module.exports = (app) => {
       loggedIn: loggedIn,
       categories: categories,
       relevanceAvailable: relevanceAvailable,
-      googleReviewList: googleReviewList,
       filters: filters,
       datalayer: datalayer,
     });
   });
 };
 
-function getGooglePlaces(type, place) {
+// function getGooglePlaces(type, place) {
+//   return new Promise((resolve, reject) => {
+//     var gp = require("googleplaces");
+//     var apikey = process.env.SERVER_GOOGLE_PLACES_API_KEY;
+//     var googlePlaces = new gp(apikey, "json");
+//     var parameters = {
+//       query: type + " in " + place,
+//     };
+//     var places = googlePlaces.textSearch(
+//       parameters,
+//       function (error, response) {
+//         if (error) {
+//           reject(error);
+//         }
+//         resolve(response);
+//       }
+//     );
+//   });
+// }
+
+async function getGooglePlace(placeid) {
   return new Promise((resolve, reject) => {
     var gp = require("googleplaces");
     var apikey = process.env.SERVER_GOOGLE_PLACES_API_KEY;
     var googlePlaces = new gp(apikey, "json");
     var parameters = {
-      query: type + " in " + place,
+      reference: placeid,
     };
-    var places = googlePlaces.textSearch(
+    var place = googlePlaces.placeDetailsRequest(
       parameters,
       function (error, response) {
         if (error) {
           reject(error);
+          console.log("Google Places Error: " + error);
         }
         resolve(response);
       }
     );
+  });
+}
+
+async function saveplace(placeid, place) {
+  gdata.findOne({ placeid: placeid }, (err, dbplace) => {
+    if (!dbplace) {
+      var newPlace = new gdata();
+      newPlace.placeid = placeid;
+      newPlace.data = place;
+      newPlace.save((err) => {
+        console.log(err);
+      });
+    }
   });
 }

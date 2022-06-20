@@ -169,9 +169,7 @@ module.exports = (app) => {
             {$set : setUserSubcatQuery}, 
             function(err, response) { 
                 console.log('user tag update error: ' + err);
-            });        
-        
-        
+            });
         await res.redirect('/listing?placeid='+req.query.placeid);
     });
 }
