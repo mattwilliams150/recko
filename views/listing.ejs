@@ -30,7 +30,9 @@
                         <% } %>
                     <% } %>
                 <% } %>
+                <%if(!!place[0].review){%>
                 <span class="text-white text-s mr-4"><%= place[0].review %></span>
+                <%}%>
               </p>
                 <% if(relevanceAvailable) { %>
               <p>

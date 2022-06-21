@@ -23,11 +23,7 @@ module.exports = (app) => {
       var noGoogleDataplacesList = placesIds.filter(function (n) {
         return !this.has(n);
       }, new Set(gplacesIds));
-      noGoogleDataplacesList.map((item, index) => {
-        if (item == "#N/A") {
-          noGoogleDataplacesList.splice(index);
-        }
-      });
+      noGoogleDataplacesList.filter((item) => item !== "#N/A");
       if (!!noGoogleDataplacesList.length) {
         for (index in noGoogleDataplacesList) {
           // let gData = await getGooglePlace(noGoogleDataplacesList[index]);
@@ -90,12 +86,16 @@ module.exports = (app) => {
         });
       }
     }
+    let placesPromiseArray = [];
     for (index in gPlacesId) {
-      await Places.findOneAndUpdate(
-        { placeId: gPlacesId[index].placeId },
-        { review: gPlacesId[index].review }
+      placesPromiseArray.push(
+        Places.findOneAndUpdate(
+          { placeId: gPlacesId[index].placeId },
+          { review: gPlacesId[index].review }
+        )
       );
     }
+    await Promise.all(placesPromiseArray);
     var placeIds = [];
     mongoplaces.forEach((record) => {
       placeIds.push(record.placeId);
@@ -122,12 +122,16 @@ module.exports = (app) => {
         }
       }
       if (!!reviewlist.length) {
+        let reviewPromiseArray = [];
         for (index in reviewlist) {
-          await Places.findOneAndUpdate(
-            { placeId: reviewlist[index].placeId },
-            { review: reviewlist[index].rating }
+          reviewPromiseArray.push(
+            Places.findOneAndUpdate(
+              { placeId: reviewlist[index].placeId },
+              { review: reviewlist[index].rating }
+            )
           );
         }
+        await Promise.all(reviewPromiseArray);
       }
     }
 
