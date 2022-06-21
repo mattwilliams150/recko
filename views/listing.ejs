@@ -41,7 +41,7 @@
                 <% } %>
               
             <!-- ABOUT -->    
-              <p><%= place[0].description %></p>
+              <p><%= !!place.length ? place[0].description : "" %></p>
               
               <p class="mb-0" >
                 <div class="form-group tag-pill-button">
