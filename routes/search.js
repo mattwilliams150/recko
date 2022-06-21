@@ -11,7 +11,7 @@ module.exports = (app) => {
     //hitting google api if any place google data is not saved in the database
     let allPlaceList = await Places.find();
     let allGplaces = await gdata.find();
-    if (allPlaceList.length > 0) {
+    if (!!allPlaceList.length) {
       let placesIds = [];
       let gplacesIds = [];
       for (index in allPlaceList) {
@@ -28,7 +28,7 @@ module.exports = (app) => {
           noGoogleDataplacesList.splice(index);
         }
       });
-      if (noGoogleDataplacesList.length > 0) {
+      if (!!noGoogleDataplacesList.length) {
         for (index in noGoogleDataplacesList) {
           // let gData = await getGooglePlace(noGoogleDataplacesList[index]);
           // if (gData) {
@@ -100,7 +100,7 @@ module.exports = (app) => {
     mongoplaces.forEach((record) => {
       placeIds.push(record.placeId);
     });
-    if (placeIds.length > 0) {
+    if (!!placeIds.length) {
       var reviewlist = [];
       for (index in placeIds) {
         let r = await Review.find({ placeid: placeIds[index] });
@@ -121,7 +121,7 @@ module.exports = (app) => {
           reviewlist.push(pushReview);
         }
       }
-      if (reviewlist.length > 0) {
+      if (!!reviewlist.length) {
         for (index in reviewlist) {
           await Places.findOneAndUpdate(
             { placeId: reviewlist[index].placeId },
@@ -168,7 +168,7 @@ module.exports = (app) => {
       mongoplaces[key] = mongoplace;
     });
 
-    if (mongoplaces.length > 0) {
+    if (!!mongoplaces.length) {
       var relevanceAvailable = mongoplaces[0].relevanceAvailable;
     } else {
       var relevanceAvailable = false;
