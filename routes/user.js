@@ -157,26 +157,16 @@ module.exports = (app, passport) => {
           },
 
           function (rand, user, callback) {
-            //    var smtpTransport = nodemailer.createTransport({
-            //        service: 'Gmail',
-            //        auth: {
-            //            user: secret.auth.user,
-            //            pass: secret.auth.pass
-            //        }
-            //    });
-            var smtpTransport = nodemailer.createTransport({
-              host: "mail.infomaniak.com",
-              port: 587,
-              secure: false,
-              auth: {
-                user: "infos@claimyourrights.ch",
-                pass: "Newpassword@2022",
-              },
-            });
+               var smtpTransport = nodemailer.createTransport({
+                   service: 'Gmail',
+                   auth: {
+                       user: secret.auth.user,
+                       pass: secret.auth.pass
+                   }
+               });
             var mailOptions = {
               to: user.email,
-              //    from: 'Recko '+'<'+secret.auth.user+'>',
-              from: "infos@claimyourrights.ch",
+                 from: 'Recko '+'<'+secret.auth.user+'>',
               subject: "Recko - Password Reset",
               text:
                 "You have requested for a password reset token. \n\n Please click the link to complete the process: \n\n http://localhost:3000/reset/" +
@@ -299,27 +289,17 @@ module.exports = (app, passport) => {
         },
 
         function (user, callback) {
-          //    var smtpTransport = nodemailer.createTransport({
-          //        service: 'Gmail',
-          //        auth: {
-          //            user: secret.auth.user,
-          //            pass: secret.auth.pass
-          //        }
-          //    });
-          var smtpTransport = nodemailer.createTransport({
-            host: "mail.infomaniak.com",
-            port: 587,
-            secure: false,
-            auth: {
-              user: "infos@claimyourrights.ch",
-              pass: "Newpassword@2022",
-            },
-          });
+             var smtpTransport = nodemailer.createTransport({
+                 service: 'Gmail',
+                 auth: {
+                     user: secret.auth.user,
+                     pass: secret.auth.pass
+                 }
+             });
 
           var mailOptions = {
             to: user.email,
-            from: "infos@claimyourrights.ch",
-            //    from: 'Recko '+'<'+secret.auth.user+'>',
+               from: 'Recko '+'<'+secret.auth.user+'>',
             subject: "Recko - Your password has been updated",
             text: "Your password has been updated for " + user.email,
           };
