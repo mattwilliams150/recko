@@ -399,7 +399,7 @@ function loginValidate(req, res, next) {
       loginErrors.forEach((error) => {
         messages.push(error.msg);
       });
-
+ 
       req.flash("error", messages);
       res.redirect("/login");
     } else {
