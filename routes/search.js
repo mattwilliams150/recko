@@ -24,13 +24,39 @@ module.exports = (app) => {
           return !this.has(n);
         }, new Set(placesIds));
         let noplacesListArray = [];
-        console.log(noplacesList);
         for (index in noplacesList) {
           noplacesListArray.push(
-            gdata.findOne({ placeid: noplacesList[index] })
+            await gdata.findOne({placeid: noplacesList[index]})
           );
         }
         await Promise.all(noplacesListArray);
+        for(index in noplacesListArray){
+            let p = new Places();
+            p.placeId = noplacesListArray[index].placeid;
+            p.photo = "";
+            p.lat=noplacesListArray[index].data.result.geometry.location.lat?noplacesListArray[index].data.result.geometry.location.lat:"";
+            p.long=noplacesListArray[index].data.result.geometry.location.lng?noplacesListArray[index].data.result.geometry.location.lng:"";
+            p.placeName=noplacesListArray[index].data.result.name?noplacesListArray[index].data.result.name:"";
+            p.review=noplacesListArray[index].data.result.rating?noplacesListArray[index].data.result.rating:"";
+            p.price="";
+            p.address=noplacesListArray[index].data.result.formatted_address?noplacesListArray[index].data.result.formatted_address:"";
+            p.sw4=noplacesListArray[index].data.result.formatted_address.search("SW4")>0?1:0;
+            p.sw11=noplacesListArray[index].data.result.formatted_address.search("SW11")>0?1:0;
+            p.sw12=noplacesListArray[index].data.result.formatted_address.search("SW12")>0?1:0;
+            p.telephone=noplacesListArray[index].data.result.formatted_phone_number?noplacesListArray[index].data.result.formatted_phone_number:"";
+            p.website=noplacesListArray[index].data.result.website?noplacesListArray[index].data.result.website:'';
+            p.description="";
+            p.type=noplacesListArray[index].data.result.types[index]?noplacesListArray[index].data.result.types[index]:'';
+            p.tag1="";
+            p.tag2="";
+            p.tag3="";
+            p.subcategory="";
+            p.amenities=null;
+            p.tags={};
+            p.save((err) => {
+              console.log(err);
+            });
+        }
         //hitting google api if any place google data is not saved in the database
         var noGoogleDataplacesList = placesIds.filter(function (n) {
           return !this.has(n);
@@ -117,7 +143,7 @@ module.exports = (app) => {
         for (index in placeIds) {
           let r = await Review.find({ placeid: placeIds[index] });
           if (r.length >= 5) {
-            let reviewCount = await Review.find({ placeid: r[0].placeid });
+            let reviewCount = await Review.find({ placeid: r[index].placeid?r[index].placeid:""});
             let ratingArray = [];
             for (reviewAdd in reviewCount) {
               ratingArray.push(reviewCount[reviewAdd].rating);
@@ -126,7 +152,7 @@ module.exports = (app) => {
               ratingArray.reduce((partialSum, a) => partialSum + a, 0) /
               reviewCount.length;
             let pushReview = {
-              placeId: r[0].placeid,
+              placeId: r[index].placeid,
               reviewLength: r.length,
               rating: rating.toFixed(1),
             };
@@ -152,7 +178,7 @@ module.exports = (app) => {
         let placeId = mongoplaces[p].placeId;
         try {
           let gplace = await gdata.find({ placeid: placeId });
-          let location = gplace[0].data.result.geometry.location;
+          let location = gplace[index].data.result.geometry.location;
           mongoplaces[p].lat = location.lat;
           mongoplaces[p].long = location.lng;
         } catch (e) {
@@ -185,7 +211,7 @@ module.exports = (app) => {
       });
 
       if (!!mongoplaces.length) {
-        var relevanceAvailable = mongoplaces[0].relevanceAvailable;
+        var relevanceAvailable = mongoplaces[index].relevanceAvailable;
       } else {
         var relevanceAvailable = false;
       }
@@ -289,6 +315,7 @@ module.exports = (app) => {
       });
     } catch (e) {
       logger.error(e.message);
+      logger.error(e.stack);
     }
   });
 };
