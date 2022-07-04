@@ -1,10 +1,6 @@
 # recko
 
 //routes/search.js
-line no. 22
-Ensure all places on Google Doc are in database.
-line no. 34
-hitting google api if any place google data is not saved in the database
 line no. 90
 rating_logic
 
@@ -58,3 +54,17 @@ Creative presentation.
 // popover text change is added also done.
 //views/partials/popover.ejs
 line no.14
+
+
+//places.csv / google api task
+step1
+firstly in places.csv i have added places from the Balham - June 2022.xlsx
+step2
+After that i am mapping places table and googleData table,in which i am filtering those placeId which are not present in googleDataTable.(nPGoogleData)
+step3
+Next i am calling GoogleApi for those nPGoogleData.places and saving them into the googledatatable.
+
+I am sending you places.csv of those file record which are added from Balham - June 2022.xlsx.
+
+Note->
+In REFINED clapham_2_readable - October 2021.xlsx data we have no id or placeId so am not able to map the records.
