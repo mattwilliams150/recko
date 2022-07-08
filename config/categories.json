@@ -56,7 +56,7 @@
             "type": "foodAndDrink"
         },
         "fantastic_flavours": {
-            "name": "Fabulous Flavours",
+            "name": "Stunning Flavours",
             "image": "003-vegetable-w.png",
             "type": "foodAndDrink"
         },
@@ -161,7 +161,7 @@
             "type": "experience"
         },
         "chic": {
-            "name": "Chic",
+            "name": "Fashionably Chic",
             "image": "029-women-hippie-style-w.png",
             "type": "experience"
         },
@@ -217,6 +217,11 @@
         },
         "bottomless_brunch": {
             "name": "Bottomless Brunch",
+            "image": "039-champagne-w.png",
+            "type": "greatFor"
+        },
+        "creative presentation":{
+            "name": "Creative Presentation",
             "image": "039-champagne-w.png",
             "type": "greatFor"
         }

@@ -47,7 +47,6 @@
                         <button class="btn btn-primary" type="submit"> <i class="fas fa-search mr-1"></i>Search</button>
                     </div>
                 </div>
-
                 <div class="col-12 text-right">
                 <button class="btn btn-link btn-collapse pl-0 text-secondary" type="button" data-toggle="collapse" data-target="#editSearch" aria-expanded="false" aria-controls="editSearch" data-expanded-text="Edit Search" data-collapsed-text="Edit Search">Edit Search</button>
               </div>
@@ -211,7 +210,8 @@
                          }
                          if (tagcount > 0) {
                             %>
-                                <a class="mr-1 badge badge-pill <%= tagClass %> px-3 py-2 mb-2"><%= tagReadable%></a>
+                                <a class="mr-1 badge badge-pill <%= tagClass %> px-3 py-2 mb-2">
+                                  <img class="pr-2 sm-tag-pill-large-img md-tag-pill-mid-img" src="img/icons/<%= tagImage %>" alt="<%=tagReadable%> Icon"><%= tagReadable%></a>
                             <%
                             }
                         }
