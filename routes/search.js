@@ -323,8 +323,4 @@ async function saveplace(placeid, place) {
       });
     }
   });
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> b1a3b474291f8b655e7025fabb93a93715ca328b
