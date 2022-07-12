@@ -28,7 +28,7 @@
 
                 </div>
             <% } %>
-            <form class="form-validate" method="POST" class="" id="signupForm" action="/reset">
+            <form class="form-validate" method="POST" class="" id="signupForm" action="/reset/:<%=token%>">
               <div class="form-group">
                 <label class="form-label" for="loginPassword"> Password</label>
                 <input class="form-control" name="password" id="loginPassword" placeholder="Password" type="password" required data-msg="Please enter your password">

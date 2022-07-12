@@ -1,5 +1,6 @@
 var Review = require("../models/review");
 var Places = require("../models/places");
+const logger=require("../logger/index.js");
 var locations = require("../config/locations.json");
 var categories = require("../config/categories.json");
 var gdata = require("../models/googledata");
@@ -322,4 +323,8 @@ async function saveplace(placeid, place) {
       });
     }
   });
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> b1a3b474291f8b655e7025fabb93a93715ca328b

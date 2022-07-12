@@ -44,6 +44,9 @@
     .md-tag-pill-large-img {
         width: 32px;
     }
+    .md-tag-pill-mid-img {
+        width: 23px;
+    }
     .md-search-title {
         font-size: 2.5rem;
     }
