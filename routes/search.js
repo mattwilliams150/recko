@@ -1,6 +1,6 @@
 var Review = require("../models/review");
 var Places = require("../models/places");
-const logger=require("../logger/index.js");
+const logger = require("../logger/index.js");
 var locations = require("../config/locations.json");
 var categories = require("../config/categories.json");
 var gdata = require("../models/googledata");

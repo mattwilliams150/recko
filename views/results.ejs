@@ -137,15 +137,17 @@
               </select>
             </div>
           </div>
-          <div class="row">
+          <div class="row  places-list-rw">
             
             <% for (i = 0; i < data.places.length; i++) { %>
             <!-- venue item-->
+            <div class="col-lg-6 col-md-6 col-12 mb-4 hover-animate" data-marker-id="<%= data.places[i].placeId %>">
               <a href='/listing?placeid=<%= data.places[i].placeId %>'>
-            <div class="col-sm-6 mb-4 hover-animate" data-marker-id="<%= data.places[i].placeId %>">
                 
-              <div class="card h-100 border-0 shadow" id="<%= data.places[i].placeId %>">
-                <div class="card-img-top overflow-hidden dark-overlay bg-cover" style="background-image: url('../img/place_photos/thumb/<%= data.places[i].photo %>'); min-height: 200px;">
+              <div class="card h-100 w-100 border-0 shadow" id="<%= data.places[i].placeId %>">
+                <div class="card-img-top  w-100 overflow-hidden dark-overlay bg-cover">
+                  
+                  <div class="places-img w-100"><img  class="w-100" src="../img/place_photos/thumb/<%= data.places[i].photo %>" /></div>
                   <div class="card-img-overlay-bottom z-index-20">
                     <h4 class="text-white text-shadow"><%= data.places[i].placeName %></h4>
                     <p class="mb-2 text-xs">
@@ -174,7 +176,7 @@
                       <% } %>
                   </div>
                 </div>
-                <div class="card-body">
+                <div class="card-body w-100">
                   <p class="text-sm mb-0">
                       
                     <%
@@ -219,10 +221,10 @@
                       
                   </p>
                 </div>
-              </div>
                 
+              </div>
+              </a>
             </div>
-                </a>
             <% } %>  
               
 
