@@ -95,3 +95,7 @@ a:hover {
 .tag-greatfor input:checked + div {
     background-color:#BA8D06;
 }
+.places-img img {
+    height: 215px;
+    object-fit: cover;
+}
