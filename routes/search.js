@@ -155,6 +155,59 @@ module.exports = (app) => {
         }
       }
 
+      if (allGplaces.length > 0) {
+        for (let place of allPlaceList) {
+          let placeStaticTags = [place.tag1, place.tag2, place.tag3];
+          placeStaticTags = placeStaticTags.map((tag) =>
+            tag.toString().toLowerCase()
+          );
+          let currentKey = [];
+          for (let item of Object.keys(categories.tagObj)) {
+            const name = categories.tagObj[item].name;
+            for (let tag of placeStaticTags) {
+              if (tag.includes(name.toLowerCase())) {
+                currentKey.push(item);
+                break;
+              }
+            }
+          }
+
+          let staticTagObject = {};
+          for (let staticTag in categories.tagObj) {
+            staticTagObject[staticTag] = 0;
+          }
+          for (let key of currentKey) {
+            staticTagObject[key] = 1;
+          }
+          await Places.replaceOne(
+            { _id: place._id },
+            {
+              tags: staticTagObject,
+              placeId: place.placeId,
+              photo: place.photo,
+              lat: place.lat,
+              long: place.long,
+              placeName: place.placeName,
+              review: place.review,
+              price: place.price,
+              address: place.address,
+              location: place.location,
+              sw4: place.sw4,
+              sw11: place.sw11,
+              sw12: place.sw12,
+              telephone: place.telephone,
+              website: place.website,
+              description: place.description,
+              type: place.type,
+              tag1: place.tag1,
+              tag2: place.tag2,
+              tag3: place.tag3,
+              subcategory: place.subcategory,
+              amenities: place.amenities,
+            }
+          );
+        }
+      }
       // count number of places per filter
       var filters = [];
       for (tag in categories.tagObj) {
