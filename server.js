@@ -44,12 +44,12 @@ app.use(function (req, res, next) {
         }
     }
 
-    if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production' || qaIdCheck) {
+    // if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production' || qaIdCheck) {
         next();
-    } else {
-        res.end();
-        console.log('Access Denied');
-    };
+    // } else {
+        // res.end();
+        // console.log('Access Denied');
+    // };
 });
 // require('./secret/secret');
 
