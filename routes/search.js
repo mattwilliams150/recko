@@ -9,35 +9,21 @@ var algorithm = require("./algorithm-simple");
 module.exports = (app) => {
 	app.get("/results", async (req, res) => {
 		try {
+			console.log("Searching for results...");
 			//mapping data in places abd google id
-			// let allPlaceList = await Places.find();
-			// let allGplaces = await gdata.find();
-			// if (!!allPlaceList.length) {
-			// 	let placesIds = [];
-			// 	let gplacesIds = [];
-			// 	for (index in allPlaceList) {
-			// 		placesIds.push(allPlaceList[index].placeId);
-			// 	}
-			// 	for (index in allGplaces) {
-			// 		gplacesIds.push(allGplaces[index].placeid);
-			// 	}
-				//places which are not in the googledata table.
-				// var nPGoogleData = placesIds.filter(function (n) {
-				// 	return !this.has(n);
-				// }, new Set(gplacesIds));
-				// nPGoogleData.filter((item) => item !== "#N/A");
-				// if (!!nPGoogleData.length) {
-				// 	for (index in nPGoogleData) {
-				// 		let gData = await getGooglePlace(nPGoogleData[index]);
-				// 		if (gData) {
-				// 			await saveplace(nPGoogleData[index], gData);
-				// 		}
-				// 	}
-				// }
-			// }
+			let allPlaceList = await Places.find();
+			let allGplaces = await gdata.find();
+			// possible parameters
+			var type = req.query.type;
+			var place = req.query.place;
+			var category = req.query.category;
+			var page = parseInt(req.query.page) || 1; // current page defaults to 1
+			var sort = req.query.sort;
+
 
 			// // get places
-			var mongoplaces = await Places.find().lean();
+			var query = { type: type };
+			var mongoplaces = await Places.find(query).lean();
 
 			// rating_logic
 			var gplaces = await gdata.find();
@@ -99,13 +85,6 @@ module.exports = (app) => {
 				}
 			}
 
-			// possible parameters
-			var type = req.query.type;
-			var place = req.query.place;
-			var category = req.query.category;
-			var page = parseInt(req.query.page) || 1; // current page defaults to 1
-			var sort = req.query.sort;
-
 			//tags
 			var tagParams = {};
 			for (tag in categories.tagObj) {
@@ -120,7 +99,6 @@ module.exports = (app) => {
 			}
 
 			// search places in database
-			var query = { type: type };
 			if (req.query.place == "Battersea") {
 				query.sw11 = 1;
 			} else if (req.query.place == "Balham") {
@@ -137,8 +115,7 @@ module.exports = (app) => {
 				}
 			}
 
-			// get places
-			var mongoplaces = await Places.find(query).lean();
+
 
 			// get lat long from crawl data
 			for (p in mongoplaces) {
@@ -336,6 +313,7 @@ module.exports = (app) => {
 				filters: filters,
 				datalayer: datalayer,
 			});
+			console.log("rendered results");
 		} catch (e) {
 			logger.error(e.message);
 			logger.error(e.stack);
