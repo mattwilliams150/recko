@@ -21,16 +21,16 @@ module.exports = (app) => {
 			var sort = req.query.sort;
 
 			// rating_logic
-			var gplaces = await gdata.find().lean();
-			let gPlacesId = [];
-			for (index in gplaces) {
-				if (gplaces[index].data.result) {
-					gPlacesId.push({
-						placeId: gplaces[index].placeid,
-						review: gplaces[index].data.result.rating,
-					});
-				} 
-			}
+			// var gplaces = await gdata.find().lean();
+			// let gPlacesId = [];
+			// for (index in gplaces) {
+			// 	if (gplaces[index].data.result) {
+			// 		gPlacesId.push({
+			// 			placeId: gplaces[index].placeid,
+			// 			review: gplaces[index].data.result.rating,
+			// 		});
+			// 	} 
+			// }
 			// let placesPromiseArray = [];
 			// for (index in gPlacesId) {
 			// 	placesPromiseArray.push(
@@ -44,6 +44,7 @@ module.exports = (app) => {
 			
 			//tags
 			var tagParams = {};
+			var query = { type: type };
 			for (tag in categories.tagObj) {
 				tagParams[tag] = req.query[tag];
 			}
@@ -71,10 +72,7 @@ module.exports = (app) => {
 			}
 
 			// // get places
-			console.log("fetching places from places")
-			var query = { type: type };
 			var mongoplaces = await Places.find(query).lean();
-			console.log("finished fetching places from places")
 
 			var placeIds = [];
 			mongoplaces.forEach((record) => {
@@ -115,17 +113,17 @@ module.exports = (app) => {
 			// 	}
 			// }
 			// get lat long from crawl data
-			for (p in mongoplaces) {
-				let placeId = mongoplaces[p].placeId;
-				try {
-					let gplace = gplaces.filter((gplace) => gplace.placeid == placeId)[0];
-					let location = gplace.data?.result?.geometry?.location;
-					mongoplaces[p].lat = location.lat;
-					mongoplaces[p].long = location.lng;
-				} catch (e) {
-					console.log("place g lookup error: placeid:" + placeId + " : " + e);
-				}
-			}
+			// for (p in mongoplaces) {
+			// 	let placeId = mongoplaces[p].placeId;
+			// 	try {
+			// 		let gplace = await gdata.findOne({ placeid: placeId }).lean();
+			// 		let location = gplace?.data?.result?.geometry?.location;
+			// 		mongoplaces[p].lat = location.lat;
+			// 		mongoplaces[p].long = location.lng;
+			// 	} catch (e) {
+			// 		console.log("place g lookup error: placeid:" + placeId + " : " + e);
+			// 	}
+			// }
 
 			// what does this do????
 			// if (gplaces.length > 0) {
@@ -181,6 +179,7 @@ module.exports = (app) => {
 			// 		);
 			// 	}
 			// }
+
 			// count number of places per filter
 			var filters = [];
 			for (tag in categories.tagObj) {
