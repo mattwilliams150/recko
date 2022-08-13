@@ -6,7 +6,7 @@ var categories = require("../config/categories.json");
 var gdata = require("../models/googledata");
 var algorithm = require("./algorithm-simple");
 
-module.exports = (app) => {
+module.exports = (app, gplaces) => {
 	app.get("/results", async (req, res) => {
 		try {
 			console.log("Searching for results...");
@@ -110,18 +110,18 @@ module.exports = (app) => {
 			// 		// await Promise.all(reviewPromiseArray);
 			// 	}
 			// }
-			// get lat long from crawl data
-			// for (p in mongoplaces) {
-			// 	let placeId = mongoplaces[p].placeId;
-			// 	try {
-			// 		let gplace = await gdata.findOne({ placeid: placeId }).lean();
-			// 		let location = gplace?.data?.result?.geometry?.location;
-			// 		mongoplaces[p].lat = location.lat;
-			// 		mongoplaces[p].long = location.lng;
-			// 	} catch (e) {
-			// 		console.log("place g lookup error: placeid:" + placeId + " : " + e);
-			// 	}
-			// }
+			//get lat long from crawl data
+			for (p in mongoplaces) {
+				let placeId = mongoplaces[p].placeId;
+				try {
+					let gplace = await gplaces.filter((gplace) => gplace.placeid == placeId)[0];
+					let location = gplace?.data?.result?.geometry?.location;
+					mongoplaces[p].lat = location.lat;
+					mongoplaces[p].long = location.lng;
+				} catch (e) {
+					console.log("place g lookup error: placeid:" + placeId + " : " + e);
+				}
+			}
 
 			// what does this do????
 			// if (gplaces.length > 0) {

@@ -12,73 +12,78 @@ var mongoose = require('mongoose');
 var mongostore = require('connect-mongo')(session);
 var passport = require('passport');
 var flash = require('connect-flash');
+var gdata = require("./models/googledata");
 
 var app = express();
 mongoose.set('useFindAndModify', false);
 mongoose.Promise = global.Promise;
 mongoose.connect(process.env.MONGODB_URI, {
-   useNewUrlParser: true,
-   useUnifiedTopology: true
- });
+		useNewUrlParser: true,
+		useUnifiedTopology: true
+	})
+	.then(async () => {
+		console.log('Connected to MongoDB');
+		require('./config/passport');
+		app.use(cookieParser());
 
-require('./config/passport');
-app.use(cookieParser());
+		// only allow localhost or testing IPs.
+		app.use(function (req, res, next) {
+			let host = req.get('host');
+			let testip = req.headers['x-forwarded-for'];
+			let ipregex = new RegExp(process.env.TESTINGIP);
 
-// only allow localhost or testing IPs.
-app.use(function (req, res, next) {
-    let host = req.get('host');
-    let testip = req.headers['x-forwarded-for'];
-    let ipregex = new RegExp(process.env.TESTINGIP);
+			if (process.env.ENVIRONMENT == 'PRODUCTION' && !/^www\./i.test(host) && !/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url)) {
+				href = "https://www.recko.co.uk" + req.url;
+				res.redirect(href);
+			}
+			
+			if (process.env.ENVIRONMENT == 'QA') {
+				if (req.query.qvk == process.env.QA_VALIDATION_KEY || req.cookies.qvk == process.env.QA_VALIDATION_KEY) {
+					res.cookie('qvk', process.env.QA_VALIDATION_KEY);
+					var qaIdCheck = true;
+				} else {
+					var qaIdCheck = false;
+				}
+			}
 
-    if (process.env.ENVIRONMENT == 'PRODUCTION' && !/^www\./i.test(host) && !/.*(\/vendor\/|\/img\/|\/js\/|\/css\/).*/i.test(req.url)) {
-        href = "https://www.recko.co.uk" + req.url;
-        res.redirect(href);
-    }
-    
-    if (process.env.ENVIRONMENT == 'QA') {
-        if (req.query.qvk == process.env.QA_VALIDATION_KEY || req.cookies.qvk == process.env.QA_VALIDATION_KEY) {
-            res.cookie('qvk', process.env.QA_VALIDATION_KEY);
-            var qaIdCheck = true;
-        } else {
-            var qaIdCheck = false;
-        }
-    }
+			// if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production' || qaIdCheck) {
+				next();
+			// } else {
+				// res.end();
+				// console.log('Access Denied');
+			// };
+		});
+		// require('./secret/secret');
 
-    // if (host == 'localhost:8080' || ipregex.test(testip) || process.env.ENVIRONMENT == 'production' || qaIdCheck) {
-        next();
-    // } else {
-        // res.end();
-        // console.log('Access Denied');
-    // };
-});
-// require('./secret/secret');
+		app.use(express.static('public'));
+		app.engine('ejs', engine);
+		app.set('view engine', 'ejs');
+		app.use(bodyParser.urlencoded({extended: true}));
+		app.use(bodyParser.json());
+		app.use(validator());
 
-app.use(express.static('public'));
-app.engine('ejs', engine);
-app.set('view engine', 'ejs');
-app.use(bodyParser.urlencoded({extended: true}));
-app.use(bodyParser.json());
-app.use(validator());
+		app.use(session({
+			secret: 'qDykeBpm6fc3a',
+			resave: false,
+			saveUninitialized: false,
+			store: new mongostore({mongooseConnection: mongoose.connection})
+		}));
 
-app.use(session({
-    secret: 'qDykeBpm6fc3a',
-    resave: false,
-    saveUninitialized: false,
-    store: new mongostore({mongooseConnection: mongoose.connection})
-}));
+		app.use(flash());
+		var gplaces = await gdata.find().lean();
+		app.use(passport.initialize());
+		app.use(passport.session());
+		require('./routes/routes')(app);
+		require('./routes/account')(app);
+		require('./routes/listing')(app);
+		require('./routes/search')(app, gplaces);
+		require('./routes/blog')(app);
+		require('./routes/user')(app, passport);
 
-app.use(flash());
+		app.listen(process.env.PORT, function () {
+			console.log('App running on port 8080');
+		});
 
-app.use(passport.initialize());
-app.use(passport.session());
+	})
+	.catch(err => console.log(err));
 
-require('./routes/routes')(app);
-require('./routes/account')(app);
-require('./routes/listing')(app);
-require('./routes/search')(app);
-require('./routes/blog')(app);
-require('./routes/user')(app, passport);
-
-app.listen(process.env.PORT, function () {
-    console.log('App running on port 8080');
-});
