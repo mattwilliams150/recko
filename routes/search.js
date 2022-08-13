@@ -70,10 +70,8 @@ module.exports = (app) => {
 					query["tags." + tag] = { $gt: 0 };
 				}
 			}
-
 			// // get places
 			var mongoplaces = await Places.find(query).lean();
-
 			var placeIds = [];
 			mongoplaces.forEach((record) => {
 				placeIds.push(record.placeId);
