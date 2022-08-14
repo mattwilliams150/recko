@@ -101,13 +101,15 @@ module.exports = (app, passport) => {
       }
     }
   );
-
-  app.get("/logout", (req, res) => {
-    req.logout();
-    req.session.destroy((err) => {
-      res.redirect("/");
+    
+    app.get('/logout', function(req, res, next) {
+        req.logout(function(err) {
+            if (err) { return next(err); }
+            req.session.destroy((err) => {
+              res.redirect("/");
+            });
+        });
     });
-  });
 
   app.get("/forgot", (req, res) => {
     try {
