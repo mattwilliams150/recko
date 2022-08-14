@@ -42,6 +42,7 @@ module.exports = function (app) {
           title: "Recko",
           loggedIn: loggedIn,
           articles: articles,
+            categories: categories,
         });
       });
     });
