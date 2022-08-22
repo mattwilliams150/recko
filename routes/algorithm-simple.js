@@ -8,17 +8,17 @@ const logger = require("../logger");
 module.exports.relevance = function relevance(user, place) {
   try {
     var pearsonScaleUp = 0.8;
-    var subCatCap = 15.0;
-    var tagCap = 25.0;
+    var subCatCap = 20.0;
+    var tagCap = 50.0;
     var reviewCap = 60.0;
     var tagMatrix = [
-      [21, 19, 17, 15, 13],
-      [19, 17, 15, 13, 11],
-      [17, 15, 13, 11, 9],
-      [15, 13, 11, 9, 7],
-      [13, 11, 9, 7, 5],
+      [40, 35, 30, 25, 20],
+      [35, 30, 25, 20, 15],
+      [30, 25, 20, 15, 10],
+      [25, 20, 15, 10, 10],
+      [20, 15, 10, 10, 10],
     ];
-    var subCatMatrix = [10, 8, 6];
+    var subCatMatrix = [20, 18, 16];
 
     var reviewRelevance = 0.0;
     var subCatRelevance = 0.0;
@@ -29,10 +29,14 @@ module.exports.relevance = function relevance(user, place) {
 
     if (user !== undefined && reviewnum > 0) {
       // review relevance
-      if (reviewnum >= 4.0) {
-        reviewRelevance = (reviewnum - 1) * 15;
+      if (reviewnum >= 4.7) {
+        reviewRelevance = reviewnum * 5 + 35;
+      } else if (reviewnum >= 4.0) {
+        reviewRelevance = reviewnum * 45 - 165;
+      } else if (reviewnum >= 3.0) {
+        reviewRelevance = reviewnum * 10 - 25;
       } else {
-        reviewRelevance = (reviewnum - 2) * 15;
+         reviewRelevance = reviewnum * 5 / 3;
       }
 
       // tag relevance
@@ -46,6 +50,7 @@ module.exports.relevance = function relevance(user, place) {
         for (var i in userPosTagSorted) {
           for (var j in placePosTagSorted) {
             if (userPosTagSorted[i] == placePosTagSorted[j]) {
+                console.log(tagRelevance)
               tagRelevance += tagMatrix[i][j];
             }
           }
@@ -63,8 +68,7 @@ module.exports.relevance = function relevance(user, place) {
       }
 
       relevance = (
-        Math.min(tagCap, tagRelevance) +
-        subCatRelevance +
+        Math.min(40.0, tagRelevance + subCatRelevance) +
         reviewRelevance
       ).toFixed(1);
       var relevanceAvailable = true;
