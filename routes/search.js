@@ -59,7 +59,9 @@ module.exports = (app, gplaces) => {
 				query.sw11 = 1;
 			} else if (req.query.place == "Balham") {
 				query.sw12 = 1;
-			}
+			} else if (req.query.place == "Clapham") {
+				query.sw4 = 1;
+            }
 
 			if (category) {
 				query.subcategory = category;
