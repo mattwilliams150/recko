@@ -13,31 +13,31 @@ passport.deserializeUser((id, done) => {
     });
 });
 
-passport.use('local.signup', new LocalStrategy({
-    usernameField: 'email', 
-    passwordField: 'password',
-    passReqToCallback: true
-}, (req, email, password, done) => {
-   User.findOne({'email':email}, (err, user) => {
-       if(err){
-           return done(err);
-       }
+// passport.use('local.signup', new LocalStrategy({
+//     usernameField: 'email', 
+//     passwordField: 'password',
+//     passReqToCallback: true
+// }, (req, email, password, done) => {
+//    User.findOne({'email':email}, (err, user) => {
+//        if(err){
+//            return done(err);
+//        }
        
-       if(user){
-           return done(null, false, req.flash('error', 'Email already exists.'))
-       }
+//        if(user){
+//            return done(null, false, req.flash('error', 'Email already exists.'))
+//        }
        
-       var newUser = new User();
-       newUser.firstName = req.body.firstName;
-       newUser.lastName = req.body.lastName;
-       newUser.username = req.body.username;
-       newUser.email = req.body.email;
-       newUser.password = newUser.encryptPassword(req.body.password);
-       newUser.save((err) => {
-           return done(null, newUser);
-       });
-   }); 
-}));
+//        var newUser = new User();
+//        newUser.firstName = req.body.firstName;
+//        newUser.lastName = req.body.lastName;
+//        newUser.username = req.body.username;
+//        newUser.email = req.body.email;
+//        newUser.password = newUser.encryptPassword(req.body.password);
+//        newUser.save((err) => {
+//            return done(null, newUser);
+//        });
+//    }); 
+// }));
 
 passport.use('local.login', new LocalStrategy({
     usernameField: 'email', 
@@ -64,15 +64,12 @@ passport.use('local.popsignup', new LocalStrategy({
     passReqToCallback: true
 }, (req, email, password, done) => {
    User.findOne({'email':email}, (err, user) => {
-       
        if(err){
            return done(err);
        }
-
        if(user){
            return done(null, false, req.flash('error', 'Email already exists, <a href = "/login">click here to login</a>.'))
        }
-       
        var newUser = new User();
        newUser.firstName = req.body.popFirstName;
        newUser.lastName = req.body.popLastName;
