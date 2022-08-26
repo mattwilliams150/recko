@@ -61,7 +61,7 @@
       <div class="col-lg-9 pl-lg-5">
           
 <!-- vouchers -->            
-          
+<!--          
         <div class="text-block">
           <h2 class="mb-4">Your Vouchers</h2>
           <div class="card shadow">
@@ -89,7 +89,7 @@
         <div class="text-block">
           <h2 class="mb-4">Your Reviews</h2>
             
-<% for (i in reviews) { %>          
+        <% for (i in reviews) { %>          
           <div class="media d-block d-sm-flex review">
             <div class="media-body">
               <h6 class="mt-2 mb-1"><a href="/listing?placeid=<%= reviews[i].placeid %>"><%= reviews[i].placeName %></a></h6>
@@ -102,6 +102,27 @@
                     <% } %>
                 <% } %>
               </div>
+                <p>
+            <% for (tagId in categories.tagObj) {%>
+                <% var tagReadable = categories.tagObj[tagId].name %>
+                <% var tagType = categories.tagObj[tagId].type 
+                if (tagType == "foodAndDrink") {
+                    var tagClass = "tag-pill-food"
+                } else if (tagType == "experience") {
+                    var tagClass = "tag-pill-experience"
+                } else if (tagType == "greatFor") {
+                    var tagClass = "tag-pill-greatfor"
+                } else {
+                    var tagClass = "tag-pill"
+                }
+
+                 if(reviews[i]['tags'] !== undefined) {%>
+                    <% if(reviews[i]['tags'][tagId] == 'on') {  %>
+                        <div class="mr-1 badge badge-pill <%= tagClass %> px-3 py-2 mb-2 tag-pill-button"><%=tagReadable%></div>
+                    <% } %>
+                <% } %>
+            <% } %>
+                </p>
               <p class="text-muted text-sm"><%= reviews[i].review %></p>
                 <span class="text-uppercase text-muted text-sm">
                         <% let datediff = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24))
