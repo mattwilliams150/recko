@@ -217,10 +217,10 @@ module.exports = (app, gplaces) => {
 					return 0;
 				};
 			}
-			if (sort == "relevance") {
-				mongoplaces.sort(GetSortOrder("relevance"));
-			} else {
+			if (sort == "review" || loggedIn == false) {
 				mongoplaces.sort(GetSortOrder("review"));
+			} else {
+				mongoplaces.sort(GetSortOrder("relevance"));
 			}
 			// cut out the number of records per page for the current page
 			var recordsPerPage = 10;

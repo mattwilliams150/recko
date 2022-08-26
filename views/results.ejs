@@ -129,13 +129,15 @@
             <div class="mr-3">
               <p class="mb-3 mb-md-0"><strong><%= data.pagination.totalRecords %></strong> results found</p>
             </div>
+        <% if (loggedIn) { %>  
             <div>
               <label class="form-label mr-2" for="form_sort">Sort by</label>
               <select class="selectpicker" name="sort" id="form_sort" data-style="btn-selectpicker" title="" onchange="resultsSort(this.value)">
-                <option value="review"<% if (data.parameters.sort == "review") {%> selected="selected" <% } %>>Rating</option>
                 <option value="relevance"<% if (data.parameters.sort == "relevance") {%> selected="selected" <% } %>>Recommended for you</option>
+                  <option value="review"<% if (data.parameters.sort == "review") {%> selected="selected" <% } %>>Rating</option>
               </select>
             </div>
+        <% } %>
           </div>
           <div class="row  places-list-rw">
             
