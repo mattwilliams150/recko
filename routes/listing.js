@@ -5,11 +5,18 @@ var gdata = require("../models/googledata");
 var algorithm = require("./algorithm-simple");
 var categories = require("../config/categories.json");
 const logger = require("../logger/index.js");
+const { error } = require("winston");
 
 module.exports = (app) => {
   try {
-    app.get("/listing", (req, res) => {
+    app.get("/listing", async (req, res) => {
       var placeid = req.query.placeid;
+			let alreadyReviewed = req.query.alreadyReviewed;
+			if (!alreadyReviewed) {
+				alreadyReviewed = false;
+			}
+			console.log(`placeid: ${placeid}`);
+			console.log(`Req query: ${req.query}`);
       var title = "Recko";
       var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY;
       if (req.user !== undefined) {
@@ -18,8 +25,9 @@ module.exports = (app) => {
         loggedIn = false;
       }
 
-      Review.find({ placeid: placeid }, async (err, review) => {
-        //console.log(review);
+      Review.find({ placeid: placeid })
+				.then(async (reviews) => {
+				//console.log(review);
         //--- use google data---//
         /*
             getGooglePlace(placeid)
@@ -41,28 +49,28 @@ module.exports = (app) => {
 
             */
 
-        var place = await Places.find({ placeId: placeid });
-        var mongoplace = await gdata.find({ placeid: placeid });
+        var place = await Places.findOne({ placeId: placeid });
+        var mongoplace = await gdata.findOne({ placeid: placeid });
 
         // work out relevance score
-        var relv = algorithm.relevance(req.user, place[0]);
+        var relv = algorithm.relevance(req.user, place);
         var relevance = relv.relevance;
         var relevanceAvailable = relv.relevanceAvailable;
 
         // define data layer
         var flatTags = "";
-        for (tag in place[0].tags) {
-          flatTags = flatTags.concat(tag + ":" + place[0].tags[tag] + "|");
+        for (tag in place.tags) {
+          flatTags = flatTags.concat(tag + ":" + place.tags[tag] + "|");
         }
         var datalayer = {
           page: "listing",
           loginStatus: loggedIn,
           placeId: placeid,
           relevance: relevance,
-          placeLocation: place[0].location,
-          placeName: place[0].placeName,
-          placeSubCategory: place[0].subcategory,
-          placeType: place[0].type,
+          placeLocation: place.location,
+          placeName: place.placeName,
+          placeSubCategory: place.subcategory,
+          placeType: place.type,
           placeTags: flatTags,
         };
 
@@ -70,21 +78,30 @@ module.exports = (app) => {
         res.render("listing", {
           title: title,
           placeid: placeid,
-          mongoplace: mongoplace[0].data.result,
+          mongoplace: mongoplace.data.result,
           place: place,
+					alreadyReviewed: alreadyReviewed,
           categories: categories,
           loggedIn: loggedIn,
-          reviews: review,
+          reviews: reviews,
           clientPlacesApiKey: clientPlacesApiKey,
           relevance: relevance,
           relevanceAvailable: relevanceAvailable,
           datalayer: datalayer,
         });
-      });
+      })
+			.catch((err) => {
+				console.log(err);
+			});
+        
     });
 
     app.post("/listingreview", async (req, res) => {
       // add record to review database
+			let existingReview = await Review.findOne({ placeid: req.query.placeid, userId: req.user.id }).lean();
+			if (existingReview) {
+				return await res.redirect(`/listing?placeid=${req.query.placeid}&alreadyReviewed=true`);	
+			}
       var newReview = new Review();
       var reviewTags = {};
       newReview.placeid = req.query.placeid;
@@ -105,7 +122,7 @@ module.exports = (app) => {
       newReview.save((err) => {
         console.log(err);
       });
-
+			console.log("hi im here");
       // update value of tag on place record when review is left.
       var place = await Places.find({ placeId: req.query.placeid });
 

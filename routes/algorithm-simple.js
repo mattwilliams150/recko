@@ -7,6 +7,12 @@ const logger = require("../logger");
 
 module.exports.relevance = function relevance(user, place) {
   try {
+		if (user === undefined) {
+			return {
+				relevance: 0,
+				relevanceAvailable: false,
+			};
+		}
     var pearsonScaleUp = 0.8;
     var subCatCap = 15.0;
     var tagCap = 25.0;

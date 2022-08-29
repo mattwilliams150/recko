@@ -7,16 +7,16 @@
 
 
     <!-- Hero Section-->
-    <section class="pt-5 pt-sm-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('../img/place_photos/full/<%= place[0].photo %>');">
+    <section class="pt-5 pt-sm-7 pb-5 d-flex align-items-end dark-overlay bg-cover" style="background-image: url('../img/place_photos/full/<%= place.photo %>');">
       <div class="container overlay-content">
         <div class="d-flex justify-content-between align-items-start flex-column flex-lg-row align-items-lg-end">
           <div class="text-white mb-4 mb-lg-0 col">
-            <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%= !!place.length ? place[0].subcategory : "" %></div>
+            <div class="badge badge-pill badge-transparent px-3 py-2 mb-4"><%= !!place.length ? place.subcategory : "" %></div>
             <h1 class="text-shadow verified"><%= mongoplace.name %></h1>
             <p><i class="fa-map-marker-alt fas mr-2"></i> <%= mongoplace.formatted_address %></p>
             <p class="d-flex align-items-center">
                 <% for (j = 0; j < 5; j++) {
-                    if (Math.round(place[0].review) > j) {  %>
+                    if (Math.round(place.review) > j) {  %>
                         <% if (j == 4 ) { %>
                             <i class="fa fa-xs fa-star text-primary mr-2"></i>
                         <% } else { %>
@@ -30,7 +30,7 @@
                         <% } %>
                     <% } %>
                 <% } %>
-                <span class="text-white text-s mr-4"><%= !!place.length ? place[0].review : "" %></span>
+                <span class="text-white text-s mr-4"><%= !!place.length ? place.review : "" %></span>
               </p>
                 <% if(relevanceAvailable) { %>
               <p>
@@ -39,7 +39,7 @@
                 <% } %>
               
             <!-- ABOUT -->    
-              <p><%= !!place.length ? place[0].description : "" %></p>
+              <p><%= !!place.length ? place.description : "" %></p>
               <p class="mb-0" >
                 <div class="form-group tag-pill-button">
                 <% 
@@ -47,7 +47,7 @@
                     var tagLim = 3;
                     
                     // convert to array for sorting            
-                    var tagArr = Object.entries(place[0].tags);
+                    var tagArr = Object.entries(place.tags);
                     // sort
                     tagArr.sort(function(a, b) {
                         return b[1] - a[1];
@@ -117,10 +117,8 @@
             <% for (i = 0; i < reviews.length; i++) { %>
              <div class="media d-block d-sm-flex review">
                 <div class="text-md-center mr-4 mr-xl-5"><img class="mobile-hidden d-block avatar avatar-xl p-2 mb-2" src="img/letters/<%= reviews[i].username.charAt(0).toLowerCase() %>.png" alt="Reviewer Photo"><span class="text-uppercase text-muted text-sm">
-
                     <% let datediff = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24))
                         let monthsago = Math.floor((Date.now() - reviews[i].date) / (1000*60*60*24*30)) %>
-
                         <% if(datediff == 0) { %>
                              Today
                         <% } else if (datediff < 7) { %>
@@ -130,7 +128,6 @@
                         <% } else { %>
                              <%=monthsago%> Months Ago
                          <% } %>
-
                 </span></div>
                 <div class="media-body">
                   <div class="mb-2">
@@ -165,10 +162,7 @@
                     <% } %>
                     </p>
                     <h6 class="text-muted mt-2 mb-1"><%= reviews[i].username %></h6>
-
                 </div>
-
-
               </div>
             <% } %>
 
@@ -231,7 +225,6 @@
                           </select>
                         </div>
                         <p id="review_rating_alert" class="alert alert-danger" style="display: none;">Please rate this place</p>
-
                       </div>
                     </div>
                     <div class="form-group">
@@ -239,11 +232,7 @@
                       <textarea class="form-control" rows="4" name="review_review" id="review" placeholder="Enter your review"></textarea>
                     </div>
                       <div class="form-group"><label class="form-label" for="review">Select at least one tag for this place *</label>   </div>
-
-
-
                       <div class="form-group tag-pill-button">
-
                     <div class="tag-food">
                     <h6>Food & Drink</h6>    
                     <% for (tagId in categories.tagObj) { %>
@@ -288,14 +277,12 @@
                       </div>
                       
                     <p id="review_tag_alert" class="alert alert-danger" style="display: none; ">Please select at least one tag</p>
-
                     <br>
                     <button class="btn btn-primary" type="submit">Post review</button>
                   </form>
                 
                   
 <% } else { %>
-
             <p>Please <a href="/register">Register</a> or <a href="/login">Login</a> to leave a review</p>
             
 <% } %>               
@@ -397,7 +384,6 @@
               <!-- Gallery-->
               <h3 class="mb-4">Gallery</h3>
               <div class="row gallery ml-n1 mr-n1">
-
                  <% for (i = 0; i < Math.min(mongoplace.photos.length, 6); i++) { %>
                 <div class="col-lg-4 col-6 px-1 mb-2"><img class="img-fluid" src="https://maps.googleapis.com/maps/api/place/photo?maxheight=227&photoreference=<%=mongoplace.photos[i].photo_reference%>&key=<%=clientPlacesApiKey%>" alt="...">
                 </div>
@@ -512,7 +498,6 @@
     </section>
 
 <% if (false) { %>
-
     <div class="py-6 bg-gray-100"> 
       <div class="container">
         <h5 class="mb-0">Similar places</h5>
@@ -684,9 +669,13 @@
         </div>
       </div>
     </div>
-
 <% } %>
-
+		<script>
+			let reviewed = <%= alreadyReviewed %>;
+			if (reviewed === true) {
+				alert("You have already reviewed this place");
+			}
+		</script>
     <script src="js/map-detail.js"></script>
     <script>
       createDetailMap({
@@ -728,6 +717,5 @@
             } else {
                 return false;  
             }
-
         }
     </script>
