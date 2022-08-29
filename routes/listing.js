@@ -15,8 +15,6 @@ module.exports = (app) => {
 			if (!alreadyReviewed) {
 				alreadyReviewed = false;
 			}
-			console.log(`placeid: ${placeid}`);
-			console.log(`Req query: ${req.query}`);
       var title = "Recko";
       var clientPlacesApiKey = process.env.CLIENT_GOOGLE_PLACES_API_KEY;
       if (req.user !== undefined) {
@@ -122,7 +120,6 @@ module.exports = (app) => {
       newReview.save((err) => {
         console.log(err);
       });
-			console.log("hi im here");
       // update value of tag on place record when review is left.
       var place = await Places.find({ placeId: req.query.placeid });
 
