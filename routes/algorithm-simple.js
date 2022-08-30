@@ -50,8 +50,7 @@ module.exports.relevance = function relevance(user, place) {
         for (var i in userPosTagSorted) {
           for (var j in placePosTagSorted) {
             if (userPosTagSorted[i] == placePosTagSorted[j]) {
-                console.log(tagRelevance)
-              tagRelevance += tagMatrix[i][j];
+              tagRelevance += tagMatrix[i][j] / 2;
             }
           }
         }
@@ -67,10 +66,7 @@ module.exports.relevance = function relevance(user, place) {
         }
       }
 
-      relevance = (
-        Math.min(40.0, tagRelevance + subCatRelevance) +
-        reviewRelevance
-      ).toFixed(1);
+      relevance = (Math.min(40.0, tagRelevance + subCatRelevance) + reviewRelevance).toFixed(1);
       var relevanceAvailable = true;
       //console.log("tag relevance:" + tagRelevance + " subcatrelevance:" + subCatRelevance)
     } else {
