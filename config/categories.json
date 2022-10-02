@@ -46,22 +46,22 @@
 	],
 	"tagObj": {
 		"value_for_money": {
-			"name": "Good Value for Money",
+			"name": "Value for Money",
 			"image": "040-money-bag-w.png",
 			"type": "foodAndDrink"
 		},
 		"culturally_authentic_dishes": {
-			"name": "Culturally Authentic Dishes",
+			"name": "Culturally Authentic",
 			"image": "004-fried-rice-w.png",
 			"type": "foodAndDrink"
 		},
 		"exciting_menu": {
-			"name": "Exciting Menu",
+			"name": "Innovative Menu",
 			"image": "005-menu-w.png",
 			"type": "foodAndDrink"
 		},
 		"fantastic_flavours": {
-			"name": "Fantastic Flavours",
+			"name": "Fresh Flavours",
 			"image": "003-vegetable-w.png",
 			"type": "foodAndDrink"
 		},
@@ -81,7 +81,7 @@
 			"type": "foodAndDrink"
 		},
 		"street_food_vibes": {
-			"name": "Street Food Vibes",
+			"name": "Street Food",
 			"image": "010-street-food-w.png",
 			"type": "foodAndDrink"
 		},
@@ -96,12 +96,12 @@
 			"type": "foodAndDrink"
 		},
 		"fantastic_wine_list": {
-			"name": "Fantastic Wine List",
+			"name": "Quality Wine",
 			"image": "011-wine-glass-and-bottle-w.png",
 			"type": "foodAndDrink"
 		},
 		"awesome_architecture": {
-			"name": "Awesome Architecture",
+			"name": "Architecturally Significant",
 			"image": "025-modern-architecture-w.png",
 			"type": "experience"
 		},
@@ -111,12 +111,12 @@
 			"type": "experience"
 		},
 		"fantastic_service": {
-			"name": "Fantastic Service",
+			"name": "Quality Service",
 			"image": "012-waiter-w.png",
 			"type": "experience"
 		},
 		"luxurious": {
-			"name": "Luxurious",
+			"name": "Luxury Interiors",
 			"image": "002-chandelier-w.png",
 			"type": "experience"
 		},
@@ -126,7 +126,7 @@
 			"type": "experience"
 		},
 		"great_music": {
-			"name": "Great Music",
+			"name": "Live Music / DJs",
 			"image": "016-dj-w.png",
 			"type": "experience"
 		},
@@ -151,7 +151,7 @@
 			"type": "experience"
 		},
 		"relaxing": {
-			"name": "Relaxing",
+			"name": "Relaxed Atmosphere",
 			"image": "028-relax-w.png",
 			"type": "experience"
 		},
@@ -166,22 +166,22 @@
 			"type": "experience"
 		},
 		"chic": {
-			"name": "Fashionable / Chic",
+			"name": "Trendy",
 			"image": "029-women-hippie-style-w.png",
 			"type": "experience"
 		},
 		"lgbtq_friendly": {
-			"name": "LGBTQ+ Friendly",
+			"name": "LGBTQIA+ Friendly",
 			"image": "041-LGBTQ.png",
 			"type": "experience"
 		},
 		"working_from_home": {
-			"name": "Great for \"Working From Home\"",
+			"name": "Great for Remote Working",
 			"image": "030-laptop-w.png",
 			"type": "greatFor"
 		},
 		"young_kids_families": {
-			"name": "Great for Young Kids/Families",
+			"name": "Great for Families",
 			"image": "031-baby-carriage-w.png",
 			"type": "greatFor"
 		},
@@ -211,7 +211,7 @@
 			"type": "greatFor"
 		},
 		"a_quiet_catch_up": {
-			"name": "Great for a Quiet Catch-Up",
+			"name": "Great for a Business Meeting",
 			"image": "017-talking-w.png",
 			"type": "greatFor"
 		},
@@ -221,7 +221,7 @@
 			"type": "greatFor"
 		},
 		"an_evening_with_friends": {
-			"name": "Great for An Evening with Friends",
+			"name": "Great for When on a Budget",
 			"image": "038-group-w.png",
 			"type": "greatFor"
 		},
@@ -233,7 +233,7 @@
 		"creative_presentation": {
 			"name": "Creative Presentation",
 			"image": "039-champagne-w.png",
-			"type": "greatFor"
+			"type": "foodAndDrink"
 		}
 	}
 }
