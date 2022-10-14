@@ -159,18 +159,19 @@ module.exports = (app, passport) => {
 
 				function (rand, user, callback) {
 					var smtpTransport = nodemailer.createTransport({
-						service: 'Gmail',
+						service: 'Mandrill',
 						auth: {
-							user: secret.auth.user,
-							pass: secret.auth.pass
+							user: "recko",
+							pass: "UB25GeqZRO64jUlEx99_qg"
 						}
 					});
 					var mailOptions = {
 						to: user.email,
-						from: 'Recko '+'<'+secret.auth.user+'>',
+						from: 'Recko <noreply@recko.co.uk>',
 						subject: "Recko - Password Reset",
 						text:
-							"You have requested for a password reset token. \n\n Please click the link to complete the process: \n\n http://localhost:3000/reset/" +
+							"You have requested for a password reset token. \n\n Please click the link to complete the process: \n\n http://www.recko.co.uk/reset/" +
+							rand,
 							rand,
 					};
 					smtpTransport.sendMail(mailOptions, (err, response) => {
@@ -290,16 +291,16 @@ module.exports = (app, passport) => {
 
 				function (user, callback) {
 					var smtpTransport = nodemailer.createTransport({
-						service: 'Gmail',
+						service: 'Mandrill',
 						auth: {
-							user: secret.auth.user,
-							pass: secret.auth.pass
+							user: 'recko',
+							pass: 'UB25GeqZRO64jUlEx99_qg'
 						}
 					});
 
 					var mailOptions = {
 						to: user.email,
-						from: 'Recko '+'<'+secret.auth.user+'>',
+						from: 'Recko <noreply@recko.co.uk>',
 						subject: "Recko - Your password has been updated",
 						text: "Your password has been updated for " + user.email,
 					};
