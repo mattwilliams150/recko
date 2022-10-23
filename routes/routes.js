@@ -21,6 +21,10 @@ module.exports = (app) => {
           articles: articles,
           emailMessage: emailMessage,
           categories: categories,
+            datalayer: {
+                page: "homepage",
+				loginStatus: loggedIn
+            }
         });
       });
     });
