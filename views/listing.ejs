@@ -713,6 +713,7 @@
             }
             
             if( rating != "" && tagcheck == 1) { 
+                dataLayer.push({'event': 'review'});
                 return true;
             } else {
                 return false;  
