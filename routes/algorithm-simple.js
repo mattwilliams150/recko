@@ -13,18 +13,23 @@ module.exports.relevance = function relevance(user, place) {
 				relevanceAvailable: false,
 			};
 		}
-    var pearsonScaleUp = 0.8;
+
     var subCatCap = 20.0;
-    var tagCap = 50.0;
-    var reviewCap = 60.0;
+    var tagCap = 30.0;
+
     var tagMatrix = [
-      [40, 35, 30, 25, 20],
-      [35, 30, 25, 20, 15],
-      [30, 25, 20, 15, 10],
-      [25, 20, 15, 10, 10],
-      [20, 15, 10, 10, 10],
+        [25, 22, 19, 17, 15, 13, 11, 9, 7, 5],
+        [22, 19, 17, 15, 13, 11, 9, 7, 5, 4],
+        [19, 17, 15, 13, 11, 9, 7, 5, 4, 3],
+        [17, 15, 13, 11, 9, 7, 5, 4, 3, 2],
+        [15, 13, 11, 9, 7, 5, 4, 3, 2, 1],
+        [13, 11, 9, 7, 5, 4, 3, 2, 1, 0],
+        [11, 9, 7, 5, 4, 3, 2, 1, 0, 0],
+        [9, 7, 5, 4, 3, 2, 1, 0, 0, 0],
+        [7, 5, 4, 3, 2, 1, 0, 0, 0, 0],
+        [5, 4, 3, 2, 1, 0, 0, 0, 0, 0]
     ];
-    var subCatMatrix = [20, 18, 16];
+    var subCatMatrix = [19, 15, 11, 9, 7, 5, 4, 3, 2, 1];
 
     var reviewRelevance = 0.0;
     var subCatRelevance = 0.0;
@@ -35,46 +40,43 @@ module.exports.relevance = function relevance(user, place) {
 
     if (user !== undefined && reviewnum > 0) {
       // review relevance
-      if (reviewnum >= 4.7) {
-        reviewRelevance = reviewnum * 5 + 35;
-      } else if (reviewnum >= 4.0) {
-        reviewRelevance = reviewnum * 45 - 165;
-      } else if (reviewnum >= 3.0) {
-        reviewRelevance = reviewnum * 10 - 25;
+      if (reviewnum >= 4.0) {
+        reviewRelevance = (reviewnum - 1) * 16;
       } else {
-         reviewRelevance = reviewnum * 5 / 3;
+         reviewRelevance = (reviewnum - 2) * 15;
       }
 
       // tag relevance
       if (user.posTags !== undefined && place.posTags !== undefined) {
         // get top 5 user tags
-        userPosTagSorted = helpers.topn(user.posTags, 5);
+        userPosTagSorted = helpers.topn(user.posTags, 10);
         // get top 5 place tags
-        placePosTagSorted = helpers.topn(place.posTags, 5);
+        placePosTagSorted = helpers.topn(place.posTags, 10);
 
         // find matched of user and place tags. where match found lookup value from tagmatrix and add to tagrelevance
         for (var i in userPosTagSorted) {
           for (var j in placePosTagSorted) {
             if (userPosTagSorted[i] == placePosTagSorted[j]) {
-              tagRelevance += tagMatrix[i][j] / 2;
+              tagRelevance += tagMatrix[i][j];
             }
           }
         }
       }
+      tagRelevance = Math.min(tagCap, tagRelevance);
 
       // subcat relevance
       if (user.subCatPosCounts !== undefined) {
-        var topSubCats = helpers.topn(user.subCatPosCounts, 3);
+        var topSubCats = helpers.topn(user.subCatPosCounts, 10);
         for (i in topSubCats) {
           if (topSubCats[i] == place.subcategory) {
             subCatRelevance = subCatMatrix[i];
           }
         }
       }
+        subCatRelevance = Math.min(subCatCap, subCatRelevance);    
 
-      relevance = (Math.min(40.0, tagRelevance + subCatRelevance) + reviewRelevance).toFixed(1);
+      relevance = (Math.min(100.0, tagRelevance + subCatRelevance) + reviewRelevance).toFixed(1);
       var relevanceAvailable = true;
-      //console.log("tag relevance:" + tagRelevance + " subcatrelevance:" + subCatRelevance)
     } else {
       var relevanceAvailable = false;
       relevance = null;
