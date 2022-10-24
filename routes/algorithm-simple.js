@@ -75,7 +75,7 @@ module.exports.relevance = function relevance(user, place) {
       }
         subCatRelevance = Math.min(subCatCap, subCatRelevance);    
 
-      relevance = (Math.min(100.0, tagRelevance + subCatRelevance) + reviewRelevance).toFixed(1);
+      relevance = (Math.min(100.0, tagRelevance + subCatRelevance + reviewRelevance)).toFixed(1);
       var relevanceAvailable = true;
     } else {
       var relevanceAvailable = false;
