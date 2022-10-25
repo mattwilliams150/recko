@@ -207,6 +207,7 @@
             var pu = 1
         }
         if (email == 1 && pw == 1 && cpw == 1 && pu == 1) {
+            dataLayer.push({'event': 'register'});
             $.ajax({
                 url: "/popover",
                 type: "POST",
